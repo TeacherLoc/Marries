@@ -1,0 +1,229 @@
+:root {
+    --primary-color: #d4a5a5;
+    --secondary-color: #f5f5f5;
+    --text-color: #333;
+    --light-text: #666;
+    --border-color: #e0e0e0;
+    --success-color: #4caf50;
+    --danger-color: #f44336;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Admin Header */
+.admin-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.admin-header h1 {
+    font-size: 1.8rem;
+    flex: 1;
+}
+
+.admin-header nav {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-back {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-back:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Main Content */
+.admin-main {
+    padding: 30px 20px;
+}
+
+/* Statistics */
+.statistics h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: var(--light-text);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* RSVPs Section */
+.rsvps-section h2,
+.guestbook-section h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.rsvp-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rsvp-table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.rsvp-table th,
+.rsvp-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.rsvp-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.rsvp-table tr.attending {
+    background-color: #e8f5e9;
+}
+
+.rsvp-table tr.not-attending {
+    background-color: #ffebee;
+}
+
+.rsvp-table td:nth-child(3) {
+    font-weight: bold;
+}
+
+/* Guestbook Section */
+.guestbook-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.guestbook-entry {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.guestbook-entry h3 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.guestbook-entry p {
+    color: var(--light-text);
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.guestbook-entry small {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-header h1 {
+        width: 100%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rsvp-table {
+        font-size: 0.9rem;
+    }
+
+    .rsvp-table th,
+    .rsvp-table td {
+        padding: 10px;
+    }
+
+    .guestbook-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rsvp-table {
+        font-size: 0.8rem;
+    }
+
+    .rsvp-table th,
+    .rsvp-table td {
+        padding: 8px;
+    }
+}

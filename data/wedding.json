@@ -1,0 +1,60 @@
+{
+  "couple": {
+    "brideName": "Ngọc Anh",
+    "groomName": "Minh Tuấn",
+    "parentsBride": {
+      "father": "Ông Nguyễn Văn A",
+      "mother": "Bà Phạm Thị B"
+    },
+    "parentsGroom": {
+      "father": "Ông Trần Văn C",
+      "mother": "Bà Lê Thị D"
+    },
+    "welcomeMessage": "Trân trọng kính mời quý khách tham dự lễ cưới của chúng tôi"
+  },
+  "wedding": {
+    "ceremonyDate": "2024-06-15",
+    "ceremonyTime": "08:00",
+    "ceremonyLocation": "Nhà Thờ Chính Tòa Hà Nội",
+    "receptionDate": "2024-06-15",
+    "receptionTime": "18:00",
+    "receptionLocation": "Nhà Hàng Á Châu",
+    "receptionAddress": "123 Đường Tôn Đức Thắng, Hà Nội",
+    "coordinates": {
+      "lat": 21.0285,
+      "lng": 105.8542
+    }
+  },
+  "loveStory": [
+    {
+      "year": 2018,
+      "title": "Gặp Gỡ Lần Đầu",
+      "description": "Chúng tôi đã gặp nhau tại đại học. Ngay từ lần gặp đầu tiên, tôi đã cảm thấy có gì đó đặc biệt."
+    },
+    {
+      "year": 2020,
+      "title": "Bước Đầu Tìm Hiểu",
+      "description": "Sau một thời gian làm quen, chúng tôi bắt đầu hẹn hò và khám phá thế giới cùng nhau."
+    },
+    {
+      "year": 2022,
+      "title": "Du Lịch Singapore",
+      "description": "Chuyến đi Singapore đã giúp chúng tôi nhận ra tình yêu sâu sắc của nhau."
+    },
+    {
+      "year": 2023,
+      "title": "Cầu Hôn",
+      "description": "Minh Tuấn đã cầu hôn Ngọc Anh vào một buổi hoàng hôn tuyệt đẹp trên bãi biển Nha Trang."
+    }
+  ],
+  "gallery": [],
+  "preWeddingVideo": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "digitalGift": {
+    "bankName": "Ngân Hàng Đầu Tiên",
+    "accountHolder": "Nguyễn Văn A & Trần Văn C",
+    "accountNumber": "0123456789012",
+    "qrCode": ""
+  },
+  "rsvps": [],
+  "guestbook": []
+}

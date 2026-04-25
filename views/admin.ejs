@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Wedding</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Admin Dashboard - <%= couple.brideName %> & <%= couple.groomName %></h1>
+            <nav>
+                <a href="/" class="btn-back">← Quay Lại Website</a>
+            </nav>
+        </header>
+
+        <main class="admin-main">
+            <!-- Statistics -->
+            <section class="statistics">
+                <h2>Thống Kê</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Tổng Phản Hồi</h3>
+                        <p class="stat-number"><%= statistics.totalRSVPs %></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Xác Nhận Tham Dự</h3>
+                        <p class="stat-number"><%= statistics.attendingCount %></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Không Tham Dự</h3>
+                        <p class="stat-number"><%= statistics.notAttendingCount %></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tổng Số Khách</h3>
+                        <p class="stat-number"><%= statistics.totalGuests %></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RSVPs Table -->
+            <section class="rsvps-section">
+                <h2>Danh Sách Xác Nhận Tham Dự</h2>
+                <div class="table-container">
+                    <table class="rsvp-table">
+                        <thead>
+                            <tr>
+                                <th>Tên Khách</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Tham Dự</th>
+                                <th>Số Người</th>
+                                <th>Yêu Cầu Đặc Biệt</th>
+                                <th>Ngày Gửi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% rsvps.forEach(rsvp => { %>
+                                <tr class="<%= rsvp.attendance ? 'attending' : 'not-attending' %>">
+                                    <td><%= rsvp.guestName %></td>
+                                    <td><%= rsvp.phoneNumber %></td>
+                                    <td><%= rsvp.attendance ? '✓ Có' : '✗ Không' %></td>
+                                    <td><%= rsvp.numberOfGuests %></td>
+                                    <td><%= rsvp.dietaryPreferences %></td>
+                                    <td><%= new Date(rsvp.timestamp).toLocaleDateString('vi-VN') %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Guestbook -->
+            <section class="guestbook-section">
+                <h2>Sổ Lời Chúc</h2>
+                <div class="guestbook-container">
+                    <% guestbook.forEach(entry => { %>
+                        <div class="guestbook-entry">
+                            <h3><%= entry.guestName %></h3>
+                            <p><%= entry.message %></p>
+                            <small><%= new Date(entry.timestamp).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></small>
+                        </div>
+                    <% }); %>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

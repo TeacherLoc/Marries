@@ -1,0 +1,27 @@
+{
+  "name": "personalized-wedding-website",
+  "version": "1.0.0",
+  "description": "A personalized wedding invitation website with RSVP and guestbook features",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "rsvp",
+    "guestbook"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "body-parser": "^1.20.2",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
