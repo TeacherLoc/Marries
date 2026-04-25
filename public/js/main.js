@@ -17,12 +17,30 @@ function updateCountdown() {
             document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         } else {
-            document.getElementById('countdown').innerHTML = '<p style="text-align: center; font-size: 1.5rem;">Cảm ơn vì đã tham dự!</p>';
+            document.getElementById('countdown').innerHTML = '<p style="text-align: center; font-size: 1.5rem; animation: pulse 1s infinite;">❤️ Cảm ơn vì đã tham dự! ❤️</p>';
         }
     }
 
     countdown();
     setInterval(countdown, 1000);
+}
+
+// Smooth scrolling and scroll animations
+function observeElements() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
 }
 
 // Gallery Lightbox
@@ -51,11 +69,19 @@ function changeLightboxImage(direction) {
     document.getElementById('lightbox-image').src = galleryItems[currentImageIndex].src;
 }
 
-// RSVP Form Submission
+// RSVP Form Submission with animations
 document.getElementById('rsvp-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const form = e.target;
+    const btn = form.querySelector('.btn-submit');
+    const originalText = btn.textContent;
+
+    // Show loading state
+    btn.disabled = true;
+    btn.textContent = '⏳ Đang gửi...';
+
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
     try {
@@ -70,22 +96,69 @@ document.getElementById('rsvp-form')?.addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.success) {
-            alert('Cảm ơn bạn đã xác nhận tham dự!');
-            e.target.reset();
+            btn.textContent = '✓ Đã gửi thành công!';
+            btn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+
+            // Create success message with animation
+            const successMsg = document.createElement('div');
+            successMsg.textContent = '❤️ Cảm ơn bạn đã xác nhận tham dự!';
+            successMsg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4caf50;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 8px;
+                font-size: 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideDown 0.5s ease-out;
+            `;
+            document.body.appendChild(successMsg);
+
+            setTimeout(() => {
+                successMsg.remove();
+                form.reset();
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
         } else {
-            alert('Đã xảy ra lỗi. Vui lòng thử lại.');
+            btn.textContent = '✗ Lỗi - Thử lại';
+            btn.style.background = 'linear-gradient(135deg, #f44336 0%, #da190b 100%)';
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Lỗi kết nối. Vui lòng thử lại.');
+        btn.textContent = '✗ Lỗi kết nối';
+        btn.style.background = 'linear-gradient(135deg, #f44336 0%, #da190b 100%)';
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
     }
 });
 
-// Guestbook Form Submission
+// Guestbook Form Submission with animations
 document.getElementById('guestbook-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const form = e.target;
+    const btn = form.querySelector('.btn-submit');
+    const originalText = btn.textContent;
+
+    // Show loading state
+    btn.disabled = true;
+    btn.textContent = '⏳ Đang gửi...';
+
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
     try {
@@ -100,22 +173,81 @@ document.getElementById('guestbook-form')?.addEventListener('submit', async (e) 
         const result = await response.json();
 
         if (result.success) {
-            alert('Cảm ơn lời chúc của bạn!');
-            e.target.reset();
-            // Reload to show new entry
-            setTimeout(() => location.reload(), 1000);
+            btn.textContent = '✓ Đã gửi thành công!';
+            btn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.textContent = '❤️ Cảm ơn lời chúc của bạn!';
+            successMsg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4caf50;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 8px;
+                font-size: 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideDown 0.5s ease-out;
+            `;
+            document.body.appendChild(successMsg);
+
+            setTimeout(() => {
+                successMsg.remove();
+                form.reset();
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.background = '';
+                // Reload to show new entry with animation
+                location.reload();
+            }, 1500);
         } else {
-            alert('Đã xảy ra lỗi. Vui lòng thử lại.');
+            btn.textContent = '✗ Lỗi - Thử lại';
+            btn.style.background = 'linear-gradient(135deg, #f44336 0%, #da190b 100%)';
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Lỗi kết nối. Vui lòng thử lại.');
+        btn.textContent = '✗ Lỗi kết nối';
+        btn.style.background = 'linear-gradient(135deg, #f44336 0%, #da190b 100%)';
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
     }
 });
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     updateCountdown();
+    observeElements();
+
+    // Add animation style for success message
+    if (!document.getElementById('animation-styles')) {
+        const style = document.createElement('style');
+        style.id = 'animation-styles';
+        style.textContent = `
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translate(-50%, -30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate(-50%, 0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 });
 
 // Close lightbox when pressing Escape
