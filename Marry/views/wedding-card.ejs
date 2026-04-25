@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= couple.brideName %> & <%= couple.groomName %> - Thiệp Cưới Online</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/wedding-card.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="wedding-card">
+    <!-- Header/Navigation -->
+    <nav class="wedding-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-ring"></i> Marry
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#couple" class="nav-link">Chúng Tôi</a></li>
+          <li><a href="#event" class="nav-link">Sự Kiện</a></li>
+          <li><a href="#gallery" class="nav-link">Ảnh</a></li>
+          <li><a href="#guestbook" class="nav-link">Sổ Lời Chúc</a></li>
+          <li><a href="#rsvp" class="nav-link">RSVP</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="couple-names">
+          <span class="bride-name"><%= couple.brideName %></span>
+          <span class="amp">&</span>
+          <span class="groom-name"><%= couple.groomName %></span>
+        </h1>
+        <p class="wedding-date">
+          <i class="fas fa-calendar-heart"></i>
+          <%= new Date(couple.weddingDate).toLocaleDateString('vi-VN', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }) %>
+        </p>
+      </div>
+    </section>
+
+    <!-- Couple Section -->
+    <section class="couple-section" id="couple">
+      <div class="section-container">
+        <h2 class="section-title">Chúng Tôi</h2>
+        
+        <div class="couple-profile">
+          <div class="profile-image">
+            <img src="<%= couple.profileImage %>" alt="<%= couple.brideName %> & <%= couple.groomName %>" />
+          </div>
+
+          <div class="couple-story">
+            <h3>Câu Chuyện Của Chúng Tôi</h3>
+            <p><%= couple.story %></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event Section -->
+    <section class="event-section" id="event">
+      <div class="section-container">
+        <h2 class="section-title">Sự Kiện</h2>
+
+        <div class="events-grid">
+          <!-- Ceremony -->
+          <div class="event-card">
+            <div class="event-icon">
+              <i class="fas fa-church"></i>
+            </div>
+            <h3><%= event.ceremony.name %></h3>
+            <div class="event-detail">
+              <i class="fas fa-calendar"></i>
+              <span><%= new Date(event.ceremony.date).toLocaleDateString('vi-VN', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              }) %></span>
+            </div>
+            <div class="event-detail">
+              <i class="fas fa-clock"></i>
+              <span><%= event.ceremony.time %></span>
+            </div>
+            <div class="event-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span><%= event.ceremony.location %></span>
+            </div>
+          </div>
+
+          <!-- Reception -->
+          <div class="event-card">
+            <div class="event-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h3><%= event.reception.name %></h3>
+            <div class="event-detail">
+              <i class="fas fa-calendar"></i>
+              <span><%= new Date(event.reception.date).toLocaleDateString('vi-VN', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              }) %></span>
+            </div>
+            <div class="event-detail">
+              <i class="fas fa-clock"></i>
+              <span><%= event.reception.time %></span>
+            </div>
+            <div class="event-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <span><%= event.reception.location %></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-section">
+          <h3>Bản Đồ Sự Kiện</h3>
+          <div id="eventMap" style="width: 100%; height: 500px; border-radius: 10px; overflow: hidden;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="gallery">
+      <div class="section-container">
+        <h2 class="section-title">Thư Viện Ảnh</h2>
+
+        <div class="gallery-grid">
+          <% gallery.forEach(photo => { %>
+            <div class="gallery-item">
+              <img src="<%= photo.image %>" alt="<%= photo.title %>" class="gallery-image" />
+              <div class="gallery-overlay">
+                <p class="gallery-title"><%= photo.title %></p>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guest Information Section -->
+    <section class="guest-info-section">
+      <div class="section-container">
+        <h2 class="section-title">Thông Tin Khách Mời</h2>
+
+        <div class="guest-info-grid">
+          <div class="info-card">
+            <i class="fas fa-heart"></i>
+            <h4>Trang Phục</h4>
+            <p><%= guestInformation.dressCode %></p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-calendar-check"></i>
+            <h4>Hạn Xác Nhận</h4>
+            <p>Vui lòng RSVP trước <%= new Date(guestInformation.rsvpDeadline).toLocaleDateString('vi-VN') %></p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-info-circle"></i>
+            <h4>Ghi Chú</h4>
+            <p><%= guestInformation.specialRequests %></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guest Book Section -->
+    <section class="guestbook-section" id="guestbook">
+      <div class="section-container">
+        <h2 class="section-title">Sổ Lời Chúc</h2>
+
+        <div class="guestbook-form">
+          <h3>Gửi Lời Chúc</h3>
+          <form id="messageForm" class="form-group">
+            <div class="form-input">
+              <input type="text" id="guestName" name="guestName" placeholder="Tên của bạn" required />
+            </div>
+            <div class="form-input">
+              <textarea id="message" name="message" placeholder="Lời chúc của bạn..." rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Gửi Lời Chúc</button>
+          </form>
+        </div>
+
+        <div class="guestbook-messages">
+          <h3>Lời Chúc Từ Khách Mời</h3>
+          <div id="messagesContainer" class="messages-list">
+            <% if (messages && messages.length > 0) { %>
+              <% messages.forEach(msg => { %>
+                <div class="message-card">
+                  <div class="message-header">
+                    <div class="guest-name"><%= msg.guestName %></div>
+                    <div class="message-date">
+                      <%= new Date(msg.timestamp).toLocaleDateString('vi-VN') %>
+                    </div>
+                  </div>
+                  <p class="message-text"><%= msg.message %></p>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p class="no-messages">Chưa có lời chúc nào. Hãy là người đầu tiên!</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp-section" id="rsvp">
+      <div class="section-container">
+        <h2 class="section-title">Xác Nhận Tham Dự</h2>
+
+        <div class="rsvp-form">
+          <form id="rsvpForm" class="form-group">
+            <div class="form-input">
+              <label for="rsvpName">Tên Khách Mời *</label>
+              <input type="text" id="rsvpName" name="guestName" placeholder="Họ và tên" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-input">
+                <label for="attendance">Xác Nhận *</label>
+                <select id="attendance" name="attendance" required>
+                  <option value="">-- Chọn --</option>
+                  <option value="yes">Tôi sẽ tham dự</option>
+                  <option value="no">Tôi không thể tham dự</option>
+                  <option value="maybe">Chưa chắc</option>
+                </select>
+              </div>
+
+              <div class="form-input">
+                <label for="guestCount">Số Người Tham Dự *</label>
+                <select id="guestCount" name="guestCount" required>
+                  <option value="1">1 người</option>
+                  <option value="2">2 người</option>
+                  <option value="3">3 người</option>
+                  <option value="4">4 người</option>
+                  <option value="5">5 người</option>
+                  <option value="6">6+ người</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-input">
+              <label for="dietary">Hạn Chế Thực Phẩm</label>
+              <input type="text" id="dietary" name="dietary" placeholder="Ví dụ: Không ăn thịt, tiểu đường..." />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gửi RSVP</button>
+          </form>
+        </div>
+
+        <div class="rsvp-stats">
+          <h3>Thống Kê</h3>
+          <div class="stats-grid" id="statsContainer">
+            <div class="stat-card">
+              <div class="stat-number" id="rsvpCount">0</div>
+              <div class="stat-label">Khách Đã RSVP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gift Registry Section -->
+    <section class="gift-section">
+      <div class="section-container">
+        <h2 class="section-title">Danh Sách Quà Tặng</h2>
+
+        <div class="gifts-grid" id="giftsContainer"></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="wedding-footer">
+      <div class="footer-content">
+        <p>&copy; 2024 <%= couple.brideName %> & <%= couple.groomName %>. All rights reserved.</p>
+        <p>Powered by <strong>Marry</strong> - Thiệp Cưới Online Thông Minh</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+  <script src="/js/wedding-card.js"></script>
+</body>
+</html>

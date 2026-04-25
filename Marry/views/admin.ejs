@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="admin-container">
+    <nav class="admin-sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-lock"></i> Admin</h2>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#dashboard" class="menu-link active">Dashboard</a></li>
+        <li><a href="#statistics" class="menu-link">Thống Kê</a></li>
+        <li><a href="#rsvp" class="menu-link">RSVP</a></li>
+        <li><a href="#messages" class="menu-link">Lời Chúc</a></li>
+      </ul>
+    </nav>
+
+    <div class="admin-content">
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="admin-section active">
+        <h1>Dashboard</h1>
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <i class="fas fa-user-check"></i>
+            <h3>RSVP</h3>
+            <p id="dashRsvpCount">0</p>
+          </div>
+          <div class="dashboard-card">
+            <i class="fas fa-message"></i>
+            <h3>Lời Chúc</h3>
+            <p id="dashMessageCount">0</p>
+          </div>
+          <div class="dashboard-card">
+            <i class="fas fa-gift"></i>
+            <h3>Quà Đã Chọn</h3>
+            <p id="dashGiftCount">0</p>
+          </div>
+          <div class="dashboard-card">
+            <i class="fas fa-users"></i>
+            <h3>Tổng Khách</h3>
+            <p id="dashGuestCount">0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Statistics Section -->
+      <section id="statistics" class="admin-section">
+        <h1>Thống Kê</h1>
+        <div class="stats-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Chỉ Số</th>
+                <th>Giá Trị</th>
+              </tr>
+            </thead>
+            <tbody id="statsTableBody">
+              <tr>
+                <td colspan="2" style="text-align: center;">Đang tải...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RSVP Section -->
+      <section id="rsvp" class="admin-section">
+        <h1>Danh Sách RSVP</h1>
+        <div class="rsvp-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Tên Khách Mời</th>
+                <th>Xác Nhận</th>
+                <th>Số Người</th>
+                <th>Hạn Chế Thực Phẩm</th>
+                <th>Ngày Gửi</th>
+              </tr>
+            </thead>
+            <tbody id="rsvpTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center;">Đang tải...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Messages Section -->
+      <section id="messages" class="admin-section">
+        <h1>Lời Chúc Từ Khách Mời</h1>
+        <div class="messages-list" id="adminMessages">
+          <p style="text-align: center;">Đang tải...</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

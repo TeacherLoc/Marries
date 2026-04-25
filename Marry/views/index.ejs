@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="home-container">
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <i class="fas fa-ring"></i> Marry
+        </h1>
+        <p class="hero-subtitle">Thiệp Cưới Online Thông Minh</p>
+        
+        <div class="button-group">
+          <button id="generateQRBtn" class="btn btn-primary">
+            <i class="fas fa-qrcode"></i> Tạo Mã QR
+          </button>
+          <button id="scanQRBtn" class="btn btn-secondary">
+            <i class="fas fa-camera"></i> Quét Mã QR
+          </button>
+        </div>
+      </div>
+
+      <div id="qrContainer" class="qr-container hidden">
+        <h2>Mã QR Của Bạn</h2>
+        <div id="qrCode" class="qr-display"></div>
+        <p id="qrUrl" class="qr-url"></p>
+        <button id="downloadQRBtn" class="btn btn-small">
+          <i class="fas fa-download"></i> Tải Xuống
+        </button>
+        <button id="closeQRBtn" class="btn btn-small btn-secondary">
+          <i class="fas fa-times"></i> Đóng
+        </button>
+      </div>
+
+      <div id="scannerContainer" class="scanner-container hidden">
+        <video id="videoScanner" class="video-scanner"></video>
+        <canvas id="canvasScanner" style="display:none;"></canvas>
+        <div class="scanner-controls">
+          <button id="stopScanBtn" class="btn btn-small btn-secondary">
+            <i class="fas fa-times"></i> Dừng Quét
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <h2>Tính Năng</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-qrcode"></i>
+          <h3>Mã QR Thông Minh</h3>
+          <p>Tạo và quét mã QR để chia sẻ thông tin cưới</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-images"></i>
+          <h3>Thư Viện Ảnh</h3>
+          <p>Chia sẻ những khoảnh khắc đẹp nhất của bạn</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-envelope"></i>
+          <h3>RSVP Online</h3>
+          <p>Khách mời xác nhận tham dự trực tuyến</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-message"></i>
+          <h3>Sổ Lời Chúc</h3>
+          <p>Khách mời có thể ghi lời chúc cho cặp đôi</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-map-location-dot"></i>
+          <h3>Bản Đồ Địa Điểm</h3>
+          <p>Hướng dẫn tìm đường đến địa điểm sự kiện</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-gift"></i>
+          <h3>Danh Sách Quà Tặng</h3>
+          <p>Khách mời có thể chọn quà tặng ý thích</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>Hướng Dẫn Sử Dụng</h2>
+      <ol class="instruction-list">
+        <li>Click nút "Tạo Mã QR" để tạo mã QR cho thiệp cưới của bạn</li>
+        <li>Tải mã QR về hoặc in ra</li>
+        <li>Chia sẻ mã QR với khách mời</li>
+        <li>Khách mời quét mã QR để xem thiệp cưới online</li>
+        <li>Khách mời có thể RSVP, ghi lời chúc, và xem chi tiết sự kiện</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="/js/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
