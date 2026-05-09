@@ -30,10 +30,68 @@ function initMusicPlayer() {
 
     if (!musicToggle || !backgroundMusic) return;
 
-    // Set a default music URL (replace with actual URL)
-    backgroundMusic.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+    // YouTube URL - extract video ID for embed player
+    const youtubeUrl = 'https://www.youtube.com/watch?v=xFONPDwW-lU&list=RDxFONPDwW-lU&start_radio=1';
+    const videoId = 'xFONPDwW-lU'; // Extract from URL
+
+    // Create hidden YouTube embed for audio playback
+    const youtubeEmbed = document.createElement('div');
+    youtubeEmbed.id = 'youtube-player';
+    youtubeEmbed.style.display = 'none';
+    document.body.appendChild(youtubeEmbed);
 
     let isPlaying = false;
+    let ytPlayer = null;
+
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    // YouTube Player Ready Callback
+    window.onYouTubeIframeAPIReady = function() {
+        ytPlayer = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: videoId,
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    };
+
+    function onPlayerReady(event) {
+        console.log('YouTube player ready');
+    }
+
+    function onPlayerStateChange(event) {
+        // Handle state changes
+    }
+
+    musicToggle.addEventListener('click', () => {
+        if (!ytPlayer) {
+            console.log('YouTube player not ready yet');
+            return;
+        }
+
+        if (isPlaying) {
+            ytPlayer.pauseVideo();
+            musicToggle.textContent = '🎵';
+            musicToggle.classList.remove('playing');
+            isPlaying = false;
+        } else {
+            ytPlayer.playVideo();
+            musicToggle.textContent = '🎶';
+            musicToggle.classList.add('playing');
+            isPlaying = true;
+        }
+    });
+
+    // Alternative: Direct audio playback if user provides MP3 URL
+    // Uncomment below to use direct audio URL instead
+    /*
+    backgroundMusic.src = 'YOUR_MP3_URL_HERE';
 
     musicToggle.addEventListener('click', () => {
         if (isPlaying) {
@@ -48,6 +106,7 @@ function initMusicPlayer() {
             isPlaying = true;
         }
     });
+    */
 }
 
 // ===== COUNTDOWN TIMER =====
