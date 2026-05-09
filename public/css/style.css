@@ -149,7 +149,7 @@ body {
     text-align: center;
     color: white;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     animation: fadeInDown 0.8s ease-out;
 }
 
@@ -318,11 +318,9 @@ body {
 }
 
 .timeline-item {
-    margin-bottom: 30px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
+    margin-bottom: 50px;
+    position: relative;
+    width: 100%;
     animation: fadeInUp 0.6s ease-out both;
 }
 
@@ -330,6 +328,16 @@ body {
 .timeline-item:nth-child(2) { animation-delay: 0.2s; }
 .timeline-item:nth-child(3) { animation-delay: 0.3s; }
 .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+.timeline-item.left {
+    padding-right: 52%;
+    text-align: right;
+}
+
+.timeline-item.right {
+    padding-left: 52%;
+    text-align: left;
+}
 
 .timeline-item.left .timeline-content {
     text-align: right;
@@ -960,7 +968,9 @@ body {
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 480px) {
     .header-content h1.names {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        word-spacing: 0.15em;
     }
 
     .countdown-timer {
@@ -975,21 +985,24 @@ body {
         font-size: 1.8rem;
     }
 
+    .timeline-item {
+        padding-right: 0;
+        padding-left: 80px;
+        text-align: left;
+    }
+
+    .timeline-item.left,
+    .timeline-item.right {
+        padding-left: 80px;
+        text-align: left;
+    }
+
     .timeline::before {
         left: 30px;
     }
 
-    .timeline-item {
-        grid-template-columns: 60px 1fr;
-        margin-left: 0;
-    }
-
-    .timeline-item.right {
-        grid-template-columns: 60px 1fr;
-    }
-
     .timeline-marker {
-        left: 30px;
+        left: 15px;
         width: 40px;
         height: 40px;
     }
@@ -1739,28 +1752,33 @@ body {
 /* Responsive Design */
 @media (max-width: 480px) {
     .header-content h1.names {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        word-spacing: 0.15em;
     }
 
     .countdown-timer {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .timeline-item {
+        padding-right: 0;
+        padding-left: 80px;
+        text-align: left;
+    }
+
+    .timeline-item.left,
+    .timeline-item.right {
+        padding-left: 80px;
+        text-align: left;
+    }
+
     .timeline::before {
         left: 30px;
     }
 
-    .timeline-item {
-        grid-template-columns: 60px 1fr;
-        margin-left: 0;
-    }
-
-    .timeline-item.right {
-        grid-template-columns: 60px 1fr;
-    }
-
     .timeline-marker {
-        left: 30px;
+        left: 15px;
         width: 40px;
         height: 40px;
     }
