@@ -1,4 +1,56 @@
-// Countdown Timer
+// ===== ENVELOPE OPENING ANIMATION =====
+function initEnvelopeAnimation() {
+    const envelope = document.getElementById('envelope-overlay');
+    if (!envelope) return;
+
+    envelope.addEventListener('click', () => {
+        envelope.classList.remove('active');
+        envelope.classList.add('closed');
+        setTimeout(() => {
+            envelope.style.display = 'none';
+        }, 600);
+    });
+
+    // Auto-close after 10 seconds
+    setTimeout(() => {
+        if (envelope.classList.contains('active')) {
+            envelope.classList.remove('active');
+            envelope.classList.add('closed');
+            setTimeout(() => {
+                envelope.style.display = 'none';
+            }, 600);
+        }
+    }, 10000);
+}
+
+// ===== MUSIC PLAYER =====
+function initMusicPlayer() {
+    const musicToggle = document.getElementById('music-toggle');
+    const backgroundMusic = document.getElementById('background-music');
+
+    if (!musicToggle || !backgroundMusic) return;
+
+    // Set a default music URL (replace with actual URL)
+    backgroundMusic.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+
+    let isPlaying = false;
+
+    musicToggle.addEventListener('click', () => {
+        if (isPlaying) {
+            backgroundMusic.pause();
+            musicToggle.textContent = '🎵';
+            musicToggle.classList.remove('playing');
+            isPlaying = false;
+        } else {
+            backgroundMusic.play().catch(err => console.log('Cannot autoplay audio:', err));
+            musicToggle.textContent = '🎶';
+            musicToggle.classList.add('playing');
+            isPlaying = true;
+        }
+    });
+}
+
+// ===== COUNTDOWN TIMER =====
 function updateCountdown() {
     const weddingDate = new Date('<%= wedding.ceremonyDate %>T<%= wedding.ceremonyTime %>:00').getTime();
 
@@ -25,21 +77,62 @@ function updateCountdown() {
     setInterval(countdown, 1000);
 }
 
-// Smooth scrolling and scroll animations
-function observeElements() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+// ===== GALLERY SWIPER & FILTERS =====
+function initGallerySwiper() {
+    // Initialize Swiper
+    const gallerySwiper = new Swiper('.gallery-swiper', {
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            dynamicBullets: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
             }
-        });
-    }, {
-        threshold: 0.1
+        }
     });
 
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
+    // Gallery Filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            // Filter items
+            galleryItems.forEach(item => {
+                const category = item.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    item.style.display = '';
+                    setTimeout(() => item.style.opacity = '1', 10);
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => item.style.display = 'none', 300);
+                }
+            });
+
+            // Refresh Swiper
+            gallerySwiper.update();
+        });
     });
 }
 
@@ -227,8 +320,20 @@ document.getElementById('guestbook-form')?.addEventListener('submit', async (e) 
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+        duration: 1000,
+        offset: 100,
+        easing: 'ease-in-out-cubic',
+        once: false,
+        mirror: true
+    });
+
+    // Initialize animations
+    initEnvelopeAnimation();
     updateCountdown();
-    observeElements();
+    initMusicPlayer();
+    initGallerySwiper();
 
     // Add animation style for success message
     if (!document.getElementById('animation-styles')) {
@@ -248,6 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         document.head.appendChild(style);
     }
+
+    console.log('Wedding website initialized successfully!');
 });
 
 // Close lightbox when pressing Escape

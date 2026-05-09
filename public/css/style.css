@@ -1007,6 +1007,235 @@ body {
     }
 }
 
+/* ===== ENVELOPE OPENING ANIMATION ===== */
+.envelope-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #e8c4c4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.6s ease-out;
+}
+
+.envelope-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.envelope-overlay.closed {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope {
+    width: 300px;
+    height: 200px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+}
+
+.envelope-cover {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5e6d3 0%, #e8d4c0 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.6s ease;
+}
+
+.envelope:hover .envelope-cover {
+    transform: rotateX(180deg);
+}
+
+.envelope-text {
+    text-align: center;
+    color: var(--primary-color);
+    pointer-events: none;
+}
+
+.envelope-text h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.envelope-text p {
+    font-size: 0.9rem;
+    font-style: italic;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===== MUSIC PLAYER ===== */
+.music-player {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.music-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #c49090 100%);
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(212, 165, 165, 0.3);
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(212, 165, 165, 0.4);
+}
+
+.music-btn.playing {
+    animation: rotate 2s linear infinite;
+}
+
+/* ===== GALLERY FILTERS ===== */
+.gallery-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ===== SWIPER GALLERY ===== */
+.gallery-swiper {
+    position: relative;
+    padding: 20px 0;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.swiper-slide.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 300px;
+}
+
+.swiper-slide.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.swiper-slide:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    color: white;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.swiper-slide:hover .overlay {
+    opacity: 1;
+}
+
+.overlay p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: auto;
+    bottom: -50px;
+}
+
+.swiper-pagination {
+    bottom: -50px;
+}
+
+.swiper-pagination-bullet {
+    background: var(--primary-color);
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--primary-color);
+    opacity: 1;
+}
+
+/* ===== AOS OVERRIDES ===== */
+[data-aos] {
+    opacity: 0;
+}
+
+[data-aos="fade-up"] {
+    transform: translateY(30px);
+}
+
+[data-aos="zoom-in"] {
+    transform: scale(0.95);
+}
+
+[data-aos].aos-animate {
+    opacity: 1;
+    transform: none;
+}
+
+/* Print Styles */
+@media print {
+    .countdown-section,
+    .rsvp-section,
+    .guestbook-form {
+        display: none;
+    }
+}
+
 
 /* Love Story */
 .love-story-section {

@@ -39,6 +39,7 @@ const initializeData = () => {
       ],
       gallery: [],
       preWeddingVideo: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      backgroundMusic: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
       digitalGift: {
         bankName: 'Ngân hàng',
         accountHolder: 'Tên chủ tài khoản',

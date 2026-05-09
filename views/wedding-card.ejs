@@ -5,8 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= couple.brideName %> & <%= couple.groomName %> - Wedding Invitation</title>
     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
 </head>
 <body>
+    <!-- Music Player (Hidden by default) -->
+    <div id="music-player" class="music-player">
+        <button id="music-toggle" class="music-btn" title="Phát nhạc">🎵</button>
+        <audio id="background-music" loop></audio>
+    </div>
+
+    <!-- Envelope Opening Animation -->
+    <div id="envelope-overlay" class="envelope-overlay active">
+        <div class="envelope">
+            <div class="envelope-cover">
+                <div class="envelope-text">
+                    <h2>Bạn Nhận Được Một Lời Mời Cưới</h2>
+                    <p>Bấm để mở</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="wedding-container">
         <!-- Header / Opening Section -->
         <section class="header-section">
@@ -20,7 +44,7 @@
         </section>
 
         <!-- Countdown Timer -->
-        <section class="countdown-section">
+        <section class="countdown-section" data-aos="zoom-in">
             <div class="countdown-timer" id="countdown">
                 <div class="countdown-item">
                     <span class="countdown-value" id="days">0</span>
@@ -42,7 +66,7 @@
         </section>
 
         <!-- Love Story -->
-        <section class="love-story-section">
+        <section class="love-story-section" data-aos="fade-up">
             <h2>Câu Chuyện Tình Yêu</h2>
             <div class="timeline">
                 <% loveStory.forEach((story, index) => { %>
@@ -60,7 +84,7 @@
         </section>
 
         <!-- Wedding Details -->
-        <section class="wedding-details-section">
+        <section class="wedding-details-section" data-aos="fade-up">
             <h2>Chi Tiết Lễ Cưới</h2>
             <div class="details-grid">
                 <div class="detail-card ceremony">
@@ -86,26 +110,34 @@
             <p class="map-address"><%= wedding.receptionAddress %></p>
         </section>
 
-        <!-- Photo Gallery -->
+        <!-- Photo Gallery with Swiper -->
         <% if (gallery && gallery.length > 0) { %>
-            <section class="gallery-section">
+            <section class="gallery-section" data-aos="fade-up">
                 <h2>Album Ảnh</h2>
-                <div class="gallery-grid">
-                    <% gallery.forEach((photo, index) => { %>
-                        <div class="gallery-item" onclick="openLightbox(<%= index %>)">
-                            <img src="<%= photo.url %>" alt="<%= photo.caption %>">
-                        </div>
-                    <% }); %>
+                <div class="gallery-filter">
+                    <button class="filter-btn active" data-filter="all">Tất Cả</button>
+                    <button class="filter-btn" data-filter="ceremony">Lễ Cưới</button>
+                    <button class="filter-btn" data-filter="reception">Tiệc Cưới</button>
+                    <button class="filter-btn" data-filter="moments">Khoảnh Khắc</button>
                 </div>
-                <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-                    <div class="lightbox-content" onclick="event.stopPropagation()">
-                        <span class="close">&times;</span>
-                        <img id="lightbox-image" src="" alt="">
-                        <div class="nav-buttons">
-                            <button class="prev" onclick="changeLightboxImage(-1)">&#10094;</button>
-                            <button class="next" onclick="changeLightboxImage(1)">&#10095;</button>
-                        </div>
+
+                <!-- Swiper Gallery -->
+                <div class="swiper gallery-swiper">
+                    <div class="swiper-wrapper">
+                        <% gallery.forEach((photo, index) => { %>
+                            <div class="swiper-slide gallery-item" data-category="<%= photo.category || 'all' %>">
+                                <img src="<%= photo.url %>" alt="<%= photo.caption %>" loading="lazy">
+                                <div class="overlay">
+                                    <p><%= photo.caption %></p>
+                                </div>
+                            </div>
+                        <% }); %>
                     </div>
+                    <!-- Navigation Buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
                 </div>
             </section>
         <% } %>
@@ -210,6 +242,13 @@
         </footer>
     </div>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- Main JS -->
     <script src="/js/main.js"></script>
 </body>
 </html>

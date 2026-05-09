@@ -47,8 +47,30 @@
       "description": "Minh Tuấn đã cầu hôn Ngọc Anh vào một buổi hoàng hôn tuyệt đẹp trên bãi biển Nha Trang."
     }
   ],
-  "gallery": [],
+  "gallery": [
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+1",
+      "caption": "Khoảnh khắc đẹp",
+      "category": "moments"
+    },
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+2",
+      "caption": "Lễ cưới",
+      "category": "ceremony"
+    },
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+3",
+      "caption": "Tiệc cưới",
+      "category": "reception"
+    },
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+4",
+      "caption": "Khoảnh khắc yêu thương",
+      "category": "moments"
+    }
+  ],
   "preWeddingVideo": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "backgroundMusic": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   "digitalGift": {
     "bankName": "Ngân Hàng Đầu Tiên",
     "accountHolder": "Nguyễn Văn A & Trần Văn C",
