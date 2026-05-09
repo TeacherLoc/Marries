@@ -15,14 +15,14 @@
   "wedding": {
     "ceremonyDate": "2024-06-15",
     "ceremonyTime": "08:00",
-    "ceremonyLocation": "Nhà Thờ Chính Tòa Hà Nội",
+    "ceremonyLocation": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
     "receptionDate": "2024-06-15",
     "receptionTime": "18:00",
-    "receptionLocation": "Nhà Hàng Á Châu",
-    "receptionAddress": "123 Đường Tôn Đức Thắng, Hà Nội",
+    "receptionLocation": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
+    "receptionAddress": "37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam",
     "coordinates": {
-      "lat": 21.0285,
-      "lng": 105.8542
+      "lat": 10.9382941,
+      "lng": 106.6881491
     }
   },
   "loveStory": [

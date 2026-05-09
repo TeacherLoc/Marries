@@ -18,7 +18,7 @@ html {
 }
 
 body {
-    font-family: 'Georgia', 'Calligraphy', serif;
+    font-family: 'Playfair Display', 'Lora', 'Georgia', serif;
     color: var(--text-color);
     background-color: #fff;
     line-height: 1.6;
@@ -810,7 +810,7 @@ body {
 .guestbook-form textarea {
     resize: vertical;
     min-height: 100px;
-    font-family: 'Georgia', serif;
+    font-family: inherit;
 }
 
 /* ===== BUTTONS ===== */
