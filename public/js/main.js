@@ -79,6 +79,12 @@ function updateCountdown() {
 
 // ===== GALLERY SWIPER & FILTERS =====
 function initGallerySwiper() {
+    // Check if Swiper exists
+    if (typeof Swiper === 'undefined') {
+        console.warn('Swiper not loaded');
+        return;
+    }
+
     // Initialize Swiper
     const gallerySwiper = new Swiper('.gallery-swiper', {
         loop: true,
@@ -131,7 +137,9 @@ function initGallerySwiper() {
             });
 
             // Refresh Swiper
-            gallerySwiper.update();
+            if (gallerySwiper) {
+                gallerySwiper.update();
+            }
         });
     });
 }
@@ -320,41 +328,55 @@ document.getElementById('guestbook-form')?.addEventListener('submit', async (e) 
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize AOS (Animate On Scroll)
-    AOS.init({
-        duration: 1000,
-        offset: 100,
-        easing: 'ease-in-out-cubic',
-        once: false,
-        mirror: true
-    });
+    try {
+        // Initialize AOS (Animate On Scroll)
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 1000,
+                offset: 100,
+                easing: 'ease-in-out-cubic',
+                once: false,
+                mirror: true
+            });
+        } else {
+            console.warn('AOS library not loaded');
+        }
 
-    // Initialize animations
-    initEnvelopeAnimation();
-    updateCountdown();
-    initMusicPlayer();
-    initGallerySwiper();
+        // Initialize animations
+        initEnvelopeAnimation();
+        updateCountdown();
+        initMusicPlayer();
 
-    // Add animation style for success message
-    if (!document.getElementById('animation-styles')) {
-        const style = document.createElement('style');
-        style.id = 'animation-styles';
-        style.textContent = `
-            @keyframes slideDown {
-                from {
-                    opacity: 0;
-                    transform: translate(-50%, -30px);
+        // Wait for libraries to load
+        if (typeof Swiper !== 'undefined') {
+            setTimeout(() => {
+                initGallerySwiper();
+            }, 500);
+        }
+
+        // Add animation style for success message
+        if (!document.getElementById('animation-styles')) {
+            const style = document.createElement('style');
+            style.id = 'animation-styles';
+            style.textContent = `
+                @keyframes slideDown {
+                    from {
+                        opacity: 0;
+                        transform: translate(-50%, -30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translate(-50%, 0);
+                    }
                 }
-                to {
-                    opacity: 1;
-                    transform: translate(-50%, 0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
+            `;
+            document.head.appendChild(style);
+        }
+
+        console.log('✅ Wedding website initialized successfully!');
+    } catch (error) {
+        console.error('❌ Initialization error:', error);
     }
-
-    console.log('Wedding website initialized successfully!');
 });
 
 // Close lightbox when pressing Escape
