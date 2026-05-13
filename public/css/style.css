@@ -1921,7 +1921,11 @@ section {
 /* Logo Container */
 .venue-logo {
     animation: fadeInDown 0.8s ease-out 0.2s backwards;
-    margin: 20px 0;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .venue-logo img {
@@ -1948,6 +1952,10 @@ section {
 
     .venue-btn p {
         font-size: 0.85rem;
+    }
+
+    .venue-logo {
+        margin: 15px auto;
     }
 
     .venue-logo img {
@@ -1984,7 +1992,7 @@ section {
     }
 
     .venue-logo {
-        margin: 10px 0;
+        margin: 10px auto;
     }
 
     .venue-logo img {
