@@ -179,12 +179,18 @@ function updateCountdown() {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.style.display = 'grid';
+
             document.getElementById('days').textContent = days;
             document.getElementById('hours').textContent = String(hours).padStart(2, '0');
             document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         } else {
-            document.getElementById('countdown').innerHTML = '<p style="text-align: center; font-size: 1.5rem; animation: pulse 1s infinite;">❤️ Cảm ơn vì đã tham dự! ❤️</p>';
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.style.display = 'flex';
+            countdownEl.style.justifyContent = 'center';
+            countdownEl.innerHTML = '<p class="countdown-thanks"><span class="heart">❤️</span><span class="text">Cảm ơn vì đã tham dự!</span><span class="heart">❤️</span></p>';
         }
     }
 
@@ -259,82 +265,6 @@ function initGallerySwiper() {
     });
 }
 
-// ===== AUTO SCROLL SECTIONS =====
-function initAutoScrollSections() {
-    const sections = Array.from(document.querySelectorAll('.wedding-container > section, .wedding-container > footer'));
-    if (!sections.length) return;
-
-    let isAutoScrolling = false;
-    let lastAutoScroll = 0;
-    const scrollDelay = 800;
-
-    function getCurrentIndex() {
-        let closestIndex = 0;
-        let minDistance = Infinity;
-
-        sections.forEach((section, index) => {
-            const distance = Math.abs(section.getBoundingClientRect().top);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
-            }
-        });
-
-        return closestIndex;
-    }
-
-    function scrollToIndex(index) {
-        if (index < 0 || index >= sections.length) return;
-        isAutoScrolling = true;
-        sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => {
-            isAutoScrolling = false;
-        }, scrollDelay);
-    }
-
-    function shouldIgnoreScroll() {
-        const activeTag = document.activeElement?.tagName?.toLowerCase();
-        return ['input', 'textarea', 'select'].includes(activeTag);
-    }
-
-    function handleDelta(deltaY) {
-        const now = Date.now();
-        if (isAutoScrolling || now - lastAutoScroll < scrollDelay || shouldIgnoreScroll()) return;
-        if (Math.abs(deltaY) < 10) return;
-
-        const currentIndex = getCurrentIndex();
-        if (deltaY > 0) {
-            scrollToIndex(currentIndex + 1);
-        } else {
-            scrollToIndex(currentIndex - 1);
-        }
-
-        lastAutoScroll = now;
-    }
-
-    window.addEventListener('wheel', (event) => {
-        if (event.ctrlKey) return;
-        handleDelta(event.deltaY);
-    }, { passive: true });
-
-    let touchStartY = 0;
-    window.addEventListener('touchstart', (event) => {
-        if (event.touches.length !== 1) return;
-        touchStartY = event.touches[0].clientY;
-    }, { passive: true });
-
-    window.addEventListener('touchend', (event) => {
-        if (!touchStartY) return;
-        const touchEndY = event.changedTouches[0].clientY;
-        const deltaY = touchStartY - touchEndY;
-
-        if (Math.abs(deltaY) > 40) {
-            handleDelta(deltaY);
-        }
-
-        touchStartY = 0;
-    }, { passive: true });
-}
 
 // Gallery Lightbox
 let currentImageIndex = 0;
@@ -539,7 +469,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initVenueSelector();
         updateCountdown();
         initMusicPlayer();
-        initAutoScrollSections();
 
         // Wait for libraries to load
         if (typeof Swiper !== 'undefined') {

@@ -1,10 +1,14 @@
 :root {
-    --primary-color: #d4a5a5;
-    --secondary-color: #f5f5f5;
-    --text-color: #333;
-    --light-text: #666;
-    --border-color: #e0e0e0;
-    --accent-gold: #d4af37;
+    --primary-color: #8fa69b;
+    --secondary-color: #f7f1e8;
+    --text-color: #2d2a26;
+    --light-text: #6b6b63;
+    --border-color: #d9d1c6;
+    --accent-gold: #c9a227;
+    --accent-wine: #7a2e2e;
+    --heading-color: #2f3a34;
+    --font-body: 'Be Vietnam Pro', 'Segoe UI', 'Arial', sans-serif;
+    --font-script: 'Dancing Script', 'Brush Script MT', cursive;
 }
 
 * {
@@ -18,9 +22,13 @@ html {
 }
 
 body {
-    font-family: 'Playfair Display', 'Lora', 'Georgia', serif;
+    font-family: var(--font-body);
     color: var(--text-color);
-    background-color: #fff;
+    background-color: var(--secondary-color);
+    background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(247, 241, 232, 0.9)),
+        radial-gradient(circle at 15% 10%, rgba(143, 166, 155, 0.15), transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(201, 162, 39, 0.12), transparent 50%);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -37,8 +45,9 @@ body {
 .wedding-container {
     max-width: 600px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: #fffdf8;
     position: relative;
+    box-shadow: 0 12px 40px rgba(45, 42, 38, 0.08);
 }
 
 /* ===== ANIMATIONS ===== */
@@ -148,10 +157,10 @@ body {
 
 /* ===== HEADER SECTION ===== */
 .header-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #e8c4c4 100%);
-    padding: 60px 20px;
+    background: linear-gradient(135deg, #8fa69b 0%, #bfcfc5 100%);
+    padding: 70px 20px 60px;
     text-align: center;
-    color: white;
+    color: #fefaf2;
     position: relative;
     overflow: visible;
     animation: fadeInDown 0.8s ease-out;
@@ -174,22 +183,24 @@ body {
 }
 
 .header-content h1.names {
-    font-size: 2.5rem;
+    font-family: var(--font-script);
+    font-size: 3rem;
     margin-bottom: 15px;
-    font-weight: 400;
-    letter-spacing: 3px;
+    font-weight: 600;
+    letter-spacing: 2px;
     animation: fadeInUp 0.8s ease-out 0.2s both;
     white-space: normal;
     word-spacing: 0.1em;
     hyphens: none;
-    line-height: 1.3;
+    line-height: 1.2;
 }
 
 .header-content h1.names span {
     display: inline-block;
     margin: 0 10px;
-    font-size: 2rem;
+    font-size: 2.2rem;
     opacity: 0.9;
+    color: var(--accent-gold);
     animation: heartBeat 2s ease-in-out infinite;
     animation-delay: 0.5s;
 }
@@ -221,6 +232,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     max-width: 100%;
+    justify-items: center;
 }
 
 .countdown-item {
@@ -242,14 +254,32 @@ body {
 
 .countdown-item:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(212, 165, 165, 0.2);
+    box-shadow: 0 8px 20px rgba(122, 46, 46, 0.18);
 }
 
 .countdown-value {
     font-size: 2rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--accent-wine);
     animation: pulse 2s ease-in-out infinite;
+}
+
+.countdown-thanks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-script);
+    font-size: 1.5rem;
+    color: var(--accent-wine);
+    white-space: nowrap;
+    animation: pulse 1.2s ease-in-out infinite;
+    width: 100%;
+    text-align: center;
+}
+
+.countdown-thanks .heart {
+    font-size: 1.4rem;
 }
 
 .countdown-label {
@@ -275,16 +305,17 @@ body {
 .guestbook-section h2,
 .qr-website-section h2 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.1rem;
     margin-bottom: 30px;
-    color: var(--text-color);
-    font-weight: 400;
+    color: var(--heading-color);
+    font-weight: 600;
     letter-spacing: 1px;
     position: relative;
     animation: fadeInDown 0.6s ease-out;
     word-wrap: break-word;
     overflow-wrap: break-word;
     line-height: 1.3;
+    font-family: var(--font-script);
 }
 
 .love-story-section h2::before,
@@ -297,10 +328,10 @@ body {
 .rsvp-section h2::before,
 .guestbook-section h2::before,
 .qr-website-section h2::before {
-    content: '✦';
+    content: '❦';
     display: block;
-    font-size: 1.5rem;
-    color: var(--primary-color);
+    font-size: 1.4rem;
+    color: var(--accent-gold);
     margin-bottom: 10px;
     animation: float 3s ease-in-out infinite;
 }
@@ -427,7 +458,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(212, 165, 165, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(122, 46, 46, 0.1), transparent);
     transition: left 0.5s ease;
 }
 
@@ -437,13 +468,14 @@ body {
 
 .detail-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(212, 165, 165, 0.2);
+    box-shadow: 0 10px 25px rgba(122, 46, 46, 0.2);
 }
 
 .detail-card h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: var(--primary-color);
+    color: var(--accent-wine);
+    font-family: var(--font-script);
 }
 
 .detail-card .time {
@@ -658,13 +690,14 @@ body {
 
 .parent-info:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(212, 165, 165, 0.2);
+    box-shadow: 0 8px 20px rgba(122, 46, 46, 0.2);
 }
 
 .parent-info h3 {
     font-size: 1.2rem;
     margin-bottom: 15px;
-    color: var(--primary-color);
+    color: var(--accent-wine);
+    font-family: var(--font-script);
 }
 
 .parent-info p {
@@ -763,7 +796,7 @@ body {
 .rsvp-form:hover,
 .guestbook-form:hover {
     border-color: var(--primary-color);
-    box-shadow: 0 8px 25px rgba(212, 165, 165, 0.15);
+    box-shadow: 0 8px 25px rgba(122, 46, 46, 0.12);
 }
 
 .rsvp-section {
@@ -784,7 +817,7 @@ body {
     border: 2px solid var(--border-color);
     border-radius: 6px;
     font-size: 1rem;
-    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-family: var(--font-body);
     transition: all 0.3s ease;
     background-color: #fafafa;
     color: var(--text-color);
@@ -799,7 +832,7 @@ body {
 }
 
 .rsvp-form select {
-    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-family: var(--font-body);
 }
 
 .rsvp-form input:focus,
@@ -809,7 +842,7 @@ body {
     outline: none;
     border-color: var(--primary-color);
     background-color: white;
-    box-shadow: 0 0 0 3px rgba(212, 165, 165, 0.1);
+    box-shadow: 0 0 0 3px rgba(122, 46, 46, 0.12);
     transform: translateY(-2px);
 }
 
@@ -822,13 +855,13 @@ body {
 /* ===== BUTTONS ===== */
 .guestbook-entry:hover {
     transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(212, 165, 165, 0.1);
+    box-shadow: 0 4px 12px rgba(122, 46, 46, 0.1);
 }
 
 .btn-submit {
     padding: 14px 30px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #c49090 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--accent-wine) 0%, var(--accent-gold) 100%);
+    color: #fffaf2;
     border: none;
     border-radius: 6px;
     font-size: 1.05rem;
@@ -836,10 +869,10 @@ body {
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     font-weight: 600;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(212, 165, 165, 0.2);
+    box-shadow: 0 4px 12px rgba(122, 46, 46, 0.25);
     position: relative;
     overflow: hidden;
-    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-family: var(--font-body);
     word-wrap: break-word;
 }
 
@@ -860,7 +893,7 @@ body {
 
 .btn-submit:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(212, 165, 165, 0.3);
+    box-shadow: 0 8px 20px rgba(122, 46, 46, 0.3);
 }
 
 .btn-submit:active {
@@ -933,7 +966,7 @@ body {
 
 .qr-container:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(212, 165, 165, 0.2);
+    box-shadow: 0 8px 25px rgba(122, 46, 46, 0.18);
 }
 
 .website-qr {
@@ -956,8 +989,8 @@ body {
 /* ===== FOOTER ===== */
 .footer {
     padding: 40px 20px;
-    background: linear-gradient(135deg, #333 0%, #555 100%);
-    color: white;
+    background: linear-gradient(135deg, #2f3a34 0%, #5a6b60 100%);
+    color: #fefaf2;
     text-align: center;
     animation: fadeInUp 0.8s ease-out;
 }
@@ -974,9 +1007,14 @@ body {
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 480px) {
     .header-content h1.names {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
         letter-spacing: 1px;
         word-spacing: 0.15em;
+    }
+
+    .countdown-thanks {
+        font-size: 1.2rem;
+        white-space: nowrap;
     }
 
     .countdown-timer {
@@ -1062,7 +1100,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #e8c4c4 100%);
+    background: linear-gradient(135deg, #8fa69b 0%, #d8c9b7 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1095,7 +1133,7 @@ body {
 .envelope-cover {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #f5e6d3 0%, #e8d4c0 100%);
+    background: linear-gradient(135deg, #f7efe4 0%, #e8d9c8 100%);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -1111,8 +1149,9 @@ body {
 
 .envelope-text {
     text-align: center;
-    color: var(--primary-color);
+    color: var(--accent-wine);
     pointer-events: none;
+    font-family: var(--font-script);
 }
 
 .envelope-text h2 {
@@ -1138,19 +1177,19 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #c49090 100%);
+    background: linear-gradient(135deg, var(--accent-wine) 0%, var(--accent-gold) 100%);
     border: none;
-    color: white;
+    color: #fffaf2;
     font-size: 1.8rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(212, 165, 165, 0.3);
+    box-shadow: 0 4px 15px rgba(122, 46, 46, 0.3);
     transition: all 0.3s ease;
     animation: float 3s ease-in-out infinite;
 }
 
 .music-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(212, 165, 165, 0.4);
+    box-shadow: 0 6px 20px rgba(122, 46, 46, 0.35);
 }
 
 .music-btn.playing {
@@ -1169,9 +1208,9 @@ body {
 
 .filter-btn {
     padding: 10px 20px;
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-wine);
     background: white;
-    color: var(--primary-color);
+    color: var(--accent-wine);
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1181,8 +1220,8 @@ body {
 
 .filter-btn:hover,
 .filter-btn.active {
-    background: var(--primary-color);
-    color: white;
+    background: var(--accent-wine);
+    color: #fffaf2;
     transform: translateY(-2px);
 }
 
@@ -1234,7 +1273,7 @@ body {
 
 .swiper-button-prev,
 .swiper-button-next {
-    color: var(--primary-color);
+    color: var(--accent-wine);
     background: rgba(255, 255, 255, 0.9);
     width: 40px;
     height: 40px;
@@ -1248,12 +1287,12 @@ body {
 }
 
 .swiper-pagination-bullet {
-    background: var(--primary-color);
+    background: var(--accent-wine);
     opacity: 0.5;
 }
 
 .swiper-pagination-bullet-active {
-    background: var(--primary-color);
+    background: var(--accent-wine);
     opacity: 1;
 }
 
@@ -1301,11 +1340,12 @@ body {
 .guestbook-section h2,
 .qr-website-section h2 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.1rem;
     margin-bottom: 30px;
-    color: var(--text-color);
-    font-weight: 400;
+    color: var(--heading-color);
+    font-weight: 600;
     letter-spacing: 1px;
+    font-family: var(--font-script);
 }
 
 .timeline {
@@ -1392,7 +1432,8 @@ body {
 .detail-card h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: var(--primary-color);
+    color: var(--accent-wine);
+    font-family: var(--font-script);
 }
 
 .detail-card .time {
@@ -1555,7 +1596,8 @@ body {
 .parent-info h3 {
     font-size: 1.2rem;
     margin-bottom: 15px;
-    color: var(--primary-color);
+    color: var(--accent-wine);
+    font-family: var(--font-script);
 }
 
 .parent-info p {
@@ -1634,7 +1676,7 @@ body {
 .rsvp-form select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(212, 165, 165, 0.3);
+    box-shadow: 0 0 5px rgba(122, 46, 46, 0.25);
 }
 
 /* Guestbook Section */
