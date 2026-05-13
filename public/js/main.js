@@ -35,7 +35,7 @@ function initEnvelopeAnimation() {
         }, 600);
     });
 
-    // Auto-close after 10 seconds
+    // Auto-close after 30 seconds
     setTimeout(() => {
         if (envelope.classList.contains('active')) {
             envelope.classList.remove('active');
@@ -44,7 +44,7 @@ function initEnvelopeAnimation() {
                 envelope.style.display = 'none';
             }, 600);
         }
-    }, 10000);
+    }, 30000);
 }
 
 // ===== MUSIC PLAYER =====

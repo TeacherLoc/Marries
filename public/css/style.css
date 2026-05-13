@@ -672,6 +672,7 @@ body {
 .gift-section {
     padding: 40px 20px;
     animation: fadeInUp 0.8s ease-out;
+    display: none;
 }
 
 .gift-container {
@@ -764,6 +765,7 @@ body {
 .rsvp-section {
     padding: 40px 20px;
     background-color: var(--secondary-color);
+    display: none;
 }
 
 .guestbook-section {
