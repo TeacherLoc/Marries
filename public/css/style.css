@@ -1833,6 +1833,7 @@ section {
     opacity: 1;
     transition: opacity 0.6s ease-out;
     padding: 20px;
+    overflow-y: auto;
 }
 
 .venue-selector.hidden {
@@ -1848,38 +1849,11 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    gap: 30px;
+    padding: 40px 0;
 }
 
-.venue-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-    align-items: center;
-    position: relative;
-}
-
-/* Logo Container - positioned in the middle */
-.venue-logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
-    animation: fadeInDown 0.8s ease-out 0.2s backwards;
-}
-
-.venue-logo img {
-    width: 100px;
-    height: 100px;
-    background: #f0ebe6;
-    border-radius: 50%;
-    padding: 12px;
-    box-shadow: 0 10px 30px rgba(157, 128, 128, 0.15);
-    display: block;
-}
-
+/* Groom Section */
 .venue-btn {
     display: flex;
     flex-direction: column;
@@ -1887,30 +1861,23 @@ section {
     justify-content: center;
     background: transparent;
     color: var(--text-color);
-    padding: 40px 20px;
+    padding: 30px 20px;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: none;
     border: none;
     border-radius: 0;
-    position: relative;
     cursor: pointer;
     width: 100%;
     animation: fadeInUp 0.6s ease-out both;
 }
 
-.venue-btn:nth-child(1) {
+.venue-btn.groom-venue {
     animation-delay: 0.1s;
-    min-height: 140px;
-    justify-content: flex-end;
-    padding-bottom: 20px;
 }
 
-.venue-btn:nth-child(3) {
+.venue-btn.bride-venue {
     animation-delay: 0.3s;
-    min-height: 140px;
-    justify-content: flex-start;
-    padding-top: 20px;
 }
 
 .venue-btn::before,
@@ -1928,8 +1895,8 @@ section {
 }
 
 .venue-btn h2 {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
     margin-top: 0;
     color: #a89080;
     font-weight: 400;
@@ -1939,7 +1906,7 @@ section {
 }
 
 .venue-btn p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #c4b5af;
     margin: 0;
     line-height: 1.4;
@@ -1951,22 +1918,42 @@ section {
     display: none;
 }
 
-.venue-divider {
-    display: none;
+/* Logo Container */
+.venue-logo {
+    animation: fadeInDown 0.8s ease-out 0.2s backwards;
+    margin: 20px 0;
+}
+
+.venue-logo img {
+    width: 110px;
+    height: 110px;
+    background: #f0ebe6;
+    border-radius: 50%;
+    padding: 14px;
+    box-shadow: 0 10px 30px rgba(157, 128, 128, 0.15);
+    display: block;
 }
 
 @media (max-width: 768px) {
     .venue-selector-content {
         max-width: 100%;
+        gap: 20px;
+        padding: 30px 0;
     }
 
     .venue-btn h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         letter-spacing: 2px;
     }
 
     .venue-btn p {
         font-size: 0.85rem;
+    }
+
+    .venue-logo img {
+        width: 100px;
+        height: 100px;
+        padding: 12px;
     }
 }
 
@@ -1975,26 +1962,18 @@ section {
         padding: 15px;
     }
 
-    .venue-logo img {
-        width: 85px;
-        height: 85px;
-        padding: 10px;
+    .venue-selector-content {
+        max-width: 100%;
+        gap: 15px;
+        padding: 20px 0;
     }
 
     .venue-btn {
-        padding: 35px 15px;
-    }
-
-    .venue-btn:nth-child(1) {
-        min-height: 120px;
-    }
-
-    .venue-btn:nth-child(3) {
-        min-height: 120px;
+        padding: 20px 15px;
     }
 
     .venue-btn h2 {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
         letter-spacing: 1.8px;
         margin-bottom: 6px;
     }
@@ -2002,5 +1981,15 @@ section {
     .venue-btn p {
         font-size: 0.8rem;
         letter-spacing: 0.5px;
+    }
+
+    .venue-logo {
+        margin: 10px 0;
+    }
+
+    .venue-logo img {
+        width: 90px;
+        height: 90px;
+        padding: 10px;
     }
 }
