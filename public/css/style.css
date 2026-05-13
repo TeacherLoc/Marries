@@ -1939,19 +1939,28 @@ section {
     margin-top: 20px;
 }
 
-/* Center logo/monogram */
+/* Center logo container */
 .venue-selector-content::before {
     content: '';
     display: block;
-    width: 120px;
-    height: 120px;
-    margin: 30px auto;
+    width: 140px;
+    height: 140px;
+    margin: 35px auto;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), rgba(240, 235, 230, 0.8));
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(157, 128, 128, 0.12);
     background-image: url('/image/logocuoi.jpg');
-    background-size: contain;
+    background-size: 85%;
     background-repeat: no-repeat;
     background-position: center;
     animation: fadeInDown 0.8s ease-out 0.3s backwards;
     z-index: 10;
+    position: relative;
+}
+
+/* Subtle inner circle border */
+.venue-selector-content::before {
+    border: 1px solid rgba(168, 144, 128, 0.15);
 }
 
 /* Top divider */
@@ -1975,8 +1984,8 @@ section {
     }
 
     .venue-selector-content::before {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         margin: 25px auto;
     }
 
