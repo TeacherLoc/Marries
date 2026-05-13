@@ -1,0 +1,105 @@
+{
+  "couple": {
+    "brideName": "Ngọc Dung",
+    "groomName": "Minh Tiến",
+    "parentsBride": {
+      "father": "Ông Nguyễn Văn A",
+      "mother": "Bà Phạm Thị B"
+    },
+    "parentsGroom": {
+      "father": "Ông Trần Văn C",
+      "mother": "Bà Lê Thị D"
+    },
+    "welcomeMessage": "Trân trọng kính mời quý khách tham dự lễ cưới của chúng tôi"
+  },
+  "wedding": {
+    "ceremonyDate": "2024-06-15",
+    "ceremonyTime": "08:00",
+    "ceremonyLocation": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
+    "receptionDate": "2024-06-15",
+    "receptionTime": "18:00",
+    "receptionLocation": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
+    "receptionAddress": "37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam",
+    "coordinates": {
+      "lat": 10.9382941,
+      "lng": 106.6881491
+    },
+    "brideReception": {
+      "name": "Tiệc nhà gái - Võ Gia Palace",
+      "location": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
+      "address": "37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam",
+      "time": "18:00",
+      "coordinates": {
+        "lat": 10.9382941,
+        "lng": 106.6881491
+      },
+      "mapsUrl": "https://maps.google.com/maps?q=10.9382941,106.6881491"
+    },
+    "groomReception": {
+      "name": "Tiệc nhà trai - Thắng Lợi",
+      "location": "Nhà Hàng Thắng Lợi",
+      "address": "123 Đường Tôn Đức Thắng, Hà Nội",
+      "time": "18:00",
+      "coordinates": {
+        "lat": 21.0285,
+        "lng": 105.8542
+      },
+      "mapsUrl": "https://maps.google.com/maps?q=21.0285,105.8542"
+    }
+  },
+  "loveStory": [
+    {
+      "year": 2018,
+      "title": "Gặp Gỡ Lần Đầu",
+      "description": "Chúng tôi đã gặp nhau tại đại học. Ngay từ lần gặp đầu tiên, tôi đã cảm thấy có gì đó đặc biệt."
+    },
+    {
+      "year": 2020,
+      "title": "Bước Đầu Tìm Hiểu",
+      "description": "Sau một thời gian làm quen, chúng tôi bắt đầu hẹn hò và khám phá thế giới cùng nhau."
+    },
+    {
+      "year": 2022,
+      "title": "Du Lịch Singapore",
+      "description": "Chuyến đi Singapore đã giúp chúng tôi nhận ra tình yêu sâu sắc của nhau."
+    },
+    {
+      "year": 2023,
+      "title": "Cầu Hôn",
+      "description": "Minh Tuấn đã cầu hôn Ngọc Anh vào một buổi hoàng hôn tuyệt đẹp trên bãi biển Nha Trang."
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+1",
+      "caption": "Khoảnh khắc đẹp",
+      "category": "moments"
+    },
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+2",
+      "caption": "Lễ cưới",
+      "category": "ceremony"
+    },
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+3",
+      "caption": "Tiệc cưới",
+      "category": "reception"
+    },
+    {
+      "url": "https://via.placeholder.com/400x400?text=Ảnh+4",
+      "caption": "Khoảnh khắc yêu thương",
+      "category": "moments"
+    }
+  ],
+  "preWeddingVideo": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "backgroundMusic": "https://www.youtube.com/watch?v=xFONPDwW-lU&list=RDxFONPDwW-lU&start_radio=1",
+  "backgroundMusicType": "youtube",
+  "digitalGift": {
+    "bankName": "Ngân Hàng Đầu Tiên",
+    "accountHolder": "Nguyễn Văn A & Trần Văn C",
+    "accountNumber": "0123456789012",
+    "qrCode": ""
+  },
+  "rsvps": [],
+  "guestbook": []
+}
