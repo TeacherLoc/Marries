@@ -1,4 +1,28 @@
-// ===== ENVELOPE OPENING ANIMATION =====
+// ===== VENUE SELECTOR =====
+let selectedVenue = 'bride'; // Default venue
+
+function selectVenue(venue) {
+    selectedVenue = venue;
+    const selector = document.getElementById('venue-selector');
+
+    if (selector) {
+        selector.classList.add('hidden');
+
+        // Hide envelope after venue selection
+        const envelope = document.getElementById('envelope-overlay');
+        if (envelope) {
+            setTimeout(() => {
+                envelope.style.display = 'none';
+            }, 600);
+        }
+    }
+
+    // Store selection
+    sessionStorage.setItem('selectedVenue', venue);
+
+    // Update map if visible
+    updateMapForVenue(venue);
+}
 function initEnvelopeAnimation() {
     const envelope = document.getElementById('envelope-overlay');
     if (!envelope) return;
@@ -403,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize animations
         initEnvelopeAnimation();
+        initVenueSelector();
         updateCountdown();
         initMusicPlayer();
 
@@ -444,3 +469,32 @@ document.addEventListener('keydown', (e) => {
         closeLightbox();
     }
 });
+
+// ===== MAP UPDATE FOR VENUE =====
+function updateMapForVenue(venue) {
+    const mapFrame = document.querySelector('.map-container iframe');
+    if (!mapFrame) return;
+
+    let lat, lng;
+    if (venue === 'bride') {
+        lat = 10.9382941;
+        lng = 106.6881491;
+    } else {
+        lat = 21.0285;
+        lng = 105.8542;
+    }
+
+    mapFrame.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+}
+
+// ===== INIT VENUE SELECTOR =====
+function initVenueSelector() {
+    const selector = document.getElementById('venue-selector');
+    if (!selector) return;
+
+    // Check if venue was already selected
+    const stored = sessionStorage.getItem('selectedVenue');
+    if (stored) {
+        selectVenue(stored);
+    }
+}

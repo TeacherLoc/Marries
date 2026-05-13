@@ -37,6 +37,30 @@
         </div>
     </div>
 
+    <!-- Venue Selection Screen -->
+    <div id="venue-selector" class="venue-selector active">
+        <div class="venue-selector-content">
+            <h1 class="venue-title">Chọn Tiệc Cưới</h1>
+            <p class="venue-subtitle">Vui lòng chọn địa điểm tiệc cưới</p>
+
+            <div class="venue-buttons">
+                <a href="#" class="venue-btn bride-venue" onclick="selectVenue('bride'); return false;">
+                    <div class="venue-emoji">👰</div>
+                    <h2>Tiệc Nhà Gái</h2>
+                    <p><%= wedding.brideReception.location %></p>
+                    <span class="venue-time">🕖 <%= wedding.brideReception.time %></span>
+                </a>
+
+                <a href="#" class="venue-btn groom-venue" onclick="selectVenue('groom'); return false;">
+                    <div class="venue-emoji">🤵</div>
+                    <h2>Tiệc Nhà Trai</h2>
+                    <p><%= wedding.groomReception.location %></p>
+                    <span class="venue-time">🕖 <%= wedding.groomReception.time %></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="wedding-container">
         <!-- Header / Opening Section -->
         <section class="header-section">
