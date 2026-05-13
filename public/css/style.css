@@ -1870,6 +1870,7 @@ section {
     cursor: pointer;
     width: 100%;
     animation: fadeInUp 0.6s ease-out both;
+    position: relative;
 }
 
 .venue-btn.groom-venue {
@@ -1880,9 +1881,29 @@ section {
     animation-delay: 0.3s;
 }
 
+/* Divider line above groom location */
+.venue-btn.groom-venue::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
+}
+
+/* Divider line below bride location */
+.venue-btn.bride-venue::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
+}
+
 .venue-btn::before,
 .venue-btn::after {
-    display: none;
+    display: block;
 }
 
 .venue-btn:active {
@@ -1921,7 +1942,7 @@ section {
 /* Logo Container */
 .venue-logo {
     animation: fadeInDown 0.8s ease-out 0.2s backwards;
-    margin: 20px auto;
+    margin: 30px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1934,7 +1955,9 @@ section {
     background: #f0ebe6;
     border-radius: 50%;
     padding: 14px;
-    box-shadow: 0 10px 30px rgba(157, 128, 128, 0.15);
+    box-shadow:
+        0 10px 30px rgba(157, 128, 128, 0.15),
+        inset 0 0 0 1px rgba(168, 144, 128, 0.1);
     display: block;
 }
 
@@ -1943,6 +1966,10 @@ section {
         max-width: 100%;
         gap: 20px;
         padding: 30px 0;
+    }
+
+    .venue-btn {
+        padding: 25px 15px;
     }
 
     .venue-btn h2 {
@@ -1955,7 +1982,7 @@ section {
     }
 
     .venue-logo {
-        margin: 15px auto;
+        margin: 25px auto;
     }
 
     .venue-logo img {
@@ -1972,7 +1999,7 @@ section {
 
     .venue-selector-content {
         max-width: 100%;
-        gap: 15px;
+        gap: 12px;
         padding: 20px 0;
     }
 
@@ -1992,7 +2019,7 @@ section {
     }
 
     .venue-logo {
-        margin: 10px auto;
+        margin: 15px auto;
     }
 
     .venue-logo img {
