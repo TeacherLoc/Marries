@@ -1,5 +1,6 @@
 // ===== VENUE SELECTOR =====
 let selectedVenue = 'bride'; // Default venue
+const ENVELOPE_HIDE_DELAY = 2500;
 
 function selectVenue(venue) {
     selectedVenue = venue;
@@ -13,7 +14,7 @@ function selectVenue(venue) {
         if (envelope) {
             setTimeout(() => {
                 envelope.style.display = 'none';
-            }, 600);
+            }, ENVELOPE_HIDE_DELAY);
         }
     }
 
@@ -32,7 +33,7 @@ function initEnvelopeAnimation() {
         envelope.classList.add('closed');
         setTimeout(() => {
             envelope.style.display = 'none';
-        }, 600);
+        }, ENVELOPE_HIDE_DELAY);
     });
 
     // Auto-close after 30 seconds
@@ -42,7 +43,7 @@ function initEnvelopeAnimation() {
             envelope.classList.add('closed');
             setTimeout(() => {
                 envelope.style.display = 'none';
-            }, 600);
+            }, ENVELOPE_HIDE_DELAY);
         }
     }, 30000);
 }
@@ -66,6 +67,32 @@ function initMusicPlayer() {
 
     let isPlaying = false;
     let ytPlayer = null;
+    let pendingAutoplay = false;
+
+    function updateToggleState() {
+        if (isPlaying) {
+            musicToggle.textContent = '🎶';
+            musicToggle.title = 'Tạm dừng';
+            musicToggle.classList.add('playing');
+        } else {
+            musicToggle.textContent = '🎵';
+            musicToggle.title = 'Phát nhạc';
+            musicToggle.classList.remove('playing');
+        }
+    }
+
+    function startPlayback() {
+        if (!ytPlayer) {
+            pendingAutoplay = true;
+            return;
+        }
+
+        if (!isPlaying) {
+            ytPlayer.playVideo();
+            isPlaying = true;
+            updateToggleState();
+        }
+    }
 
     // Load YouTube IFrame API
     const tag = document.createElement('script');
@@ -86,7 +113,10 @@ function initMusicPlayer() {
     };
 
     function onPlayerReady(event) {
-        console.log('YouTube player ready');
+        if (pendingAutoplay) {
+            pendingAutoplay = false;
+            startPlayback();
+        }
     }
 
     function onPlayerStateChange(event) {
@@ -95,22 +125,24 @@ function initMusicPlayer() {
 
     musicToggle.addEventListener('click', () => {
         if (!ytPlayer) {
-            console.log('YouTube player not ready yet');
+            pendingAutoplay = true;
             return;
         }
 
         if (isPlaying) {
             ytPlayer.pauseVideo();
-            musicToggle.textContent = '🎵';
-            musicToggle.classList.remove('playing');
             isPlaying = false;
+            updateToggleState();
         } else {
             ytPlayer.playVideo();
-            musicToggle.textContent = '🎶';
-            musicToggle.classList.add('playing');
             isPlaying = true;
+            updateToggleState();
         }
     });
+
+    document.addEventListener('click', startPlayback, { once: true });
+    document.addEventListener('touchstart', startPlayback, { once: true, passive: true });
+    updateToggleState();
 
     // Alternative: Direct audio playback if user provides MP3 URL
     // Uncomment below to use direct audio URL instead
@@ -225,6 +257,83 @@ function initGallerySwiper() {
             }
         });
     });
+}
+
+// ===== AUTO SCROLL SECTIONS =====
+function initAutoScrollSections() {
+    const sections = Array.from(document.querySelectorAll('.wedding-container > section, .wedding-container > footer'));
+    if (!sections.length) return;
+
+    let isAutoScrolling = false;
+    let lastAutoScroll = 0;
+    const scrollDelay = 800;
+
+    function getCurrentIndex() {
+        let closestIndex = 0;
+        let minDistance = Infinity;
+
+        sections.forEach((section, index) => {
+            const distance = Math.abs(section.getBoundingClientRect().top);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        return closestIndex;
+    }
+
+    function scrollToIndex(index) {
+        if (index < 0 || index >= sections.length) return;
+        isAutoScrolling = true;
+        sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+            isAutoScrolling = false;
+        }, scrollDelay);
+    }
+
+    function shouldIgnoreScroll() {
+        const activeTag = document.activeElement?.tagName?.toLowerCase();
+        return ['input', 'textarea', 'select'].includes(activeTag);
+    }
+
+    function handleDelta(deltaY) {
+        const now = Date.now();
+        if (isAutoScrolling || now - lastAutoScroll < scrollDelay || shouldIgnoreScroll()) return;
+        if (Math.abs(deltaY) < 10) return;
+
+        const currentIndex = getCurrentIndex();
+        if (deltaY > 0) {
+            scrollToIndex(currentIndex + 1);
+        } else {
+            scrollToIndex(currentIndex - 1);
+        }
+
+        lastAutoScroll = now;
+    }
+
+    window.addEventListener('wheel', (event) => {
+        if (event.ctrlKey) return;
+        handleDelta(event.deltaY);
+    }, { passive: true });
+
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (event) => {
+        if (event.touches.length !== 1) return;
+        touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (event) => {
+        if (!touchStartY) return;
+        const touchEndY = event.changedTouches[0].clientY;
+        const deltaY = touchStartY - touchEndY;
+
+        if (Math.abs(deltaY) > 40) {
+            handleDelta(deltaY);
+        }
+
+        touchStartY = 0;
+    }, { passive: true });
 }
 
 // Gallery Lightbox
@@ -430,6 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initVenueSelector();
         updateCountdown();
         initMusicPlayer();
+        initAutoScrollSections();
 
         // Wait for libraries to load
         if (typeof Swiper !== 'undefined') {

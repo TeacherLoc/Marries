@@ -92,22 +92,14 @@
             </div>
         </section>
 
-        <!-- Love Story -->
-        <section class="love-story-section" data-aos="fade-up">
-            <h2>Câu Chuyện Tình Yêu</h2>
-            <div class="timeline">
-                <% loveStory.forEach((story, index) => { %>
-                    <div class="timeline-item <%= index % 2 === 0 ? 'left' : 'right' %>">
-                        <div class="timeline-marker">
-                            <span class="timeline-year"><%= story.year %></span>
-                        </div>
-                        <div class="timeline-content">
-                            <h3><%= story.title %></h3>
-                            <p><%= story.description %></p>
-                        </div>
-                    </div>
-                <% }); %>
+        <!-- Map Section -->
+        <section class="map-section">
+            <h2>Bản Đồ</h2>
+            <div class="map-container">
+                <iframe src="https://maps.google.com/maps?q=<%= wedding.coordinates.lat %>,<%= wedding.coordinates.lng %>&z=15&output=embed"
+                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
+            <p class="map-address"><%= wedding.receptionAddress %></p>
         </section>
 
         <!-- Wedding Details -->
@@ -127,14 +119,22 @@
             </div>
         </section>
 
-        <!-- Map Section -->
-        <section class="map-section">
-            <h2>Bản Đồ</h2>
-            <div class="map-container">
-                <iframe src="https://maps.google.com/maps?q=<%= wedding.coordinates.lat %>,<%= wedding.coordinates.lng %>&z=15&output=embed"
-                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <!-- Love Story -->
+        <section class="love-story-section" data-aos="fade-up">
+            <h2>Câu Chuyện Tình Yêu</h2>
+            <div class="timeline">
+                <% loveStory.forEach((story, index) => { %>
+                    <div class="timeline-item <%= index % 2 === 0 ? 'left' : 'right' %>">
+                        <div class="timeline-marker">
+                            <span class="timeline-year"><%= story.year %></span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3><%= story.title %></h3>
+                            <p><%= story.description %></p>
+                        </div>
+                    </div>
+                <% }); %>
             </div>
-            <p class="map-address"><%= wedding.receptionAddress %></p>
         </section>
 
         <!-- Photo Gallery with Swiper -->
@@ -198,7 +198,7 @@
         </section>
 
         <!-- Digital Gift / Mừng Cưới -->
-        <section class="gift-section">
+        <section class="gift-section is-hidden">
             <h2>Mừng Cưới</h2>
             <div class="gift-container">
                 <p class="gift-text">Cảm ơn tình cảm của quý khách!</p>
@@ -216,7 +216,7 @@
         </section>
 
         <!-- RSVP Section -->
-        <section class="rsvp-section">
+        <section class="rsvp-section is-hidden">
             <h2>Xác Nhận Tham Dự</h2>
             <form id="rsvp-form" class="rsvp-form">
                 <input type="text" name="guestName" placeholder="Tên quý khách" required>
