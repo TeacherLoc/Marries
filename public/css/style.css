@@ -1825,14 +1825,14 @@ section {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, #f8f5f2 0%, #f5f1ed 100%);
+    background: linear-gradient(180deg, #f9f7f4 0%, #f5f1ed 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
     opacity: 1;
     transition: opacity 0.6s ease-out;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 .venue-selector.hidden {
@@ -1848,7 +1848,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 80vh;
+    height: auto;
     justify-content: center;
 }
 
@@ -1859,24 +1859,23 @@ section {
     width: 100%;
     align-items: center;
     position: relative;
-    flex: 1;
 }
 
 /* Logo Container - positioned in the middle */
 .venue-logo {
-    margin: -60px auto 0;
+    margin: -70px auto 0;
     animation: fadeInDown 0.8s ease-out 0.2s backwards;
     position: relative;
     z-index: 20;
 }
 
 .venue-logo img {
-    width: 120px;
-    height: 120px;
-    background: #ede8e3;
-    border-radius: 24px;
-    padding: 15px;
-    box-shadow: 0 8px 24px rgba(157, 128, 128, 0.15);
+    width: 130px;
+    height: 130px;
+    background: #f0ebe6;
+    border-radius: 50%;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(157, 128, 128, 0.15);
     display: block;
 }
 
@@ -1887,7 +1886,7 @@ section {
     justify-content: center;
     background: transparent;
     color: var(--text-color);
-    padding: 60px 20px;
+    padding: 50px 20px;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: none;
@@ -1897,19 +1896,16 @@ section {
     cursor: pointer;
     width: 100%;
     animation: fadeInUp 0.6s ease-out both;
-    flex: 1;
 }
 
 .venue-btn:nth-child(1) {
     animation-delay: 0.1s;
-    justify-content: flex-end;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
 }
 
 .venue-btn:nth-child(3) {
     animation-delay: 0.3s;
-    justify-content: flex-start;
-    padding-top: 40px;
+    padding-top: 30px;
 }
 
 .venue-btn::before,
@@ -1919,7 +1915,7 @@ section {
 
 .venue-btn:active {
     transform: scale(0.98);
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .venue-emoji {
@@ -1927,12 +1923,12 @@ section {
 }
 
 .venue-btn h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
     margin-top: 0;
     color: #a89080;
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
 }
 
@@ -1940,9 +1936,9 @@ section {
     font-size: 0.95rem;
     color: #c4b5af;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.5;
     font-weight: 300;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .venue-time {
@@ -1953,25 +1949,45 @@ section {
     display: none;
 }
 
+/* Top divider line */
+.venue-btn:nth-child(1)::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
+}
+
+/* Bottom divider line */
+.venue-btn:nth-child(3)::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
+}
+
 @media (max-width: 480px) {
     .venue-selector {
-        padding: 20px;
+        padding: 30px 15px;
     }
 
     .venue-selector-content {
         max-width: 100%;
-        height: 100vh;
+        height: auto;
     }
 
     .venue-logo {
-        margin: -50px auto 0;
+        margin: -60px auto 0;
     }
 
     .venue-logo img {
-        width: 100px;
-        height: 100px;
-        border-radius: 20px;
-        padding: 12px;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        padding: 14px;
     }
 
     .venue-btn {
@@ -1979,19 +1995,21 @@ section {
     }
 
     .venue-btn:nth-child(1) {
-        padding-bottom: 30px;
+        padding-bottom: 25px;
     }
 
     .venue-btn:nth-child(3) {
-        padding-top: 30px;
+        padding-top: 25px;
     }
 
     .venue-btn h2 {
-        font-size: 1.2rem;
-        letter-spacing: 1.5px;
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
     }
 
     .venue-btn p {
         font-size: 0.85rem;
+        letter-spacing: 0.5px;
     }
 }
