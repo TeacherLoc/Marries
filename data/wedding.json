@@ -101,12 +101,5 @@
     "qrCode": ""
   },
   "rsvps": [],
-  "guestbook": [
-    {
-      "id": 1778319700761,
-      "guestName": "Lộc",
-      "message": "LALALA",
-      "timestamp": "2026-05-09T09:41:40.761Z"
-    }
-  ]
+  "guestbook": []
 }
