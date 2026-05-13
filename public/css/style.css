@@ -1875,35 +1875,48 @@ section {
 
 .venue-btn.groom-venue {
     animation-delay: 0.1s;
+    padding-top: 40px;
+}
+
+.venue-btn.groom-venue::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
+}
+
+.venue-btn.groom-venue::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
 }
 
 .venue-btn.bride-venue {
     animation-delay: 0.3s;
+    padding-bottom: 40px;
 }
 
-/* Divider line above groom location */
-.venue-btn.groom-venue::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 50px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
-}
-
-/* Divider line below bride location */
 .venue-btn.bride-venue::before {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 10px;
     width: 50px;
     height: 1px;
     background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
 }
 
-.venue-btn::before,
-.venue-btn::after {
-    display: block;
+.venue-btn.bride-venue::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #a89080 50%, transparent 100%);
 }
 
 .venue-btn:active {
