@@ -40,17 +40,15 @@
     <!-- Venue Selection Screen -->
     <div id="venue-selector" class="venue-selector active">
         <div class="venue-selector-content">
-            <div class="venue-logo">
-                <img src="/image/logocuoi.jpg" alt="Logo">
-            </div>
-
             <div class="venue-buttons">
                 <div class="venue-btn groom-venue" onclick="selectVenue('groom'); return false;">
                     <h2>Tiệc Nhà Trai</h2>
                     <p><%= wedding.groomReception.location %></p>
                 </div>
 
-                <div class="venue-divider"></div>
+                <div class="venue-logo">
+                    <img src="/image/logocuoi.jpg" alt="Logo">
+                </div>
 
                 <div class="venue-btn bride-venue" onclick="selectVenue('bride'); return false;">
                     <h2>Tiệc Nhà Gái</h2>
