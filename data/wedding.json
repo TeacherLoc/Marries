@@ -71,6 +71,16 @@
   ],
   "gallery": [
     {
+      "url": "/image/anhcuoi1.jpg",
+      "caption": "Lễ Định Hôn - Ngọc Dung & Minh Tiến",
+      "category": "ceremony"
+    },
+    {
+      "url": "/image/anhcuoi2.jpg",
+      "caption": "Cặp đôi hạnh phúc",
+      "category": "moments"
+    },
+    {
       "url": "https://via.placeholder.com/400x400?text=Ảnh+1",
       "caption": "Khoảnh khắc đẹp",
       "category": "moments"
