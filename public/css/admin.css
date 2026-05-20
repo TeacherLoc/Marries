@@ -65,6 +65,74 @@ body {
     padding: 30px 20px;
 }
 
+/* Theme Settings */
+.theme-section {
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    max-width: 720px;
+}
+
+.theme-section h2 {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.theme-note {
+    color: var(--light-text);
+    margin-bottom: 18px;
+}
+
+.theme-form {
+    display: grid;
+    gap: 14px;
+}
+
+.form-row {
+    display: grid;
+    gap: 8px;
+}
+
+.form-row label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-row input,
+.form-row select {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    filter: brightness(0.95);
+}
+
+.status-text {
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
 /* Statistics */
 .statistics h2 {
     margin-bottom: 20px;

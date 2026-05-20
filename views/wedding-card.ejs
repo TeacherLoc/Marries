@@ -12,13 +12,22 @@
     
     <link rel="stylesheet" href="/css/style.css">
 
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
     <!-- AOS (Animate On Scroll) CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
 </head>
-<body>
+<%
+    const themeConfig = theme || {};
+    const chibi = themeConfig.chibi || {};
+    const watercolor = themeConfig.watercolor || {};
+    const layer1 = chibi.layer1Url ? `url('${chibi.layer1Url}')` : 'none';
+    const layer2 = chibi.layer2Url ? `url('${chibi.layer2Url}')` : 'none';
+    const washLayer = watercolor.washUrl ? `url('${watercolor.washUrl}')` : 'none';
+    const lineLayer = watercolor.lineArtUrl ? `url('${watercolor.lineArtUrl}')` : 'none';
+    const themeClass = themeConfig.backgroundStyle === 'watercolor'
+        ? 'theme-watercolor'
+        : (themeConfig.backgroundStyle === 'chibi' && chibi.enabled ? 'theme-chibi' : '');
+%>
+<body class="<%= themeClass %>" style="--chibi-base: <%= chibi.baseColor || '#fff5f4' %>; --chibi-accent: <%= chibi.accentColor || '#f8d9e0' %>; --chibi-layer-1: <%- layer1 %>; --chibi-layer-2: <%- layer2 %>; --chibi-float-duration: <%= (chibi.floatDuration || 12) %>s; --watercolor-base: <%= watercolor.baseColor || '#f9f3ee' %>; --watercolor-wash: <%- washLayer %>; --watercolor-lineart: <%- lineLayer %>; --font-body: <%- themeConfig.fontBody || "'Be Vietnam Pro', 'Segoe UI', 'Arial', sans-serif" %>; --font-script: <%- themeConfig.fontScript || "'Dancing Script', 'Brush Script MT', cursive" %>;">
     <!-- Music Player (Hidden by default) -->
     <div id="music-player" class="music-player">
         <button id="music-toggle" class="music-btn" title="Phát nhạc">🎵</button>
@@ -137,7 +146,7 @@
             </div>
         </section>
 
-        <!-- Photo Gallery with Swiper -->
+        <!-- Photo Gallery Editorial -->
         <% if (gallery && gallery.length > 0) { %>
             <section class="gallery-section" data-aos="fade-up">
                 <h2>Album Ảnh</h2>
@@ -148,20 +157,24 @@
                     <button class="filter-btn" data-filter="moments">Khoảnh Khắc</button>
                 </div>
 
-                <!-- Swiper Gallery -->
-                <div class="swiper gallery-swiper">
-                    <div class="swiper-wrapper">
-                        <% gallery.forEach((photo, index) => { %>
-                            <div class="swiper-slide gallery-item" data-category="<%= photo.category || 'all' %>">
+                <div class="gallery-editorial">
+                    <% gallery.forEach((photo, index) => { %>
+                        <%
+                            const layoutClass = index === 0
+                                ? 'editorial-item--hero'
+                                : (index % 5 === 1
+                                    ? 'editorial-item--tall'
+                                    : (index % 5 === 2
+                                        ? 'editorial-item--wide'
+                                        : 'editorial-item--square'));
+                        %>
+                        <figure class="editorial-item <%= layoutClass %>" data-category="<%= photo.category || 'all' %>">
+                            <div class="editorial-media">
                                 <img src="<%= photo.url %>" alt="<%= photo.caption %>" loading="lazy">
-                                <div class="overlay">
-                                    <p><%= photo.caption %></p>
-                                </div>
                             </div>
-                        <% }); %>
-                    </div>
-                    <!-- Pagination -->
-                    <div class="swiper-pagination"></div>
+                            <figcaption class="editorial-caption"><%= photo.caption %></figcaption>
+                        </figure>
+                    <% }); %>
                 </div>
             </section>
         <% } %>
@@ -266,8 +279,16 @@
         </footer>
     </div>
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <div class="lightbox-content">
+            <button type="button" class="close" aria-label="Dong">&times;</button>
+            <img id="lightbox-image" src="" alt="Anh phong lon">
+            <div class="nav-buttons">
+                <button type="button" class="lightbox-prev" aria-label="Anh truoc">&#10094;</button>
+                <button type="button" class="lightbox-next" aria-label="Anh sau">&#10095;</button>
+            </div>
+        </div>
+    </div>
 
     <!-- AOS JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>

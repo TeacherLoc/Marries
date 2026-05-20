@@ -348,32 +348,129 @@ function initGallerySwiper() {
     });
 }
 
+// ===== EDITORIAL GALLERY & FILTERS =====
+function initEditorialGallery() {
+    const galleryRoot = document.querySelector('.gallery-editorial');
+    if (!galleryRoot) {
+        return;
+    }
+
+    const items = Array.from(galleryRoot.querySelectorAll('.editorial-item'));
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    items.forEach(item => observer.observe(item));
+
+    const applyFilter = (filterValue) => {
+        items.forEach(item => {
+            const category = item.getAttribute('data-category') || 'all';
+            const isVisible = filterValue === 'all' || category === filterValue;
+            item.classList.toggle('is-filtered-out', !isVisible);
+        });
+    };
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+            applyFilter(filterValue);
+        });
+    });
+
+    applyFilter('all');
+}
+
 
 // Gallery Lightbox
 let currentImageIndex = 0;
-const galleryItems = document.querySelectorAll('.gallery-item img');
+let lightboxImages = [];
+
+function getVisibleGalleryImages() {
+    return Array.from(document.querySelectorAll('.editorial-item:not(.is-filtered-out) img'))
+        .filter(img => img.getAttribute('src'));
+}
+
+function setLightboxImage(index) {
+    const lightboxImage = document.getElementById('lightbox-image');
+    if (!lightboxImage || lightboxImages.length === 0) {
+        return;
+    }
+
+    if (index >= lightboxImages.length) currentImageIndex = 0;
+    if (index < 0) currentImageIndex = lightboxImages.length - 1;
+
+    lightboxImage.src = lightboxImages[currentImageIndex].src;
+}
 
 function openLightbox(index) {
     const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightbox-image');
+    if (!lightbox) return;
 
     currentImageIndex = index;
-    lightboxImage.src = galleryItems[index].src;
+    setLightboxImage(currentImageIndex);
     lightbox.classList.add('active');
 }
 
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+
     lightbox.classList.remove('active');
 }
 
 function changeLightboxImage(direction) {
     currentImageIndex += direction;
-    if (currentImageIndex >= galleryItems.length) currentImageIndex = 0;
-    if (currentImageIndex < 0) currentImageIndex = galleryItems.length - 1;
-
-    document.getElementById('lightbox-image').src = galleryItems[currentImageIndex].src;
+    setLightboxImage(currentImageIndex);
 }
+
+document.addEventListener('click', (event) => {
+    const targetImage = event.target.closest('.gallery-editorial img');
+    if (!targetImage) {
+        return;
+    }
+
+    event.preventDefault();
+    lightboxImages = getVisibleGalleryImages();
+    const index = lightboxImages.indexOf(targetImage);
+    openLightbox(index >= 0 ? index : 0);
+});
+
+document.querySelector('.lightbox .close')?.addEventListener('click', closeLightbox);
+document.querySelector('.lightbox-prev')?.addEventListener('click', () => changeLightboxImage(-1));
+document.querySelector('.lightbox-next')?.addEventListener('click', () => changeLightboxImage(1));
+
+document.getElementById('lightbox')?.addEventListener('click', (event) => {
+    if (event.target.id === 'lightbox') {
+        closeLightbox();
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox || !lightbox.classList.contains('active')) {
+        return;
+    }
+
+    if (event.key === 'Escape') {
+        closeLightbox();
+    }
+    if (event.key === 'ArrowLeft') {
+        changeLightboxImage(-1);
+    }
+    if (event.key === 'ArrowRight') {
+        changeLightboxImage(1);
+    }
+});
 
 // RSVP Form Submission with animations
 document.getElementById('rsvp-form')?.addEventListener('submit', async (e) => {
@@ -553,8 +650,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCountdown();
         initMusicPlayer();
 
-        // Wait for libraries to load
-        if (typeof Swiper !== 'undefined') {
+        // Initialize gallery layouts
+        if (document.querySelector('.gallery-editorial')) {
+            initEditorialGallery();
+        }
+
+        if (document.querySelector('.gallery-swiper') && typeof Swiper !== 'undefined') {
             setTimeout(() => {
                 initGallerySwiper();
             }, 500);
@@ -582,13 +683,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('✅ Wedding website initialized successfully!');
     } catch (error) {
         console.error('❌ Initialization error:', error);
-    }
-});
-
-// Close lightbox when pressing Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeLightbox();
     }
 });
 

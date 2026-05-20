@@ -47,7 +47,25 @@ const initializeData = () => {
         qrCode: ''
       },
       rsvps: [],
-      guestbook: []
+      guestbook: [],
+      theme: {
+        backgroundStyle: 'watercolor',
+        chibi: {
+          enabled: true,
+          baseColor: '#fff5f4',
+          accentColor: '#f8d9e0',
+          layer1Url: '/image/chibi-layer-1.svg',
+          layer2Url: '/image/chibi-layer-2.svg',
+          floatDuration: 12
+        },
+        watercolor: {
+          baseColor: '#f9f3ee',
+          washUrl: '/image/watercolor-wash.svg',
+          lineArtUrl: '/image/watercolor-lineart.svg'
+        },
+        fontBody: "'Be Vietnam Pro', 'Segoe UI', 'Arial', sans-serif",
+        fontScript: "'Dancing Script', 'Brush Script MT', cursive"
+      }
     };
     fs.writeFileSync(dataPath, JSON.stringify(initialData, null, 2));
   }
@@ -146,6 +164,20 @@ const WeddingModel = {
   getDigitalGift: () => {
     const data = WeddingModel.getAll();
     return data.digitalGift;
+  },
+
+  // Get theme
+  getTheme: () => {
+    const data = WeddingModel.getAll();
+    return data.theme || {};
+  },
+
+  // Update theme
+  updateTheme: (themeData) => {
+    const data = WeddingModel.getAll();
+    data.theme = { ...data.theme, ...themeData };
+    WeddingModel.saveAll(data);
+    return data.theme;
   }
 };
 

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Theme - Wedding</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <% const themeSettings = theme || {}; %>
+    <% const chibi = themeSettings.chibi || {}; %>
+    <% const watercolor = themeSettings.watercolor || {}; %>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Theme Settings - <%= couple.brideName %> & <%= couple.groomName %></h1>
+            <nav>
+                <a href="/admin" class="btn-back">← Quay Lai Admin</a>
+                <a href="/" class="btn-back">← Quay Lai Website</a>
+            </nav>
+        </header>
+
+        <main class="admin-main">
+            <section class="theme-section">
+                <h2>Background Settings</h2>
+                <p class="theme-note">Chibi hoac watercolor. Neu chua co anh, co the dung SVG demo.</p>
+
+                <form id="theme-form" class="theme-form">
+                    <div class="form-row">
+                        <label for="backgroundStyle">Kieu nen</label>
+                        <select id="backgroundStyle" name="backgroundStyle">
+                            <option value="chibi" <%= themeSettings.backgroundStyle === 'chibi' ? 'selected' : '' %>>Chibi</option>
+                            <option value="watercolor" <%= themeSettings.backgroundStyle === 'watercolor' ? 'selected' : '' %>>Watercolor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="chibiEnabled">Bat chibi</label>
+                        <select id="chibiEnabled" name="chibiEnabled">
+                            <option value="true" <%= chibi.enabled ? 'selected' : '' %>>Co</option>
+                            <option value="false" <%= chibi.enabled ? '' : 'selected' %>>Khong</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="baseColor">Mau nen</label>
+                        <input type="color" id="baseColor" name="baseColor" value="<%= chibi.baseColor || '#fff5f4' %>">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="accentColor">Mau nhan</label>
+                        <input type="color" id="accentColor" name="accentColor" value="<%= chibi.accentColor || '#f8d9e0' %>">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="layer1Url">Layer PNG 1 (URL)</label>
+                        <input type="text" id="layer1Url" name="layer1Url" value="<%= chibi.layer1Url || '' %>" placeholder="/image/chibi-layer-1.png">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="layer2Url">Layer PNG 2 (URL)</label>
+                        <input type="text" id="layer2Url" name="layer2Url" value="<%= chibi.layer2Url || '' %>" placeholder="/image/chibi-layer-2.png">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="floatDuration">Toc do float (giay)</label>
+                        <input type="number" id="floatDuration" name="floatDuration" min="6" max="30" value="<%= chibi.floatDuration || 12 %>">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="watercolorBase">Watercolor nen</label>
+                        <input type="color" id="watercolorBase" name="watercolorBase" value="<%= watercolor.baseColor || '#f9f3ee' %>">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="watercolorWash">Watercolor wash (URL)</label>
+                        <input type="text" id="watercolorWash" name="watercolorWash" value="<%= watercolor.washUrl || '' %>" placeholder="/image/watercolor-wash.svg">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="watercolorLine">Line art (URL)</label>
+                        <input type="text" id="watercolorLine" name="watercolorLine" value="<%= watercolor.lineArtUrl || '' %>" placeholder="/image/watercolor-lineart.svg">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="fontBody">Font noi dung</label>
+                        <input type="text" id="fontBody" name="fontBody" value="<%= themeSettings.fontBody || "'Be Vietnam Pro', 'Segoe UI', 'Arial', sans-serif" %>">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="fontScript">Font calligraphy</label>
+                        <input type="text" id="fontScript" name="fontScript" value="<%= themeSettings.fontScript || "'Dancing Script', 'Brush Script MT', cursive" %>">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Luu cau hinh</button>
+                        <span id="theme-status" class="status-text"></span>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/admin-theme.js"></script>
+</body>
+</html>

@@ -19,6 +19,7 @@ const WeddingController = {
         gallery: data.gallery,
         preWeddingVideo: data.preWeddingVideo,
         digitalGift: data.digitalGift,
+        theme: data.theme,
         guestbookEntries: guestbookEntries.slice(-5), // Last 5 entries
         qrCode: qrCode
       });
@@ -130,6 +131,31 @@ const WeddingController = {
     } catch (error) {
       console.error('Error updating wedding details:', error);
       res.status(500).json({ error: 'Error updating wedding details' });
+    }
+  },
+
+  // Admin page - theme settings
+  getAdminTheme: (req, res) => {
+    try {
+      const data = WeddingModel.getAll();
+      res.render('admin-theme', {
+        couple: data.couple,
+        theme: data.theme || {}
+      });
+    } catch (error) {
+      console.error('Error loading theme settings:', error);
+      res.status(500).render('error', { message: 'Error loading theme settings' });
+    }
+  },
+
+  // API: Update theme
+  updateTheme: (req, res) => {
+    try {
+      const theme = WeddingModel.updateTheme(req.body);
+      res.json({ success: true, theme });
+    } catch (error) {
+      console.error('Error updating theme:', error);
+      res.status(500).json({ error: 'Error updating theme' });
     }
   }
 };
