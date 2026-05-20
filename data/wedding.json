@@ -77,27 +77,32 @@
     },
     {
       "url": "/image/anhcuoi2.jpg",
-      "caption": "Cặp đôi hạnh phúc",
+      "caption": "Khoảnh khắc ngoài sân",
       "category": "moments"
     },
     {
-      "url": "https://via.placeholder.com/400x400?text=Ảnh+1",
-      "caption": "Khoảnh khắc đẹp",
-      "category": "moments"
-    },
-    {
-      "url": "https://via.placeholder.com/400x400?text=Ảnh+2",
-      "caption": "Lễ cưới",
+      "url": "/image/anhcuoi3.jpg",
+      "caption": "Không gian lễ đính hôn",
       "category": "ceremony"
     },
     {
-      "url": "https://via.placeholder.com/400x400?text=Ảnh+3",
-      "caption": "Tiệc cưới",
+      "url": "/image/anhcuoi4.jpg",
+      "caption": "Cặp đôi tỏa sáng",
       "category": "reception"
     },
     {
-      "url": "https://via.placeholder.com/400x400?text=Ảnh+4",
-      "caption": "Khoảnh khắc yêu thương",
+      "url": "/image/anhcuoi5.jpg",
+      "caption": "Khoảnh khắc đáng nhớ",
+      "category": "reception"
+    },
+    {
+      "url": "/image/anhcuoi8.jpg",
+      "caption": "Gia đình sum vầy",
+      "category": "moments"
+    },
+    {
+      "url": "/image/logocuoi.jpg",
+      "caption": "Logo kỷ niệm",
       "category": "moments"
     }
   ],
