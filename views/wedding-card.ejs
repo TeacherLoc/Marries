@@ -8,7 +8,7 @@
     <!-- Google Fonts for Vietnamese Support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/css/style.css">
 
@@ -34,50 +34,116 @@
         <audio id="background-music" loop></audio>
     </div>
 
-    <!-- Envelope Opening Animation -->
-    <div id="envelope-overlay" class="envelope-overlay active">
-        <div class="envelope">
-            <div class="envelope-cover">
-                <div class="envelope-text">
-                    <h2>Bạn Nhận Được Một Lời Mời Cưới</h2>
-                    <p>Bấm để mở</p>
-                </div>
-            </div>
+    <!-- Floating petals -->
+    <div id="petals"></div>
+
+    <!-- ── LANDING ── -->
+    <div id="landing">
+      <div class="names-script">
+        <%= couple.brideName %> <span class="amp">♥</span><br><%= couple.groomName %>
+      </div>
+
+      <div class="envelope-wrap" id="envWrap" onclick="openCard()" title="Click để mở thiệp">
+        <!-- Floral SVG decoration -->
+        <svg class="floral-deco" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="30" r="18" fill="#e8f0df" opacity=".9"/>
+          <circle cx="50" cy="30" r="10" fill="#c5d6b0" opacity=".9"/>
+          <ellipse cx="28" cy="48" rx="12" ry="7" fill="#d4ddc8" transform="rotate(-30 28 48)"/>
+          <ellipse cx="72" cy="48" rx="12" ry="7" fill="#d4ddc8" transform="rotate(30 72 48)"/>
+          <ellipse cx="35" cy="62" rx="10" ry="6" fill="#b8cca2" transform="rotate(-50 35 62)"/>
+          <ellipse cx="65" cy="62" rx="10" ry="6" fill="#b8cca2" transform="rotate(50 65 62)"/>
+          <line x1="50" y1="48" x2="50" y2="85" stroke="#8fa07a" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="50" y1="65" x2="38" y2="75" stroke="#8fa07a" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="50" y1="72" x2="62" y2="80" stroke="#8fa07a" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+
+        <div class="env-body">
+          <div class="env-flap"></div>
+          <div class="env-ring"></div>
         </div>
+      </div>
+
+      <p class="click-hint">Click vào thiệp để mở</p>
+
+      <div class="landing-photo-section">
+        <% if (preWeddingPhoto) { %>
+          <img src="<%= preWeddingPhoto %>" alt="Pre-wedding" class="landing-photo">
+        <% } %>
+      </div>
     </div>
 
-    <!-- Venue Selection Screen -->
-    <div id="venue-selector" class="venue-selector active">
-        <div class="venue-selector-content">
-            <div class="venue-buttons">
-                <div class="venue-btn groom-venue" onclick="selectVenue('groom'); return false;">
-                    <h2>Tiệc Nhà Trai</h2>
-                    <p><%= wedding.groomReception.location %></p>
-                </div>
-
-                <div class="venue-logo">
-                    <img src="/image/logocuoi.jpg" alt="Logo">
-                </div>
-
-                <div class="venue-btn bride-venue" onclick="selectVenue('bride'); return false;">
-                    <h2>Tiệc Nhà Gái</h2>
-                    <p><%= wedding.brideReception.location %></p>
-                </div>
-            </div>
+    <!-- ── INVITATION CARD ── -->
+    <div id="card">
+      <div class="card-hero">
+        <!-- Gradient placeholder simulating a photo -->
+        <div style="position:absolute;inset:0;background:linear-gradient(160deg,#c8d5bc 0%,#8fa07a 40%,#6b7c5c 100%);"></div>
+        <!-- Decorative botanical SVG overlay -->
+        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.18" viewBox="0 0 400 533" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="80" rx="35" ry="55" fill="#fff" transform="rotate(-20 60 80)"/>
+          <ellipse cx="340" cy="100" rx="28" ry="50" fill="#fff" transform="rotate(25 340 100)"/>
+          <ellipse cx="30" cy="200" rx="22" ry="45" fill="#fff" transform="rotate(-35 30 200)"/>
+          <ellipse cx="370" cy="300" rx="25" ry="40" fill="#fff" transform="rotate(15 370 300)"/>
+          <ellipse cx="200" cy="20" rx="40" ry="18" fill="#fff" transform="rotate(5 200 20)"/>
+          <circle cx="200" cy="60" r="22" fill="#fff"/>
+        </svg>
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+          <p class="hero-tagline">Trân trọng kính mời</p>
+          <div class="hero-names">
+            <%= couple.brideName %><span class="hero-heart">♥</span><%= couple.groomName %>
+          </div>
         </div>
+      </div>
+
+      <div class="divider" style="margin-top:2.5rem">
+        <span class="divider-icon">✦</span>
+      </div>
+
+      <div class="section" style="text-align:center">
+        <p class="section-label">Chúng tôi trân trọng kính mời</p>
+        <p class="section-value">Quý gia đình, bạn bè, đồng nghiệp</p>
+        <p class="section-sub">đến dự tiệc mừng hôn lễ của chúng tôi</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="section" style="padding:0">
+          <p class="section-label">Ngày cưới</p>
+          <p class="section-value"><%= new Date(wedding.ceremonyDate).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, ' / ') %></p>
+        </div>
+        <div class="section" style="padding:0">
+          <p class="section-label">Giờ tiệc</p>
+          <p class="section-value"><%= wedding.ceremonyTime %></p>
+          <p class="section-sub">Tiệc bắt đầu</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="section-label">Địa điểm</p>
+        <p class="section-value"><%= wedding.ceremonyLocation %></p>
+        <p class="section-sub"><%= wedding.ceremonyAddress %></p>
+      </div>
+
+      <div class="divider">
+        <span class="divider-icon">✦</span>
+      </div>
+
+      <div class="verse">
+        "<%= couple.welcomeMessage %>"
+      </div>
+
+      <div class="rsvp-wrap" style="margin-top:2rem">
+        <button class="rsvp-btn" onclick="alert('Cảm ơn bạn đã xác nhận tham dự! 🌿')">
+          Xác nhận tham dự
+        </button>
+      </div>
+
+      <div style="text-align:center;margin-top:2.5rem;padding:0 2rem">
+        <p style="font-family:'Great Vibes',cursive;font-size:2rem;color:var(--sage)"><%= couple.brideName %> & <%= couple.groomName %></p>
+        <p style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mid);margin-top:.4rem;opacity:.65"><%= new Date(wedding.ceremonyDate).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, ' · ') %></p>
+      </div>
     </div>
 
     <div class="wedding-container">
-        <!-- Header / Opening Section -->
-        <section class="header-section">
-            <div class="header-content">
-                <h1 class="names"><%= couple.brideName %> <span>&</span> <%= couple.groomName %></h1>
-                <p class="wedding-date">
-                    <%= new Date(wedding.ceremonyDate).toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
-                </p>
-                <p class="welcome-message"><%= couple.welcomeMessage %></p>
-            </div>
-        </section>
 
         <!-- Countdown Timer -->
         <section class="countdown-section" data-aos="zoom-in">

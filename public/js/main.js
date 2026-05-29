@@ -357,24 +357,171 @@ function initEditorialGallery() {
 
     const items = Array.from(galleryRoot.querySelectorAll('.editorial-item'));
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const paginationEl = document.querySelector('.gallery-pagination');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
+    let currentFilter = 'all';
+    let currentPage = 0;
+    let perPage = 3;
+    let visibleItems = items;
+
+    const pagePresets = [
+        {
+            vectors: [
+                { x: -34, y: 22 },
+                { x: 22, y: 28 },
+                { x: 0, y: 40 },
+                { x: -18, y: 26 },
+                { x: 28, y: 18 },
+                { x: 10, y: 34 }
+            ],
+            duration: 520,
+            delayBase: 70
+        },
+        {
+            vectors: [
+                { x: 30, y: 18 },
+                { x: -26, y: 30 },
+                { x: 14, y: 36 },
+                { x: -14, y: 20 },
+                { x: 26, y: 24 },
+                { x: -30, y: 14 }
+            ],
+            duration: 620,
+            delayBase: 90
+        },
+        {
+            vectors: [
+                { x: 0, y: 44 },
+                { x: 20, y: 34 },
+                { x: -20, y: 34 },
+                { x: 16, y: 22 },
+                { x: -16, y: 22 },
+                { x: 0, y: 30 }
+            ],
+            duration: 700,
+            delayBase: 110
+        }
+    ];
+
+    const getPerPage = () => (window.innerWidth <= 768 ? 3 : 6);
+
+    const buildDots = (count) => {
+        if (!paginationEl) {
+            return;
+        }
+
+        paginationEl.innerHTML = '';
+        for (let i = 0; i < count; i += 1) {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'gallery-dot';
+            dot.setAttribute('aria-label', `Trang ${i + 1}`);
+            dot.addEventListener('click', () => {
+                setPage(i);
+            });
+            paginationEl.appendChild(dot);
+        }
+    };
+
+    const updateDots = () => {
+        if (!paginationEl) {
+            return;
+        }
+        const dots = Array.from(paginationEl.querySelectorAll('.gallery-dot'));
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('is-active', index === currentPage);
         });
-    }, { threshold: 0.2 });
+    };
 
-    items.forEach(item => observer.observe(item));
+    const applyPage = () => {
+        const preset = pagePresets[currentPage % pagePresets.length];
+        const previousHeight = galleryRoot.offsetHeight;
+        if (previousHeight) {
+            galleryRoot.style.minHeight = `${previousHeight}px`;
+        }
+
+        visibleItems.forEach(item => {
+            item.classList.add('is-paged-hidden');
+            item.classList.remove('is-visible');
+        });
+
+        const start = currentPage * perPage;
+        const pageItems = visibleItems.slice(start, start + perPage);
+
+        pageItems.forEach((item, index) => {
+            const vector = preset.vectors[index % preset.vectors.length];
+            item.classList.remove('is-paged-hidden');
+            item.style.setProperty('--reveal-delay', `${index * preset.delayBase}ms`);
+            item.style.setProperty('--fly-x', `${vector.x}px`);
+            item.style.setProperty('--fly-y', `${vector.y}px`);
+            item.style.setProperty('--reveal-duration', `${preset.duration}ms`);
+        });
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                pageItems.forEach(item => item.classList.add('is-visible'));
+            });
+        });
+
+        const totalDuration = preset.duration + (pageItems.length * preset.delayBase);
+        if (previousHeight) {
+            setTimeout(() => {
+                galleryRoot.style.minHeight = '';
+            }, totalDuration);
+        }
+
+        updateDots();
+    };
+
+    const setPage = (pageIndex) => {
+        const pageCount = Math.max(1, Math.ceil(visibleItems.length / perPage));
+        currentPage = Math.min(Math.max(pageIndex, 0), pageCount - 1);
+        applyPage();
+    };
+
+    const updateVisibleItems = () => {
+        visibleItems = items.filter(item => {
+            const category = item.getAttribute('data-category') || 'all';
+            return currentFilter === 'all' || category === currentFilter;
+        });
+
+        perPage = getPerPage();
+        const pageCount = Math.max(1, Math.ceil(visibleItems.length / perPage));
+        currentPage = 0;
+        buildDots(pageCount);
+        applyPage();
+    };
+
+    const handleSwipe = () => {
+        let startX = 0;
+        let startY = 0;
+
+        galleryRoot.addEventListener('touchstart', (event) => {
+            const touch = event.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+        }, { passive: true });
+
+        galleryRoot.addEventListener('touchend', (event) => {
+            const touch = event.changedTouches[0];
+            const deltaX = touch.clientX - startX;
+            const deltaY = touch.clientY - startY;
+
+            if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) {
+                return;
+            }
+
+            if (deltaX < 0) {
+                setPage(currentPage + 1);
+            } else {
+                setPage(currentPage - 1);
+            }
+        }, { passive: true });
+    };
 
     const applyFilter = (filterValue) => {
-        items.forEach(item => {
-            const category = item.getAttribute('data-category') || 'all';
-            const isVisible = filterValue === 'all' || category === filterValue;
-            item.classList.toggle('is-filtered-out', !isVisible);
-        });
+        currentFilter = filterValue;
+        updateVisibleItems();
     };
 
     filterBtns.forEach(btn => {
@@ -387,7 +534,15 @@ function initEditorialGallery() {
         });
     });
 
-    applyFilter('all');
+    updateVisibleItems();
+    handleSwipe();
+
+    window.addEventListener('resize', () => {
+        const nextPerPage = getPerPage();
+        if (nextPerPage !== perPage) {
+            updateVisibleItems();
+        }
+    });
 }
 
 
@@ -396,7 +551,7 @@ let currentImageIndex = 0;
 let lightboxImages = [];
 
 function getVisibleGalleryImages() {
-    return Array.from(document.querySelectorAll('.editorial-item:not(.is-filtered-out) img'))
+    return Array.from(document.querySelectorAll('.editorial-item:not(.is-filtered-out):not(.is-paged-hidden) img'))
         .filter(img => img.getAttribute('src'));
 }
 
@@ -714,3 +869,37 @@ function initVenueSelector() {
         selectVenue(stored);
     }
 }
+
+// ===== LANDING PAGE FUNCTIONS =====
+function openCard() {
+    const landing = document.getElementById('landing');
+    const card = document.getElementById('card');
+    landing.classList.add('hide');
+    card.style.display = 'block';
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            card.classList.add('visible');
+        });
+    });
+    setTimeout(() => {
+        landing.style.display = 'none';
+    }, 900);
+}
+
+// Spawn petals
+(function spawnPetals() {
+    const petalEl = document.getElementById('petals');
+    if (!petalEl) return;
+
+    const symbols = ['🌿', '✿', '❀', '🍃', '✦'];
+    for (let i = 0; i < 14; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.textContent = symbols[i % symbols.length];
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.fontSize = (0.6 + Math.random() * 0.7) + 'rem';
+        p.style.animationDuration = (7 + Math.random() * 9) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        petalEl.appendChild(p);
+    }
+})();

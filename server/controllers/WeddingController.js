@@ -18,6 +18,7 @@ const WeddingController = {
         loveStory: data.loveStory,
         gallery: data.gallery,
         preWeddingVideo: data.preWeddingVideo,
+        preWeddingPhoto: data.preWeddingPhoto,
         digitalGift: data.digitalGift,
         theme: data.theme,
         guestbookEntries: guestbookEntries.slice(-5), // Last 5 entries
