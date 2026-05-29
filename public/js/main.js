@@ -22,14 +22,15 @@ function selectVenue(venue) {
 
     // After animation, hide selector and show landing
     setTimeout(() => {
-        selector.classList.add('hidden');
         const landing = document.getElementById('landing');
         if (landing) {
-            landing.style.display = 'flex';
-            setTimeout(() => {
-                landing.classList.add('visible');
-            }, 100);
+            landing.classList.add('visible');
         }
+
+        // Hide selector after landing is visible
+        setTimeout(() => {
+            selector.classList.add('hidden');
+        }, 100);
     }, 1200);
 
     // Store selection
