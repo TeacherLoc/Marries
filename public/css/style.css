@@ -2379,7 +2379,7 @@ section {
 #landing {
     position: fixed;
     inset: 0;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -2387,6 +2387,12 @@ section {
     z-index: 100;
     transition: opacity 0.8s ease, transform 0.8s ease;
     padding: 20px;
+    opacity: 0;
+}
+
+#landing.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 #landing.hide {
@@ -2989,3 +2995,56 @@ section {
         font-size: 0.85rem;
     }
 }
+
+/* Venue Selection Split Animation */
+@keyframes expandToTop {
+    from {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    to {
+        transform: scaleY(2) translateY(-50%);
+        opacity: 1;
+    }
+}
+
+@keyframes expandToBottom {
+    from {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    to {
+        transform: scaleY(2) translateY(50%);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutCenter {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+.venue-selector.selecting .venue-btn.selected {
+    animation: expandToTop 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 100;
+}
+
+.venue-selector.selecting .venue-btn.selected.bride-venue {
+    animation: expandToBottom 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.venue-selector.selecting .venue-btn:not(.selected),
+.venue-selector.selecting .venue-logo {
+    animation: fadeOutCenter 0.6s ease-out forwards;
+}
+
+.venue-selector.selecting {
+    background: linear-gradient(180deg, #f8f5f2 0%, #f5f1ed 100%);
+}
+

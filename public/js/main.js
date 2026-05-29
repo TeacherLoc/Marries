@@ -6,17 +6,31 @@ function selectVenue(venue) {
     selectedVenue = venue;
     const selector = document.getElementById('venue-selector');
 
-    if (selector) {
-        selector.classList.add('hidden');
+    if (!selector) return;
 
-        // Hide envelope after venue selection
-        const envelope = document.getElementById('envelope-overlay');
-        if (envelope) {
-            setTimeout(() => {
-                envelope.style.display = 'none';
-            }, ENVELOPE_HIDE_DELAY);
+    // Add selecting class to trigger animations
+    selector.classList.add('selecting');
+
+    // Find and mark the selected button
+    const buttons = selector.querySelectorAll('.venue-btn');
+    buttons.forEach(btn => {
+        if ((venue === 'groom' && btn.classList.contains('groom-venue')) ||
+            (venue === 'bride' && btn.classList.contains('bride-venue'))) {
+            btn.classList.add('selected');
         }
-    }
+    });
+
+    // After animation, hide selector and show landing
+    setTimeout(() => {
+        selector.classList.add('hidden');
+        const landing = document.getElementById('landing');
+        if (landing) {
+            landing.style.display = 'flex';
+            setTimeout(() => {
+                landing.classList.add('visible');
+            }, 100);
+        }
+    }, 1200);
 
     // Store selection
     sessionStorage.setItem('selectedVenue', venue);
