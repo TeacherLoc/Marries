@@ -803,7 +803,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initEnvelopeAnimation();
         initVenueSelector();
         updateCountdown();
-        initMusicPlayer();
+        // Music player disabled on landing page
+        // initMusicPlayer();
 
         // Initialize gallery layouts
         if (document.querySelector('.gallery-editorial')) {
