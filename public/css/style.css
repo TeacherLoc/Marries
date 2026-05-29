@@ -2883,7 +2883,7 @@ section {
     justify-content: center;
     background: transparent;
     color: var(--text-color);
-    padding: 70px 20px;
+    padding: 40px 20px;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: none;
@@ -2898,14 +2898,12 @@ section {
 
 .venue-btn:nth-child(1) {
     animation-delay: 0.1s;
-    justify-content: flex-end;
-    padding-bottom: 70px;
+    justify-content: center;
 }
 
 .venue-btn:nth-child(3) {
     animation-delay: 0.3s;
-    justify-content: flex-start;
-    padding-top: 70px;
+    justify-content: center;
 }
 
 .venue-btn::before,
@@ -2971,15 +2969,15 @@ section {
     }
 
     .venue-btn {
-        padding: 50px 15px;
+        padding: 30px 15px;
     }
 
     .venue-btn:nth-child(1) {
-        padding-bottom: 50px;
+        padding-bottom: 30px;
     }
 
     .venue-btn:nth-child(3) {
-        padding-top: 50px;
+        padding-top: 30px;
     }
 
     .venue-btn h2 {
