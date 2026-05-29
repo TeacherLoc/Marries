@@ -39,31 +39,20 @@
 
     <!-- ── LANDING ── -->
     <div id="landing">
-      <div class="names-script">
-        <%= couple.brideName %> <span class="amp">♥</span><br><%= couple.groomName %>
+      <div class="landing-names-section">
+        <span class="landing-name"><%= couple.brideName %></span>
+        <span class="landing-heart">❤</span>
+        <span class="landing-name"><%= couple.groomName %></span>
       </div>
 
-      <div class="envelope-wrap" id="envWrap" onclick="openCard()" title="Click để mở thiệp">
-        <!-- Floral SVG decoration -->
-        <svg class="floral-deco" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="30" r="18" fill="#e8f0df" opacity=".9"/>
-          <circle cx="50" cy="30" r="10" fill="#c5d6b0" opacity=".9"/>
-          <ellipse cx="28" cy="48" rx="12" ry="7" fill="#d4ddc8" transform="rotate(-30 28 48)"/>
-          <ellipse cx="72" cy="48" rx="12" ry="7" fill="#d4ddc8" transform="rotate(30 72 48)"/>
-          <ellipse cx="35" cy="62" rx="10" ry="6" fill="#b8cca2" transform="rotate(-50 35 62)"/>
-          <ellipse cx="65" cy="62" rx="10" ry="6" fill="#b8cca2" transform="rotate(50 65 62)"/>
-          <line x1="50" y1="48" x2="50" y2="85" stroke="#8fa07a" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="50" y1="65" x2="38" y2="75" stroke="#8fa07a" stroke-width="1.8" stroke-linecap="round"/>
-          <line x1="50" y1="72" x2="62" y2="80" stroke="#8fa07a" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-
-        <div class="env-body">
-          <div class="env-flap"></div>
-          <div class="env-ring"></div>
+      <div class="landing-envelope-wrapper" id="envWrap" onclick="openCard()">
+        <div class="landing-envelope">
+          <div class="landing-flap"></div>
+          <div class="landing-seal"></div>
         </div>
       </div>
 
-      <p class="click-hint">Click vào thiệp để mở</p>
+      <div class="landing-cta">CLICK VÀO THIỆP ĐỂ MỞ</div>
 
       <div class="landing-photo-section">
         <% if (preWeddingPhoto) { %>
