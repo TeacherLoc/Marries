@@ -2668,7 +2668,7 @@ section {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 2.5rem 2rem;
+    padding: 2.2rem 1.2rem;
     text-align: center;
     color: #fff;
 }
@@ -2684,7 +2684,7 @@ section {
 
 .hero-names {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(2rem, 8vw, 4.2rem);
+    font-size: clamp(1.9rem, 6vw, 3.4rem);
     line-height: 1.05;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
     display: inline-flex;
@@ -2692,8 +2692,27 @@ section {
     justify-content: center;
     gap: 0.35em;
     white-space: nowrap;
-    max-width: min(92vw, 520px);
+    max-width: 100%;
     margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .hero-text {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hero-names {
+        font-size: clamp(1.7rem, 3.6vw, 2.9rem);
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-names {
+        max-width: min(92vw, 520px);
+    }
 }
 
 @media (max-width: 360px) {

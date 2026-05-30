@@ -109,48 +109,14 @@
         <span class="divider-icon">✦</span>
       </div>
 
-      <div class="section" style="text-align:center">
-        <p class="section-label">Chúng tôi trân trọng kính mời</p>
-        <p class="section-value">Quý gia đình, bạn bè, đồng nghiệp</p>
-        <p class="section-sub">đến dự tiệc mừng hôn lễ của chúng tôi</p>
-      </div>
-
-      <div class="info-grid">
-        <div class="section" style="padding:0">
-          <p class="section-label">Ngày cưới</p>
-          <p class="section-value"><%= new Date(wedding.ceremonyDate).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, ' / ') %></p>
-        </div>
-        <div class="section" style="padding:0">
-          <p class="section-label">Giờ tiệc</p>
-          <p class="section-value"><%= wedding.ceremonyTime %></p>
-          <p class="section-sub">Tiệc bắt đầu</p>
-        </div>
-      </div>
-
-      <div class="section">
-        <p class="section-label">Địa điểm</p>
-        <p class="section-value"><%= wedding.ceremonyLocation %></p>
-        <p class="section-sub"><%= wedding.ceremonyAddress %></p>
-      </div>
-
-      <div class="divider">
-        <span class="divider-icon">✦</span>
-      </div>
-
-      <div class="verse">
-        "<%= couple.welcomeMessage %>"
-      </div>
-
-      <div class="rsvp-wrap" style="margin-top:2rem">
-        <button class="rsvp-btn" onclick="alert('Cảm ơn bạn đã xác nhận tham dự! 🌿')">
-          Xác nhận tham dự
-        </button>
-      </div>
-
-      <div style="text-align:center;margin-top:2.5rem;padding:0 2rem">
-        <p style="font-family:'Great Vibes',cursive;font-size:2rem;color:var(--sage)"><%= couple.brideName %> & <%= couple.groomName %></p>
-        <p style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mid);margin-top:.4rem;opacity:.65"><%= new Date(wedding.ceremonyDate).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, ' · ') %></p>
-      </div>
+            <section class="map-section" style="padding: 0 2rem 2.5rem">
+                <h2>Bản Đồ</h2>
+                <div class="map-container">
+                    <iframe src="https://maps.google.com/maps?q=<%= wedding.coordinates.lat %>,<%= wedding.coordinates.lng %>&z=15&output=embed"
+                                    width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <p class="map-address"><%= wedding.receptionAddress %></p>
+            </section>
     </div>
 
     <div class="wedding-container">
@@ -192,16 +158,6 @@
                     <p class="location"><%= wedding.receptionLocation %></p>
                 </div>
             </div>
-        </section>
-
-        <!-- Map Section -->
-        <section class="map-section">
-            <h2>Bản Đồ</h2>
-            <div class="map-container">
-                <iframe src="https://maps.google.com/maps?q=<%= wedding.coordinates.lat %>,<%= wedding.coordinates.lng %>&z=15&output=embed"
-                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-            <p class="map-address"><%= wedding.receptionAddress %></p>
         </section>
 
         <!-- Love Story -->
