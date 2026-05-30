@@ -2684,9 +2684,23 @@ section {
 
 .hero-names {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(2.8rem, 9vw, 4.2rem);
-    line-height: 1.1;
+    font-size: clamp(2rem, 8vw, 4.2rem);
+    line-height: 1.05;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    white-space: nowrap;
+    max-width: min(92vw, 520px);
+    margin: 0 auto;
+}
+
+@media (max-width: 360px) {
+    .hero-names {
+        font-size: clamp(1.75rem, 7vw, 2.4rem);
+        max-width: 94vw;
+    }
 }
 
 .hero-heart {
