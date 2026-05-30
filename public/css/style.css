@@ -702,6 +702,111 @@ body.theme-watercolor .wedding-container > * {
     padding: 0 2rem 2.5rem;
 }
 
+.countdown-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.2rem 1.2rem;
+    margin-bottom: 1.6rem;
+    background: linear-gradient(135deg, #7a8f72 0%, #5d7259 100%);
+    border-radius: 18px;
+    font-family: var(--font-body);
+    box-shadow: 0 14px 28px rgba(45, 58, 49, 0.18);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.countdown-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.4rem;
+    font-weight: 500;
+}
+
+.countdown-boxes {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 6px;
+    align-items: flex-end;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    width: auto;
+    white-space: nowrap;
+}
+
+.countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.countdown-box {
+    background: #4f634b;
+    border-radius: 12px;
+    width: clamp(44px, 13vw, 80px);
+    height: clamp(46px, 12vw, 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.2rem, 4vw, 2.1rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+    position: relative;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.countdown-box::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.countdown-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+}
+
+.countdown-sep {
+    font-size: clamp(1.2rem, 3.6vw, 1.8rem);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    padding-bottom: 18px;
+    line-height: 1;
+}
+
+@media (max-width: 420px) {
+    .countdown-wrap {
+        padding: 1.6rem 0.6rem 1.8rem;
+    }
+
+    .countdown-boxes {
+        gap: 5px;
+        transform: scale(0.88);
+        transform-origin: center;
+    }
+
+    .countdown-box {
+        width: clamp(38px, 12vw, 64px);
+        height: clamp(40px, 11vw, 58px);
+        font-size: clamp(1rem, 3.6vw, 1.6rem);
+    }
+
+    .countdown-sep {
+        padding-bottom: 12px;
+    }
+}
+
 .calendar-title {
     text-align: center;
     margin-bottom: 10px;

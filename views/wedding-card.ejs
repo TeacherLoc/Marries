@@ -138,6 +138,30 @@
                 const weekLabels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
             %>
             <section class="calendar-section">
+                <div class="countdown-wrap" data-aos="zoom-in">
+                    <div class="countdown-title">Thời gian đếm ngược</div>
+                    <div class="countdown-boxes" id="countdown" data-date="<%= wedding.ceremonyDate %>" data-time="<%= wedding.ceremonyTime %>">
+                        <div class="countdown-unit">
+                            <div class="countdown-box" id="days">00</div>
+                            <div class="countdown-label">Ngày</div>
+                        </div>
+                        <div class="countdown-sep">:</div>
+                        <div class="countdown-unit">
+                            <div class="countdown-box" id="hours">00</div>
+                            <div class="countdown-label">Giờ</div>
+                        </div>
+                        <div class="countdown-sep">:</div>
+                        <div class="countdown-unit">
+                            <div class="countdown-box" id="minutes">00</div>
+                            <div class="countdown-label">Phút</div>
+                        </div>
+                        <div class="countdown-sep">:</div>
+                        <div class="countdown-unit">
+                            <div class="countdown-box" id="seconds">00</div>
+                            <div class="countdown-label">Giây</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="calendar-title">
                     <div class="calendar-year"><%= calYear %></div>
                     <div class="calendar-month"><%= monthLabel %></div>
