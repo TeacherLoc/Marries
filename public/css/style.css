@@ -2483,6 +2483,7 @@ section {
     margin: 2.2rem auto 1.8rem;
     width: 100%;
     max-width: 340px;
+    perspective: 1200px;
 }
 
 .landing-envelope-wrapper:hover .landing-flap {
@@ -2507,7 +2508,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .landing-envelope::before {
