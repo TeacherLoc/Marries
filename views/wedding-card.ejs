@@ -85,8 +85,7 @@
     <!-- ── INVITATION CARD ── -->
     <div id="card">
       <div class="card-hero">
-        <!-- Gradient placeholder simulating a photo -->
-        <div style="position:absolute;inset:0;background:linear-gradient(160deg,#c8d5bc 0%,#8fa07a 40%,#6b7c5c 100%);"></div>
+                <img src="/image/anhcuoi4.jpg" alt="Wedding photo" class="hero-photo">
         <!-- Decorative botanical SVG overlay -->
         <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.18" viewBox="0 0 400 533" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
           <ellipse cx="60" cy="80" rx="35" ry="55" fill="#fff" transform="rotate(-20 60 80)"/>
@@ -98,11 +97,14 @@
         </svg>
         <div class="hero-overlay"></div>
         <div class="hero-text">
-          <p class="hero-tagline">Trân trọng kính mời</p>
           <div class="hero-names">
             <%= couple.brideName %><span class="hero-heart">♥</span><%= couple.groomName %>
           </div>
         </div>
+                <div class="hero-invite">
+                    <p class="hero-invite-line">Trân trọng kính mời</p>
+                    <p class="hero-invite-name">Quý khách</p>
+                </div>
       </div>
 
       <div class="divider" style="margin-top:2.5rem">
