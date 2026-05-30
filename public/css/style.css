@@ -407,12 +407,14 @@ body.theme-watercolor .wedding-container > * {
     animation: fadeInUp 0.8s ease-out;
 }
 
+
 .countdown-timer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     max-width: 100%;
-    justify-items: center;
+    flex-wrap: nowrap;
 }
 
 .countdown-item {

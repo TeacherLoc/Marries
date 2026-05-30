@@ -182,7 +182,12 @@ function initMusicPlayer() {
 
 // ===== COUNTDOWN TIMER =====
 function updateCountdown() {
-    const weddingDate = new Date('<%= wedding.ceremonyDate %>T<%= wedding.ceremonyTime %>:00').getTime();
+    const countdownEl = document.getElementById('countdown');
+    if (!countdownEl) return;
+
+    const dateStr = countdownEl.getAttribute('data-date');
+    const timeStr = countdownEl.getAttribute('data-time') || '00:00';
+    const weddingDate = new Date(`${dateStr}T${timeStr}:00`).getTime();
 
     function countdown() {
         const now = new Date().getTime();
@@ -194,7 +199,6 @@ function updateCountdown() {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const countdownEl = document.getElementById('countdown');
             countdownEl.style.display = 'grid';
 
             document.getElementById('days').textContent = days;
@@ -202,7 +206,6 @@ function updateCountdown() {
             document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         } else {
-            const countdownEl = document.getElementById('countdown');
             countdownEl.style.display = 'flex';
             countdownEl.style.justifyContent = 'center';
             countdownEl.innerHTML = '<p class="countdown-thanks"><span class="heart">❤️</span><span class="text">Cảm ơn vì đã tham dự!</span><span class="heart">❤️</span></p>';
