@@ -8,7 +8,7 @@
     <!-- Google Fonts for Vietnamese Support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/css/style.css">
 
@@ -208,21 +208,117 @@
             </div>
         </section>
 
-        <!-- Love Story -->
-        <section class="love-story-section" data-aos="fade-up">
-            <h2>Câu Chuyện Tình Yêu</h2>
-            <div class="timeline">
-                <% loveStory.forEach((story, index) => { %>
-                    <div class="timeline-item <%= index % 2 === 0 ? 'left' : 'right' %>">
-                        <div class="timeline-marker">
-                            <span class="timeline-year"><%= story.year %></span>
+        <!-- Love Story (Replaced with invitation card) -->
+        <section class="love-story-section story-card-section" data-aos="fade-up">
+            <h2>Thiệp Mời</h2>
+            <%
+                const inviteWeekday = ceremonyDate.toLocaleDateString('vi-VN', { weekday: 'long' });
+            %>
+            <div class="story-card-wrap">
+                <div class="invite-card">
+                    <svg class="floral-corner" viewBox="0 0 160 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M-5 155 Q30 100 80 50" stroke="#8aaa78" stroke-width="1.4" fill="none"/>
+                        <path d="M-5 155 Q40 110 100 70" stroke="#8aaa78" stroke-width="0.8" fill="none" opacity="0.5"/>
+                        <path d="M10 130 Q40 90 70 40" stroke="#8aaa78" stroke-width="0.9" fill="none" opacity="0.6"/>
+                        <path d="M30 140 Q55 110 90 75" stroke="#8aaa78" stroke-width="0.7" fill="none" opacity="0.4"/>
+
+                        <ellipse cx="68" cy="58" rx="15" ry="7" fill="#8aaa78" opacity="0.55" transform="rotate(-50 68 58)"/>
+                        <ellipse cx="48" cy="82" rx="13" ry="6.5" fill="#8aaa78" opacity="0.5" transform="rotate(-35 48 82)"/>
+                        <ellipse cx="28" cy="110" rx="12" ry="6" fill="#8aaa78" opacity="0.45" transform="rotate(-20 28 110)"/>
+                        <ellipse cx="88" cy="42" rx="11" ry="5.5" fill="#aac898" opacity="0.45" transform="rotate(-60 88 42)"/>
+                        <ellipse cx="35" cy="100" rx="10" ry="5" fill="#aac898" opacity="0.4" transform="rotate(-15 35 100)"/>
+                        <ellipse cx="72" cy="72" rx="10" ry="5" fill="#8aaa78" opacity="0.38" transform="rotate(-45 72 72)"/>
+
+                        <circle cx="82" cy="36" r="9" fill="white" opacity="0.9"/>
+                        <ellipse cx="82" cy="26" rx="4" ry="5.5" fill="white" opacity="0.8"/>
+                        <ellipse cx="82" cy="46" rx="4" ry="5.5" fill="white" opacity="0.8"/>
+                        <ellipse cx="72" cy="36" rx="5.5" ry="4" fill="white" opacity="0.8"/>
+                        <ellipse cx="92" cy="36" rx="5.5" ry="4" fill="white" opacity="0.8"/>
+                        <ellipse cx="75" cy="29" rx="4.5" ry="5" fill="white" opacity="0.65" transform="rotate(-45 75 29)"/>
+                        <ellipse cx="89" cy="29" rx="4.5" ry="5" fill="white" opacity="0.65" transform="rotate(45 89 29)"/>
+                        <ellipse cx="75" cy="43" rx="4.5" ry="5" fill="white" opacity="0.65" transform="rotate(45 75 43)"/>
+                        <ellipse cx="89" cy="43" rx="4.5" ry="5" fill="white" opacity="0.65" transform="rotate(-45 89 43)"/>
+                        <circle cx="82" cy="36" r="5" fill="#e8d0a0" opacity="0.9"/>
+                        <circle cx="82" cy="36" r="3" fill="#c9a96e" opacity="0.9"/>
+                        <circle cx="82" cy="36" r="1.5" fill="#a07830"/>
+
+                        <circle cx="48" cy="70" r="7" fill="white" opacity="0.85"/>
+                        <ellipse cx="48" cy="62" rx="3" ry="4.5" fill="white" opacity="0.75"/>
+                        <ellipse cx="48" cy="78" rx="3" ry="4.5" fill="white" opacity="0.75"/>
+                        <ellipse cx="40" cy="70" rx="4.5" ry="3" fill="white" opacity="0.75"/>
+                        <ellipse cx="56" cy="70" rx="4.5" ry="3" fill="white" opacity="0.75"/>
+                        <ellipse cx="42" cy="64" rx="3.5" ry="4" fill="white" opacity="0.55" transform="rotate(-45 42 64)"/>
+                        <ellipse cx="54" cy="64" rx="3.5" ry="4" fill="white" opacity="0.55" transform="rotate(45 54 64)"/>
+                        <ellipse cx="42" cy="76" rx="3.5" ry="4" fill="white" opacity="0.55" transform="rotate(45 42 76)"/>
+                        <ellipse cx="54" cy="76" rx="3.5" ry="4" fill="white" opacity="0.55" transform="rotate(-45 54 76)"/>
+                        <circle cx="48" cy="70" r="4" fill="#e8d0a0" opacity="0.9"/>
+                        <circle cx="48" cy="70" r="2.5" fill="#c9a96e"/>
+
+                        <circle cx="105" cy="60" r="5" fill="white" opacity="0.8"/>
+                        <ellipse cx="105" cy="54" rx="2.5" ry="3.5" fill="white" opacity="0.7"/>
+                        <ellipse cx="105" cy="66" rx="2.5" ry="3.5" fill="white" opacity="0.7"/>
+                        <ellipse cx="99" cy="60" rx="3.5" ry="2.5" fill="white" opacity="0.7"/>
+                        <ellipse cx="111" cy="60" rx="3.5" ry="2.5" fill="white" opacity="0.7"/>
+                        <circle cx="105" cy="60" r="3" fill="#e8d0a0"/>
+                        <circle cx="105" cy="60" r="1.8" fill="#c9a96e"/>
+
+                        <circle cx="95" cy="22" r="3" fill="#c9a96e" opacity="0.7"/>
+                        <circle cx="100" cy="15" r="2" fill="#c9a96e" opacity="0.55"/>
+                        <circle cx="108" cy="22" r="2.5" fill="#e8d5a0" opacity="0.65"/>
+                        <circle cx="20" cy="120" r="2.5" fill="#c9a96e" opacity="0.5"/>
+                        <circle cx="12" cy="112" r="2" fill="#c9a96e" opacity="0.45"/>
+
+                        <path d="M82 36 Q88 20 96 14" stroke="#8aaa78" stroke-width="0.8" fill="none" opacity="0.6"/>
+                        <path d="M82 36 Q72 22 70 14" stroke="#8aaa78" stroke-width="0.7" fill="none" opacity="0.5"/>
+                        <path d="M48 70 Q38 58 30 52" stroke="#8aaa78" stroke-width="0.7" fill="none" opacity="0.5"/>
+                    </svg>
+
+                    <div class="invite-photos-area">
+                        <div class="polaroid polaroid-groom">
+                            <div class="photo-frame">
+                                <img src="/image/chure.jpg" alt="Anh chu re" loading="lazy">
+                            </div>
+                                <div class="polaroid-caption">
+                                    <span class="role">Chú rể</span>
+                                    <span class="name"><%= couple.groomName %></span>
+                                </div>
                         </div>
-                        <div class="timeline-content">
-                            <h3><%= story.title %></h3>
-                            <p><%= story.description %></p>
+
+                        <div class="polaroid polaroid-bride">
+                            <div class="photo-frame">
+                                <img src="/image/codau.jpg" alt="Anh co dau" loading="lazy">
+                            </div>
+                                <div class="polaroid-caption">
+                                    <span class="role">Cô dâu</span>
+                                    <span class="name"><%= couple.brideName %></span>
+                                </div>
                         </div>
                     </div>
-                <% }); %>
+
+                    <div class="invite-bottom">
+                        <div class="invite-divider"><span>✦</span></div>
+                        <p class="invite-text">
+                            Trân trọng kính mời quý khách<br>đến dự lễ thành hôn của chúng tôi
+                        </p>
+                        <div class="invite-divider"><span>✦</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-family">
+                <h3 class="story-family-title">Gia Đình</h3>
+                <div class="parents-grid">
+                    <div class="parent-info bride-side">
+                        <h4>Gia Đình Cô Dâu</h4>
+                        <p>Ông: <%= couple.parentsBride.father %></p>
+                        <p>Bà: <%= couple.parentsBride.mother %></p>
+                    </div>
+                    <div class="parent-info groom-side">
+                        <h4>Gia Đình Chú Rể</h4>
+                        <p>Ông: <%= couple.parentsGroom.father %></p>
+                        <p>Bà: <%= couple.parentsGroom.mother %></p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -271,22 +367,6 @@
             </section>
         <% } %>
 
-        <!-- Parents Information -->
-        <section class="parents-section">
-            <h2>Gia Đình</h2>
-            <div class="parents-grid">
-                <div class="parent-info bride-side">
-                    <h3>Gia Đình Cô Dâu</h3>
-                    <p>Ông: <%= couple.parentsBride.father %></p>
-                    <p>Bà: <%= couple.parentsBride.mother %></p>
-                </div>
-                <div class="parent-info groom-side">
-                    <h3>Gia Đình Chú Rể</h3>
-                    <p>Ông: <%= couple.parentsGroom.father %></p>
-                    <p>Bà: <%= couple.parentsGroom.mother %></p>
-                </div>
-            </div>
-        </section>
 
         <!-- Digital Gift / Mừng Cưới -->
         <section class="gift-section is-hidden">
