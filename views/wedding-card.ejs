@@ -295,6 +295,25 @@
                         </div>
                     </div>
 
+                    <!-- =================================== -->
+                    <!--     Thông tin gia đình hai bên     -->
+                    <!-- =================================== -->
+                    <div class="invite-family-details">
+                        <div class="family-side bride-side">
+                            <h4>Nhà Gái</h4>
+                            <p>Ông: <strong><%= couple.parentsBride.father %></strong></p>
+                            <p>Bà: <strong><%= couple.parentsBride.mother %></strong></p>
+                        </div>
+                        <div class="family-divider">
+                            <span class="heart-icon">❤</span>
+                        </div>
+                        <div class="family-side groom-side">
+                            <h4>Nhà Trai</h4>
+                            <p>Ông: <strong><%= couple.parentsGroom.father %></strong></p>
+                            <p>Bà: <strong><%= couple.parentsGroom.mother %></strong></p>
+                        </div>
+                    </div>
+
                     <div class="invite-bottom">
                         <div class="invite-divider"><span>✦</span></div>
                         <p class="invite-text">
@@ -305,21 +324,7 @@
                 </div>
             </div>
 
-            <div class="story-family">
-                <h3 class="story-family-title">Gia Đình</h3>
-                <div class="parents-grid">
-                    <div class="parent-info bride-side">
-                        <h4>Gia Đình Cô Dâu</h4>
-                        <p>Ông: <%= couple.parentsBride.father %></p>
-                        <p>Bà: <%= couple.parentsBride.mother %></p>
-                    </div>
-                    <div class="parent-info groom-side">
-                        <h4>Gia Đình Chú Rể</h4>
-                        <p>Ông: <%= couple.parentsGroom.father %></p>
-                        <p>Bà: <%= couple.parentsGroom.mother %></p>
-                    </div>
-                </div>
-            </div>
+            <% /* Section Gia Đình đã được gộp vào trong thiệp mời ở trên */ %>
         </section>
 
         <!-- Photo Gallery Editorial -->
@@ -336,17 +341,30 @@
                 <div class="gallery-editorial">
                     <% gallery.forEach((photo, index) => { %>
                         <%
-                            const layoutClass = index === 0
-                                ? 'editorial-item--hero'
-                                : (index % 5 === 1
-                                    ? 'editorial-item--tall'
-                                    : (index % 5 === 2
-                                        ? 'editorial-item--wide'
-                                        : 'editorial-item--square'));
+                            // A more varied and interesting layout pattern
+                            const layouts = [
+                                'editorial-item--hero',   // index 0
+                                'editorial-item--tall',   // index 1
+                                'editorial-item--square', // index 2
+                                'editorial-item--square', // index 3
+                                'editorial-item--wide',   // index 4
+                                'editorial-item--square', // index 5
+                                'editorial-item--tall',   // index 6
+                                'editorial-item--wide',   // index 7
+                                'editorial-item--square', // index 8
+                            ];
+                            const layoutClass = layouts[index % layouts.length];
+
+                            // Add a slight random rotation for reveal effect variety
+                            const rotations = [-1.5, 2, -1, 1.8, -2.2, 1.2];
+                            const rotation = rotations[index % rotations.length];
                         %>
-                        <figure class="editorial-item <%= layoutClass %>" data-category="<%= photo.category || 'all' %>">
+                        <figure class="editorial-item <%= layoutClass %>" 
+                                data-category="<%= photo.category || 'all' %>"
+                                data-reveal-rotation="<%= rotation %>">
                             <div class="editorial-media">
                                 <img src="<%= photo.url %>" alt="<%= photo.caption %>" loading="lazy">
+                                <div class="media-overlay"></div>
                             </div>
                             <figcaption class="editorial-caption"><%= photo.caption %></figcaption>
                         </figure>

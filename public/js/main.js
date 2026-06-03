@@ -477,6 +477,18 @@ function initEditorialGallery() {
             ],
             duration: 700,
             delayBase: 110
+        },
+        {
+            vectors: [
+                { x: 25, y: -25 },
+                { x: -25, y: -25 },
+                { x: 25, y: 25 },
+                { x: -25, y: 25 },
+                { x: 0, y: 35 },
+                { x: 0, y: -35 }
+            ],
+            duration: 650,
+            delayBase: 80
         }
     ];
 
@@ -527,10 +539,12 @@ function initEditorialGallery() {
 
         pageItems.forEach((item, index) => {
             const vector = preset.vectors[index % preset.vectors.length];
+            const rotation = item.dataset.revealRotation || 0;
             item.classList.remove('is-paged-hidden');
             item.style.setProperty('--reveal-delay', `${index * preset.delayBase}ms`);
             item.style.setProperty('--fly-x', `${vector.x}px`);
             item.style.setProperty('--fly-y', `${vector.y}px`);
+            item.style.setProperty('--fly-rot', `${rotation}deg`);
             item.style.setProperty('--reveal-duration', `${preset.duration}ms`);
         });
 
