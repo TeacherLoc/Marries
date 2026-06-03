@@ -1,6 +1,26 @@
 // ===== VENUE SELECTOR =====
 let selectedVenue = 'bride'; // Default venue
 const ENVELOPE_HIDE_DELAY = 2500;
+let weddingConfig = null;
+
+// ===== LOAD DYNAMIC CONFIG =====
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/api/wedding-data');
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.wedding) {
+                weddingConfig = data.wedding;
+                // Cập nhật lại ngày dựa theo config ngay khi tải xong
+                if (typeof updateDateForVenue === 'function') {
+                    updateDateForVenue(selectedVenue);
+                }
+            }
+        }
+    } catch (error) {
+        console.log('Sử dụng ngày mặc định do không lấy được cấu hình');
+    }
+});
 
 function selectVenue(venue) {
     selectedVenue = venue;
@@ -38,7 +58,13 @@ function selectVenue(venue) {
 
     // Update map if visible
     updateMapForVenue(venue);
+
+    // Cập nhật ngày tháng dựa theo tiệc được chọn
+    if (typeof updateDateForVenue === 'function') updateDateForVenue(venue);
 }
+
+window.selectVenue = selectVenue; // Khai báo toàn cục để chắc chắn HTML gọi được hàm này
+
 function initEnvelopeAnimation() {
     const envelope = document.getElementById('envelope-overlay');
     if (!envelope) return;
@@ -185,11 +211,11 @@ function updateCountdown() {
     const countdownEl = document.getElementById('countdown');
     if (!countdownEl) return;
 
-    const dateStr = countdownEl.getAttribute('data-date');
-    const timeStr = countdownEl.getAttribute('data-time') || '00:00';
-    const weddingDate = new Date(`${dateStr}T${timeStr}:00`).getTime();
-
     function countdown() {
+        const dateStr = countdownEl.getAttribute('data-date');
+        const timeStr = countdownEl.getAttribute('data-time') || '00:00';
+        const weddingDate = new Date(`${dateStr}T${timeStr}:00`).getTime();
+
         const now = new Date().getTime();
         const distance = weddingDate - now;
 
@@ -937,18 +963,114 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== MAP UPDATE FOR VENUE =====
 function updateMapForVenue(venue) {
     const mapFrame = document.querySelector('.map-container iframe');
-    if (!mapFrame) return;
+    const mapAddress = document.querySelector('.map-address');
 
-    let lat, lng;
+    let lat, lng, address;
     if (venue === 'bride') {
         lat = 10.9382941;
         lng = 106.6881491;
+        address = '37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam';
     } else {
         lat = 21.0285;
         lng = 105.8542;
+        address = '123 Đường Tôn Đức Thắng, Hà Nội';
     }
 
-    mapFrame.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+    if (weddingConfig) {
+        if (venue === 'bride' && weddingConfig.brideReception) {
+            lat = weddingConfig.brideReception.coordinates?.lat || lat;
+            lng = weddingConfig.brideReception.coordinates?.lng || lng;
+            address = weddingConfig.brideReception.address || address;
+        } else if (venue === 'groom' && weddingConfig.groomReception) {
+            lat = weddingConfig.groomReception.coordinates?.lat || lat;
+            lng = weddingConfig.groomReception.coordinates?.lng || lng;
+            address = weddingConfig.groomReception.address || address;
+        }
+    }
+
+    if (mapFrame) {
+        mapFrame.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+    }
+    if (mapAddress) {
+        mapAddress.textContent = address;
+    }
+}
+
+// ===== DATE UPDATE FOR VENUE =====
+function updateDateForVenue(venue) {
+    // Ngày mặc định ban đầu nếu server chưa phản hồi
+    let dateStr = venue === 'groom' ? '2026-07-19' : '2026-07-12';
+    let timeStr = venue === 'groom' ? '11:00' : '18:00';
+    let locationStr = venue === 'groom' ? 'Nhà hàng khách sạn Thắng Lợi' : 'Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace';
+
+    // Đọc ngày từ cấu hình JSON của bạn để dễ tinh chỉnh
+    if (weddingConfig) {
+        if (venue === 'groom' && weddingConfig.groomReception) {
+            dateStr = weddingConfig.groomReception.date || dateStr;
+            timeStr = weddingConfig.groomReception.time || timeStr;
+            locationStr = weddingConfig.groomReception.location || locationStr;
+        } else if (venue === 'bride' && weddingConfig.brideReception) {
+            dateStr = weddingConfig.brideReception.date || dateStr;
+            timeStr = weddingConfig.brideReception.time || timeStr;
+            locationStr = weddingConfig.brideReception.location || locationStr;
+        }
+    }
+
+    // Chuyển định dạng YYYY-MM-DD sang DD/MM/YYYY cho hiển thị Text
+    const parts = dateStr.split('-');
+    const dateDisplayStr = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dateStr;
+
+    // 1. Cập nhật ngày cho countdown để bộ đếm lùi tự điều chỉnh
+    const countdownEl = document.getElementById('countdown');
+    if (countdownEl) {
+        countdownEl.setAttribute('data-date', dateStr);
+        countdownEl.setAttribute('data-time', timeStr);
+    }
+
+    // 2. Cập nhật các đoạn text hiển thị ngày trên giao diện
+    const dateElements = document.querySelectorAll('.ceremony-date, .reception-date, .wedding-date, .date-display, #ceremony-date, #reception-date, #wedding-date');
+    dateElements.forEach(el => {
+        el.textContent = dateDisplayStr;
+    });
+
+    // 3. Cập nhật chi tiết thời gian và địa điểm Tiệc Cưới
+    const receptionTimeEl = document.querySelector('.detail-card.reception .time');
+    const receptionLocationEl = document.querySelector('.detail-card.reception .location');
+    if (receptionTimeEl) receptionTimeEl.textContent = timeStr;
+    if (receptionLocationEl) receptionLocationEl.textContent = locationStr;
+
+    // 4. Vẽ lại toàn bộ tờ lịch (Calendar) và cập nhật ngày đánh dấu
+    if (parts.length === 3) {
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Tháng trong JS tính từ 0
+        const day = parseInt(parts[2], 10);
+
+        // Cập nhật tiêu đề tháng/năm
+        const calYearEl = document.querySelector('.calendar-year');
+        const calMonthEl = document.querySelector('.calendar-month');
+        if (calYearEl) calYearEl.textContent = year;
+        if (calMonthEl) calMonthEl.textContent = `Tháng ${month + 1}`;
+
+        // Cập nhật lại toàn bộ các ô ngày trong lưới
+        const calendarDaysContainer = document.querySelector('.calendar-days');
+        if (calendarDaysContainer) {
+            const firstDow = new Date(year, month, 1).getDay();
+            const leadingEmpty = (firstDow + 6) % 7; // Dịch chủ nhật (0) về cuối tuần
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            let daysHtml = '';
+            for (let i = 0; i < leadingEmpty; i++) {
+                daysHtml += '<div class="calendar-cell is-empty"></div>';
+            }
+            
+            for (let d = 1; d <= daysInMonth; d++) {
+                const isSelected = d === day ? 'is-selected' : ''; // Dùng is-selected theo đúng class CSS của EJS
+                daysHtml += `<div class="calendar-cell ${isSelected}"><span>${d}</span></div>`;
+            }
+            
+            calendarDaysContainer.innerHTML = daysHtml;
+        }
+    }
 }
 
 // ===== INIT VENUE SELECTOR =====
