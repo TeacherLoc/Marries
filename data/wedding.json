@@ -3,12 +3,12 @@
     "brideName": "Ngọc Dung",
     "groomName": "Minh Tiến",
     "parentsBride": {
-      "father": "Võ Chí Dũng",
-      "mother": "Nguyễn Thị Thu Mai"
-    },
-    "parentsGroom": {
       "father": "Lê Văn Chí",
       "mother": "Nguyễn Thị Phượng"
+    },
+    "parentsGroom": {
+      "father": "Võ Chí Dũng",
+      "mother": "Nguyễn Thị Phượng Nguyễn Thị Thu Mai"
     },
     "welcomeMessage": "Trân trọng kính mời quý khách tham dự lễ cưới của chúng tôi"
   },
