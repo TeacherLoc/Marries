@@ -2,12 +2,67 @@ const WeddingModel = require('../models/WeddingModel');
 const QRCode = require('qrcode');
 const https = require('https');
 
+// Thay chuỗi bên dưới bằng URL Web App MỚI mà bạn vừa copy ở Bước 1
+const GG_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbxJF46IeiCRTuTQcilWmFzuk5jqMznWvPOz1EHYz9uibssrH6gyc2Z2mol0umvteBYy/exec';
+
+// Biến lưu trữ Cache (Bộ nhớ đệm)
+let cachedGuestbook = [];
+let lastFetchTime = 0;
+const CACHE_TTL = 2 * 60 * 1000; // Thời gian làm mới cache: 2 phút (tính bằng milliseconds)
+
+// Hàm hỗ trợ kéo dữ liệu trực tiếp từ Google Sheets
+const fetchFromGoogleSheets = () => {
+  return new Promise((resolve) => {
+    if (!GG_SHEET_WEBHOOK) return resolve([]);
+    
+    // Nếu đã có cache và chưa quá 2 phút, trả về ngay lập tức (không bắt người dùng chờ)
+    if (cachedGuestbook.length > 0 && (Date.now() - lastFetchTime < CACHE_TTL)) {
+      return resolve(cachedGuestbook);
+    }
+
+    const request = (url) => {
+      https.get(url, (res) => {
+        // Xử lý vòng lặp chuyển hướng đặc thù của Google
+        if (res.statusCode === 301 || res.statusCode === 302) {
+          return request(res.headers.location);
+        }
+        let rawData = '';
+        res.on('data', chunk => rawData += chunk);
+        res.on('end', () => {
+          try { 
+            let parsedData = JSON.parse(rawData);
+            // Tự động nhận diện và loại bỏ dòng tiêu đề (dòng 1) nếu có
+            if (parsedData.length > 0) {
+              const first = parsedData[0];
+              const isHeader = 
+                String(first.timestamp).toLowerCase().includes('thời gian') ||
+                String(first.guestName).toLowerCase().includes('tên') ||
+                String(first.message).toLowerCase().includes('lời chúc');
+              
+              if (isHeader) {
+                parsedData.shift(); // Cắt bỏ dòng đầu tiên (tiêu đề)
+              }
+            }
+            
+            // Cập nhật Cache mới
+            cachedGuestbook = parsedData;
+            lastFetchTime = Date.now();
+            resolve(parsedData); 
+          }
+          catch (e) { resolve(cachedGuestbook.length > 0 ? cachedGuestbook : []); }
+        });
+      }).on('error', () => resolve(cachedGuestbook.length > 0 ? cachedGuestbook : []));
+    };
+    request(GG_SHEET_WEBHOOK);
+  });
+};
+
 const WeddingController = {
   // Render main wedding card page
   getWeddingCard: async (req, res) => {
     try {
       const data = WeddingModel.getAll();
-      const guestbookEntries = WeddingModel.getAllGuestbookEntries();
+      const guestbookEntries = await fetchFromGoogleSheets();
 
       // Generate QR code for the website URL
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -66,13 +121,12 @@ const WeddingController = {
         return res.status(400).json({ error: 'Missing required fields' });
       }
 
-      const entry = WeddingModel.addGuestbookEntry({ guestName, message });
+      // NGỪNG LƯU TĨNH - Chỉ tạo dấu thời gian để đẩy thẳng lên Sheets
+      const timestamp = new Date().toISOString();
 
       // --- BẮN DỮ LIỆU SANG GOOGLE SHEETS ---
-      // Thay chuỗi bên dưới bằng URL Web App mà bạn đã copy từ Google Sheets
-      const GG_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbxghiEm_VLpDdSzURN5OnA3UBh_OTw98Qocy7kvm6LTbCGVOkL-wqd00CrHPd_9wtGd/exec'; 
       if (GG_SHEET_WEBHOOK) {
-        const payload = JSON.stringify({ guestName, message, timestamp: entry.timestamp });
+        const payload = JSON.stringify({ guestName, message, timestamp: timestamp });
         const webhookUrl = new URL(GG_SHEET_WEBHOOK);
         
         const reqSheet = https.request({
@@ -92,10 +146,13 @@ const WeddingController = {
         reqSheet.on('error', (e) => console.error('Lỗi kết nối GG Sheets:', e.message));
         reqSheet.write(payload);
         reqSheet.end();
+        
+        // Thêm ngay lời chúc mới vào bộ đệm để khách thấy ngay lập tức trên web
+        cachedGuestbook.push({ guestName, message, timestamp: timestamp });
       }
       // ---------------------------------------
 
-      res.json({ success: true, entry });
+      res.json({ success: true, entry: { guestName, message, timestamp } });
     } catch (error) {
       console.error('Error submitting guestbook entry:', error);
       res.status(500).json({ error: 'Error submitting guestbook entry' });
@@ -103,10 +160,10 @@ const WeddingController = {
   },
 
   // Admin page - view all RSVPs and guestbook
-  getAdminDashboard: (req, res) => {
+  getAdminDashboard: async (req, res) => {
     try {
       const rsvps = WeddingModel.getAllRSVPs();
-      const guestbook = WeddingModel.getAllGuestbookEntries();
+      const guestbook = await fetchFromGoogleSheets();
       const data = WeddingModel.getAll();
 
       // Calculate statistics
