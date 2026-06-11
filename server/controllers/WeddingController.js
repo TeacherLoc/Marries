@@ -1,5 +1,6 @@
 const WeddingModel = require('../models/WeddingModel');
 const QRCode = require('qrcode');
+const https = require('https');
 
 const WeddingController = {
   // Render main wedding card page
@@ -66,6 +67,34 @@ const WeddingController = {
       }
 
       const entry = WeddingModel.addGuestbookEntry({ guestName, message });
+
+      // --- BẮN DỮ LIỆU SANG GOOGLE SHEETS ---
+      // Thay chuỗi bên dưới bằng URL Web App mà bạn đã copy từ Google Sheets
+      const GG_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbxghiEm_VLpDdSzURN5OnA3UBh_OTw98Qocy7kvm6LTbCGVOkL-wqd00CrHPd_9wtGd/exec'; 
+      if (GG_SHEET_WEBHOOK) {
+        const payload = JSON.stringify({ guestName, message, timestamp: entry.timestamp });
+        const webhookUrl = new URL(GG_SHEET_WEBHOOK);
+        
+        const reqSheet = https.request({
+          hostname: webhookUrl.hostname,
+          path: webhookUrl.pathname + webhookUrl.search,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(payload)
+          }
+        }, (resSheet) => {
+          // Google Apps Script luôn trả về 302 Redirect khi POST thành công
+          if (resSheet.statusCode === 302 || resSheet.statusCode === 301) {
+            https.get(resSheet.headers.location); // Gọi tiếp link redirect để hoàn tất
+          }
+        });
+        reqSheet.on('error', (e) => console.error('Lỗi kết nối GG Sheets:', e.message));
+        reqSheet.write(payload);
+        reqSheet.end();
+      }
+      // ---------------------------------------
+
       res.json({ success: true, entry });
     } catch (error) {
       console.error('Error submitting guestbook entry:', error);
