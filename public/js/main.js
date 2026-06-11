@@ -458,207 +458,138 @@ function initEditorialGallery() {
         return;
     }
 
-    const items = Array.from(galleryRoot.querySelectorAll('.editorial-item'));
+    // 1. Ẩn đi các nút bộ lọc và phân trang (nếu có)
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const filterContainer = document.querySelector('.gallery-filters, .filters');
     const paginationEl = document.querySelector('.gallery-pagination');
 
-    let currentFilter = 'all';
-    let currentPage = 0;
-    let perPage = 3;
-    let visibleItems = items;
-
-    const pagePresets = [
-        {
-            vectors: [
-                { x: -34, y: 22 },
-                { x: 22, y: 28 },
-                { x: 0, y: 40 },
-                { x: -18, y: 26 },
-                { x: 28, y: 18 },
-                { x: 10, y: 34 }
-            ],
-            duration: 520,
-            delayBase: 70
-        },
-        {
-            vectors: [
-                { x: 30, y: 18 },
-                { x: -26, y: 30 },
-                { x: 14, y: 36 },
-                { x: -14, y: 20 },
-                { x: 26, y: 24 },
-                { x: -30, y: 14 }
-            ],
-            duration: 620,
-            delayBase: 90
-        },
-        {
-            vectors: [
-                { x: 0, y: 44 },
-                { x: 20, y: 34 },
-                { x: -20, y: 34 },
-                { x: 16, y: 22 },
-                { x: -16, y: 22 },
-                { x: 0, y: 30 }
-            ],
-            duration: 700,
-            delayBase: 110
-        },
-        {
-            vectors: [
-                { x: 25, y: -25 },
-                { x: -25, y: -25 },
-                { x: 25, y: 25 },
-                { x: -25, y: 25 },
-                { x: 0, y: 35 },
-                { x: 0, y: -35 }
-            ],
-            duration: 650,
-            delayBase: 80
-        }
-    ];
-
-    const getPerPage = () => (window.innerWidth <= 768 ? 3 : 6);
-
-    const buildDots = (count) => {
-        if (!paginationEl) {
-            return;
-        }
-
-        paginationEl.innerHTML = '';
-        for (let i = 0; i < count; i += 1) {
-            const dot = document.createElement('button');
-            dot.type = 'button';
-            dot.className = 'gallery-dot';
-            dot.setAttribute('aria-label', `Trang ${i + 1}`);
-            dot.addEventListener('click', () => {
-                setPage(i);
-            });
-            paginationEl.appendChild(dot);
-        }
-    };
-
-    const updateDots = () => {
-        if (!paginationEl) {
-            return;
-        }
-        const dots = Array.from(paginationEl.querySelectorAll('.gallery-dot'));
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('is-active', index === currentPage);
-        });
-    };
-
-    const applyPage = () => {
-        const preset = pagePresets[currentPage % pagePresets.length];
-        const previousHeight = galleryRoot.offsetHeight;
-        if (previousHeight) {
-            galleryRoot.style.minHeight = `${previousHeight}px`;
-        }
-
-        visibleItems.forEach(item => {
-            item.classList.add('is-paged-hidden');
-            item.classList.remove('is-visible');
-        });
-
-        const start = currentPage * perPage;
-        const pageItems = visibleItems.slice(start, start + perPage);
-
-        pageItems.forEach((item, index) => {
-            const vector = preset.vectors[index % preset.vectors.length];
-            const rotation = item.dataset.revealRotation || 0;
-            item.classList.remove('is-paged-hidden');
-            item.style.setProperty('--reveal-delay', `${index * preset.delayBase}ms`);
-            item.style.setProperty('--fly-x', `${vector.x}px`);
-            item.style.setProperty('--fly-y', `${vector.y}px`);
-            item.style.setProperty('--fly-rot', `${rotation}deg`);
-            item.style.setProperty('--reveal-duration', `${preset.duration}ms`);
-        });
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                pageItems.forEach(item => item.classList.add('is-visible'));
-            });
-        });
-
-        const totalDuration = preset.duration + (pageItems.length * preset.delayBase);
-        if (previousHeight) {
-            setTimeout(() => {
-                galleryRoot.style.minHeight = '';
-            }, totalDuration);
-        }
-
-        updateDots();
-    };
-
-    const setPage = (pageIndex) => {
-        const pageCount = Math.max(1, Math.ceil(visibleItems.length / perPage));
-        currentPage = Math.min(Math.max(pageIndex, 0), pageCount - 1);
-        applyPage();
-    };
-
-    const updateVisibleItems = () => {
-        visibleItems = items.filter(item => {
-            const category = item.getAttribute('data-category') || 'all';
-            return currentFilter === 'all' || category === currentFilter;
-        });
-
-        perPage = getPerPage();
-        const pageCount = Math.max(1, Math.ceil(visibleItems.length / perPage));
-        currentPage = 0;
-        buildDots(pageCount);
-        applyPage();
-    };
-
-    const handleSwipe = () => {
-        let startX = 0;
-        let startY = 0;
-
-        galleryRoot.addEventListener('touchstart', (event) => {
-            const touch = event.touches[0];
-            startX = touch.clientX;
-            startY = touch.clientY;
-        }, { passive: true });
-
-        galleryRoot.addEventListener('touchend', (event) => {
-            const touch = event.changedTouches[0];
-            const deltaX = touch.clientX - startX;
-            const deltaY = touch.clientY - startY;
-
-            if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) {
-                return;
-            }
-
-            if (deltaX < 0) {
-                setPage(currentPage + 1);
-            } else {
-                setPage(currentPage - 1);
-            }
-        }, { passive: true });
-    };
-
-    const applyFilter = (filterValue) => {
-        currentFilter = filterValue;
-        updateVisibleItems();
-    };
-
+    if (filterContainer) filterContainer.style.display = 'none';
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filterValue = btn.getAttribute('data-filter');
-            applyFilter(filterValue);
-        });
-    });
-
-    updateVisibleItems();
-    handleSwipe();
-
-    window.addEventListener('resize', () => {
-        const nextPerPage = getPerPage();
-        if (nextPerPage !== perPage) {
-            updateVisibleItems();
+        btn.style.display = 'none';
+        if (btn.parentElement && btn.parentElement.classList.contains('filters')) {
+            btn.parentElement.style.display = 'none';
         }
+    });
+    if (paginationEl) paginationEl.style.display = 'none';
+
+    // 2. Chèn CSS để định dạng lại layout 5-3-2-1 và thêm hiệu ứng
+    if (!document.getElementById('custom-gallery-layout')) {
+        const style = document.createElement('style');
+        style.id = 'custom-gallery-layout';
+        style.textContent = `
+            .gallery-editorial {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+                justify-content: center !important;
+                padding: 20px 0 !important;
+                min-height: auto !important;
+            }
+            .editorial-item {
+                position: relative !important;
+                left: auto !important;
+                top: auto !important;
+                transform: none !important;
+                opacity: 0;
+                border-radius: 12px;
+                overflow: hidden;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
+                animation: fadeInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+                display: block !important;
+            }
+        .editorial-item.is-paged-hidden {
+            display: block !important;
+        }
+        .editorial-item.is-filtered-out {
+            display: none !important; /* Ẩn hoàn toàn nếu ảnh bị lọc (ví dụ: logo) */
+            }
+            .editorial-item:hover {
+                transform: translateY(-8px) scale(1.02) !important;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.2) !important;
+                z-index: 10;
+            }
+            /* Bắt buộc các thẻ bọc (a, figure...) phải chiếm đủ 100% chiều cao */
+            .editorial-item a,
+            .editorial-item figure,
+            .editorial-item > div {
+                display: block !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+            .editorial-item img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                object-position: center 20% !important; /* Lùi xuống một chút để lấy ảnh cân đối hơn */
+                background-color: transparent;
+                transition: transform 0.6s ease;
+                display: block;
+            }
+            .editorial-item:hover img {
+                transform: scale(1.1);
+            }
+            /* Ẩn toàn bộ các dòng chữ (caption) dưới ảnh */
+            .editorial-item p,
+            .editorial-item span,
+            .editorial-item figcaption,
+            .editorial-item .caption,
+            .editorial-item h1, .editorial-item h2, .editorial-item h3, .editorial-item h4 {
+                display: none !important;
+            }
+            
+            /* --- Bố cục luân phiên 6 ảnh (3-2-1) --- */
+            /* Dòng 1: 3 ảnh */
+            .editorial-item:nth-child(6n+1),
+            .editorial-item:nth-child(6n+2),
+            .editorial-item:nth-child(6n+3) {
+                width: calc(33.333% - 6.66px) !important;
+                height: 250px !important;
+            }
+            /* Dòng 2: 2 ảnh */
+            .editorial-item:nth-child(6n+4),
+            .editorial-item:nth-child(6n+5) {
+                width: calc(50% - 5px) !important;
+                height: 350px !important;
+            }
+            /* Dòng 3: 1 ảnh to */
+            .editorial-item:nth-child(6n+6) {
+                width: 100% !important;
+                height: 500px !important;
+            }
+            
+            @keyframes fadeInScale {
+                0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+                100% { opacity: 1; transform: scale(1) translateY(0); }
+            }
+            /* Responsive cho điện thoại */
+            @media (max-width: 768px) {
+                .editorial-item:nth-child(6n+1),
+                .editorial-item:nth-child(6n+2),
+                .editorial-item:nth-child(6n+3) {
+                    width: calc(33.333% - 6.66px) !important;
+                    height: 100px !important;
+                }
+                .editorial-item:nth-child(6n+4),
+                .editorial-item:nth-child(6n+5) {
+                    width: calc(50% - 5px) !important;
+                    height: 180px !important;
+                }
+                .editorial-item:nth-child(6n+6) {
+                    width: 100% !important;
+                    height: 250px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // 3. Xóa các class cũ và thiết lập delay cho hiệu ứng xuất hiện kiểu thác nước
+    const items = Array.from(galleryRoot.querySelectorAll('.editorial-item'));
+    items.forEach((item, index) => {
+        item.classList.remove('is-paged-hidden', 'is-filtered-out');
+        item.style.animationDelay = `${(index % 6) * 0.1}s`;
     });
 }
 

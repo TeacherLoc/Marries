@@ -101,11 +101,6 @@
       "url": "/image/anhcuoi8.jpg",
       "caption": "Gia đình sum vầy",
       "category": "moments"
-    },
-    {
-      "url": "/image/logocuoi.jpg",
-      "caption": "Logo kỷ niệm",
-      "category": "moments"
     }
   ],
   "preWeddingVideo": "https://www.youtube.com/embed/dQw4w9WgXcQ",
@@ -119,7 +114,14 @@
     "qrCode": ""
   },
   "rsvps": [],
-  "guestbook": [],
+  "guestbook": [
+    {
+      "id": 1781191978821,
+      "guestName": "Lộc",
+      "message": "100 nam hanh phuc",
+      "timestamp": "2026-06-11T15:32:58.821Z"
+    }
+  ],
   "theme": {
     "backgroundStyle": "watercolor",
     "chibi": {
