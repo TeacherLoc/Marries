@@ -39,14 +39,14 @@
     "groomReception": {
       "name": "Tiệc nhà trai - Thắng Lợi",
       "date": "2026-07-19",
-      "location": "Nhà hàng Khách sạn Thắng Lợi",
-      "address": "123 Đường Tôn Đức Thắng, Hà Nội",
+      "location": "Nhà Hàng Tiệc Cưới Thắng Lợi",
+      "address": "1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương",
       "time": "11:00",
       "coordinates": {
-        "lat": 21.0285,
-        "lng": 105.8542
+        "lat": 10.97741,
+        "lng": 106.6632386
       },
-      "mapsUrl": "https://maps.google.com/maps?q=21.0285,105.8542"
+      "mapsUrl": "https://maps.google.com/maps?q=10.97741,106.6632386"
     }
   },
   "loveStory": [

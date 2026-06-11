@@ -895,16 +895,19 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateMapForVenue(venue) {
     const mapFrame = document.querySelector('.map-container iframe');
     const mapAddress = document.querySelector('.map-address');
+    const mapLinks = document.querySelectorAll('a[href*="maps.google"], .map-link, .btn-map');
 
-    let lat, lng, address;
+    let lat, lng, address, mapsUrl;
     if (venue === 'bride') {
         lat = 10.9382941;
         lng = 106.6881491;
         address = '37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam';
+        mapsUrl = 'https://maps.google.com/maps?q=10.9382941,106.6881491';
     } else {
-        lat = 21.0285;
-        lng = 105.8542;
-        address = '123 Đường Tôn Đức Thắng, Hà Nội';
+        lat = 10.97741;
+        lng = 106.6632386;
+        address = '1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương';
+        mapsUrl = 'https://maps.google.com/maps?q=10.97741,106.6632386';
     }
 
     if (weddingConfig) {
@@ -912,10 +915,12 @@ function updateMapForVenue(venue) {
             lat = weddingConfig.brideReception.coordinates?.lat || lat;
             lng = weddingConfig.brideReception.coordinates?.lng || lng;
             address = weddingConfig.brideReception.address || address;
+            mapsUrl = weddingConfig.brideReception.mapsUrl || mapsUrl;
         } else if (venue === 'groom' && weddingConfig.groomReception) {
             lat = weddingConfig.groomReception.coordinates?.lat || lat;
             lng = weddingConfig.groomReception.coordinates?.lng || lng;
             address = weddingConfig.groomReception.address || address;
+            mapsUrl = weddingConfig.groomReception.mapsUrl || mapsUrl;
         }
     }
 
@@ -924,6 +929,14 @@ function updateMapForVenue(venue) {
     }
     if (mapAddress) {
         mapAddress.textContent = address;
+    }
+    
+    // Cập nhật đường link cho các nút "Chỉ đường / Open Map"
+    if (mapLinks.length > 0) {
+        mapLinks.forEach(link => {
+            link.href = mapsUrl;
+            link.target = '_blank'; // Đảm bảo luôn mở sang tab mới hoặc app Maps
+        });
     }
 }
 
