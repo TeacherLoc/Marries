@@ -1099,6 +1099,30 @@ document.addEventListener('DOMContentLoaded', () => {
             document.head.appendChild(style);
         }
 
+        // Tự động thêm 2 nút Stick (Radio) Chọn Khách Cô Dâu / Chú Rể vào form Lời Chúc
+        const gbForm = document.getElementById('guestbook-form');
+        if (gbForm) {
+            const submitBtn = gbForm.querySelector('.btn-submit');
+            if (submitBtn && !gbForm.querySelector('input[name="guestType"]')) {
+                const guestTypeDiv = document.createElement('div');
+                guestTypeDiv.className = 'form-group guest-type-group';
+                guestTypeDiv.style.marginBottom = '15px';
+                guestTypeDiv.style.textAlign = 'left';
+                guestTypeDiv.innerHTML = `
+                    <label style="display:block; margin-bottom:8px; font-weight:500;">Bạn là khách của:</label>
+                    <div style="display:flex; gap:20px; justify-content: flex-start; padding-left: 5px; flex-wrap: nowrap; overflow-x: auto;">
+                        <label style="cursor:pointer; display:flex; align-items:center; gap:5px; white-space: nowrap;">
+                            <input type="radio" name="guestType" value="Cô Dâu" required> Cô Dâu
+                        </label>
+                        <label style="cursor:pointer; display:flex; align-items:center; gap:5px; white-space: nowrap;">
+                            <input type="radio" name="guestType" value="Chú Rể" required> Chú Rể
+                        </label>
+                    </div>
+                `;
+                gbForm.insertBefore(guestTypeDiv, submitBtn.closest('.form-group') || submitBtn);
+            }
+        }
+
         console.log('✅ Wedding website initialized successfully!');
     } catch (error) {
         console.error('❌ Initialization error:', error);

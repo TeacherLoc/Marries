@@ -115,7 +115,7 @@ const WeddingController = {
   // Handle guestbook entry submission
   submitGuestbookEntry: (req, res) => {
     try {
-      const { guestName, message } = req.body;
+      const { guestName, message, guestType } = req.body;
 
       if (!guestName || !message) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -123,10 +123,11 @@ const WeddingController = {
 
       // NGỪNG LƯU TĨNH - Chỉ tạo dấu thời gian để đẩy thẳng lên Sheets
       const timestamp = new Date().toISOString();
+      const type = guestType || 'Khách chung';
 
       // --- BẮN DỮ LIỆU SANG GOOGLE SHEETS ---
       if (GG_SHEET_WEBHOOK) {
-        const payload = JSON.stringify({ guestName, message, timestamp: timestamp });
+        const payload = JSON.stringify({ guestName, message, guestType: type, timestamp: timestamp });
         const webhookUrl = new URL(GG_SHEET_WEBHOOK);
         
         const reqSheet = https.request({
@@ -148,11 +149,11 @@ const WeddingController = {
         reqSheet.end();
         
         // Thêm ngay lời chúc mới vào bộ đệm để khách thấy ngay lập tức trên web
-        cachedGuestbook.push({ guestName, message, timestamp: timestamp });
+        cachedGuestbook.push({ guestName, message, guestType: type, timestamp: timestamp });
       }
       // ---------------------------------------
 
-      res.json({ success: true, entry: { guestName, message, timestamp } });
+      res.json({ success: true, entry: { guestName, message, guestType: type, timestamp } });
     } catch (error) {
       console.error('Error submitting guestbook entry:', error);
       res.status(500).json({ error: 'Error submitting guestbook entry' });
