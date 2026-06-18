@@ -653,37 +653,186 @@ function initEditorialGallery() {
 let currentImageIndex = 0;
 let lightboxImages = [];
 
+function initLightboxIfNeeded() {
+    // Hệ thống CSS Độc lập - Cách ly 100% khỏi Theme EJS cũ
+    if (!document.getElementById('gal-lightbox-style')) {
+        const style = document.createElement('style');
+        style.id = 'gal-lightbox-style';
+        style.textContent = `
+            .gal-lightbox {
+                display: none;
+                position: fixed;
+                z-index: 999999;
+                left: 0;
+                top: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0,0,0,0.95);
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                backdrop-filter: blur(5px);
+            }
+            .gal-lightbox.active {
+                display: flex !important;
+                opacity: 1;
+            }
+            .gal-lightbox-content {
+                max-width: 95vw;
+                max-height: 90vh;
+                object-fit: contain;
+                border-radius: 8px;
+                box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+                transform: scale(0.95);
+                transition: transform 0.3s ease;
+                user-select: none;
+                -webkit-user-drag: none;
+            }
+            .gal-lightbox.active .gal-lightbox-content {
+                transform: scale(1);
+            }
+            .gal-close {
+                position: absolute;
+                top: 15px;
+                right: 25px;
+                color: #fff;
+                font-size: 45px;
+                font-weight: bold;
+                cursor: pointer;
+                z-index: 10;
+                transition: 0.2s;
+            }
+            .gal-close:hover { color: #d4a373; transform: scale(1.1); }
+            .gal-prev, .gal-next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                font-size: 24px;
+                transition: 0.3s ease;
+                user-select: none;
+                z-index: 10;
+                background: rgba(0,0,0,0.4);
+                border-radius: 50%;
+            }
+            .gal-prev { left: 20px; }
+            .gal-next { right: 20px; }
+            .gal-prev:hover, .gal-next:hover { background-color: rgba(0,0,0,0.8); color: #d4a373; }
+            .gal-hints { display: none; }
+            
+            @media (max-width: 768px) {
+                .gal-prev, .gal-next { display: none !important; }
+                .gal-close { top: 10px; right: 20px; font-size: 40px; }
+                .gal-hints {
+                    display: block;
+                    position: absolute;
+                    bottom: 25px;
+                    color: rgba(255,255,255,0.6);
+                    font-size: 14px;
+                    pointer-events: none;
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    let lightbox = document.getElementById('gal-lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'gal-lightbox';
+        lightbox.className = 'gal-lightbox';
+        
+        // Bypass hoàn toàn sự kiện bị chặn bằng lệnh onclick trực tiếp
+        lightbox.innerHTML = `
+            <div class="gal-close" onclick="closeLightbox()">&times;</div>
+            <img class="gal-lightbox-content" id="gal-lightbox-image">
+            <div class="gal-prev" onclick="event.stopPropagation(); changeLightboxImage(-1);">&#10094;</div>
+            <div class="gal-next" onclick="event.stopPropagation(); changeLightboxImage(1);">&#10095;</div>
+            <div class="gal-hints">Vuốt ngang để chuyển ảnh • Chạm nền đen để đóng</div>
+        `;
+        
+        // Chỉ đóng khi bấm vào nền đen, không đóng khi bấm nhầm vào ảnh
+        lightbox.addEventListener('click', (event) => {
+            if (event.target.id === 'gal-lightbox') {
+                closeLightbox();
+            }
+        });
+
+        // Toán học tính toán thao tác Swipe siêu chuẩn
+        let startX = 0;
+        let startY = 0;
+
+        lightbox.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', e => {
+            if (!startX || !startY) return;
+            
+            let diffX = e.changedTouches[0].clientX - startX;
+            let diffY = e.changedTouches[0].clientY - startY;
+            
+            // Yêu cầu phải lướt tay mạnh sang ngang (chứ không phải lướt nhầm lên xuống)
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+                if (diffX > 0) changeLightboxImage(-1); // Lướt tay sang phải -> lùi ảnh
+                else changeLightboxImage(1); // Lướt tay sang trái -> tiến ảnh
+            }
+            
+            startX = 0;
+            startY = 0;
+        }, { passive: true });
+
+        document.body.appendChild(lightbox);
+    }
+    return lightbox;
+}
+
 function getVisibleGalleryImages() {
     return Array.from(document.querySelectorAll('.editorial-item:not(.is-filtered-out):not(.is-paged-hidden) img'))
         .filter(img => img.getAttribute('src'));
 }
 
 function setLightboxImage(index) {
-    const lightboxImage = document.getElementById('lightbox-image');
+    initLightboxIfNeeded();
+    const lightboxImage = document.getElementById('gal-lightbox-image');
     if (!lightboxImage || lightboxImages.length === 0) {
         return;
     }
 
     if (index >= lightboxImages.length) currentImageIndex = 0;
-    if (index < 0) currentImageIndex = lightboxImages.length - 1;
+    else if (index < 0) currentImageIndex = lightboxImages.length - 1;
+    else currentImageIndex = index;
 
     lightboxImage.src = lightboxImages[currentImageIndex].src;
 }
 
 function openLightbox(index) {
-    const lightbox = document.getElementById('lightbox');
+    const lightbox = initLightboxIfNeeded();
     if (!lightbox) return;
 
     currentImageIndex = index;
     setLightboxImage(currentImageIndex);
     lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Khóa chống cuộn màn hình web lúc xem ảnh
 }
 
 function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
+    const lightbox = document.getElementById('gal-lightbox');
     if (!lightbox) return;
 
     lightbox.classList.remove('active');
+    document.body.style.overflow = ''; // Phục hồi cuộn trang web
 }
 
 function changeLightboxImage(direction) {
@@ -691,30 +840,28 @@ function changeLightboxImage(direction) {
     setLightboxImage(currentImageIndex);
 }
 
+// Bắt sự kiện click hình ảnh một cách mạnh mẽ nhất (useCapture = true)
 document.addEventListener('click', (event) => {
-    const targetImage = event.target.closest('.gallery-editorial img');
+    const item = event.target.closest('.editorial-item');
+    if (!item || item.classList.contains('is-filtered-out')) {
+        return;
+    }
+
+    const targetImage = item.querySelector('img');
     if (!targetImage) {
         return;
     }
 
     event.preventDefault();
+    event.stopPropagation(); // Ép chặn toàn bộ các chức năng mở ảnh cũ của theme
+
     lightboxImages = getVisibleGalleryImages();
     const index = lightboxImages.indexOf(targetImage);
     openLightbox(index >= 0 ? index : 0);
-});
-
-document.querySelector('.lightbox .close')?.addEventListener('click', closeLightbox);
-document.querySelector('.lightbox-prev')?.addEventListener('click', () => changeLightboxImage(-1));
-document.querySelector('.lightbox-next')?.addEventListener('click', () => changeLightboxImage(1));
-
-document.getElementById('lightbox')?.addEventListener('click', (event) => {
-    if (event.target.id === 'lightbox') {
-        closeLightbox();
-    }
-});
+}, true);
 
 document.addEventListener('keydown', (event) => {
-    const lightbox = document.getElementById('lightbox');
+    const lightbox = document.getElementById('gal-lightbox');
     if (!lightbox || !lightbox.classList.contains('active')) {
         return;
     }
