@@ -1334,6 +1334,7 @@ body.theme-watercolor .wedding-container > * {
 
 /* ===== VIDEO SECTION ===== */
 .video-section {
+    display: none !important;
     padding: 40px 20px;
     animation: fadeInUp 0.8s ease-out;
 }
