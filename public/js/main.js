@@ -897,17 +897,21 @@ function updateMapForVenue(venue) {
     const mapAddress = document.querySelector('.map-address');
     const mapLinks = document.querySelectorAll('a[href*="maps.google"], .map-link, .btn-map');
 
-    let lat, lng, address, mapsUrl;
+    let lat, lng, address, mapsUrl, placeName, mapQuery;
     if (venue === 'bride') {
         lat = 10.9382941;
         lng = 106.6881491;
-        address = '37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam';
-        mapsUrl = 'https://maps.google.com/maps?q=10.9382941,106.6881491';
+        address = '37 Đ. Cách Mạng Tháng Tám, P. Lái Thiêu, Thuận An, Bình Dương';
+        placeName = 'Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace';
+        mapQuery = 'Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace, Thuận An, Bình Dương';
+        mapsUrl = 'https://maps.google.com/maps?q=Trung+Tâm+Hội+Nghị+Tiệc+Cưới+Võ+Gia+Palace,+Thuận+An,+Bình+Dương';
     } else {
         lat = 10.97741;
         lng = 106.6632386;
         address = '1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương';
-        mapsUrl = 'https://maps.google.com/maps?q=10.97741,106.6632386';
+        placeName = 'Nhà Hàng Tiệc Cưới Thắng Lợi';
+        mapQuery = 'Victory Wedding Convention Restaurant, Phú Lợi, Thủ Dầu Một, Bình Dương';
+        mapsUrl = 'https://maps.google.com/maps?q=Victory+Wedding+Convention+Restaurant,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
     }
 
     if (weddingConfig) {
@@ -916,16 +920,21 @@ function updateMapForVenue(venue) {
             lng = weddingConfig.brideReception.coordinates?.lng || lng;
             address = weddingConfig.brideReception.address || address;
             mapsUrl = weddingConfig.brideReception.mapsUrl || mapsUrl;
+            placeName = weddingConfig.brideReception.location || placeName;
         } else if (venue === 'groom' && weddingConfig.groomReception) {
             lat = weddingConfig.groomReception.coordinates?.lat || lat;
             lng = weddingConfig.groomReception.coordinates?.lng || lng;
             address = weddingConfig.groomReception.address || address;
             mapsUrl = weddingConfig.groomReception.mapsUrl || mapsUrl;
+            placeName = weddingConfig.groomReception.location || placeName;
         }
     }
 
     if (mapFrame) {
-        mapFrame.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+        // Sử dụng tên đăng ký gốc của Google Maps (mapQuery) để giúp khung iframe hiển thị chuẩn 100%
+        let queryText = (placeName === 'Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace' || placeName === 'Nhà Hàng Tiệc Cưới Thắng Lợi') ? mapQuery : `${placeName}, ${address}`;
+        const query = encodeURIComponent(queryText);
+        mapFrame.src = `https://maps.google.com/maps?q=${query}&z=16&output=embed`;
     }
     if (mapAddress) {
         mapAddress.textContent = address;

@@ -19,7 +19,7 @@
     "receptionDate": "2026-07-12",
     "receptionTime": "11:00",
     "receptionLocation": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
-    "receptionAddress": "37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam",
+    "receptionAddress": "37 Đ. Cách Mạng Tháng Tám, P. Lái Thiêu, Thuận An, Bình Dương",
     "coordinates": {
       "lat": 10.9382941,
       "lng": 106.6881491
@@ -28,13 +28,13 @@
       "name": "Tiệc nhà gái - Võ Gia Palace",
       "date": "2026-07-12",
       "location": "Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace",
-      "address": "37 Đ. Cách Mạng Tháng Tám, Thủ Thiêm, An, Hồ Chí Minh, Việt Nam",
+      "address": "37 Đ. Cách Mạng Tháng Tám, P. Lái Thiêu, Thuận An, Bình Dương",
       "time": "11:00",
       "coordinates": {
         "lat": 10.9382941,
         "lng": 106.6881491
       },
-      "mapsUrl": "https://maps.google.com/maps?q=10.9382941,106.6881491"
+      "mapsUrl": "https://maps.google.com/maps?q=Trung+Tâm+Hội+Nghị+Tiệc+Cưới+Võ+Gia+Palace,+Thuận+An,+Bình+Dương"
     },
     "groomReception": {
       "name": "Tiệc nhà trai - Thắng Lợi",
@@ -46,7 +46,7 @@
         "lat": 10.97741,
         "lng": 106.6632386
       },
-      "mapsUrl": "https://maps.google.com/maps?q=10.97741,106.6632386"
+      "mapsUrl": "https://maps.google.com/maps?q=Victory+Wedding+Convention+Restaurant,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương"
     }
   },
   "loveStory": [
