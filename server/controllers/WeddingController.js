@@ -64,9 +64,9 @@ const WeddingController = {
       const data = WeddingModel.getAll();
       const guestbookEntries = await fetchFromGoogleSheets();
 
-      // Generate QR code for the website URL
-      const baseUrl = `${req.protocol}://${req.get('host')}`;
-      const qrCode = await QRCode.toDataURL(baseUrl);
+      // Lấy ảnh QR tĩnh từ thư mục image thay vì tự động tạo
+      // LƯU Ý: Nếu file ảnh của bạn có đuôi là .png thì hãy sửa '.jpg' thành '.png'
+      const qrCode = '/image/qrcode.jpg';
 
       res.render('wedding-card', {
         couple: data.couple,
