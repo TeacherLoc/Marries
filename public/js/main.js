@@ -437,8 +437,19 @@ function initGallerySwiper() {
     };
 
     // Gallery Filter
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    // Ép buộc dọn dẹp các nút EJS cũ bị sót lại (Tất cả, Lễ cưới...)
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+        const val = btn.getAttribute('data-filter');
+        if (val !== 'damhoi' && val !== 'damcuoi' && btn.parentElement) {
+            btn.parentElement.classList.add('gallery-filters', 'filters');
+            btn.parentElement.innerHTML = `
+                <button class="filter-btn active" data-filter="damhoi">Đám Hỏi</button>
+                <button class="filter-btn" data-filter="damcuoi">Đám Cưới</button>
+            `;
+        }
+    });
 
+    const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             // Update active button
@@ -449,6 +460,11 @@ function initGallerySwiper() {
             applyGalleryFilter(filterValue);
         });
     });
+
+    // Kích hoạt mặc định bộ lọc "Đám Hỏi"
+    if (filterBtns.length > 0) {
+        applyGalleryFilter('damhoi');
+    }
 }
 
 // ===== EDITORIAL GALLERY & FILTERS =====
@@ -458,19 +474,49 @@ function initEditorialGallery() {
         return;
     }
 
-    // 1. Ẩn đi các nút bộ lọc và phân trang (nếu có)
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const filterContainer = document.querySelector('.gallery-filters, .filters');
     const paginationEl = document.querySelector('.gallery-pagination');
+        if (paginationEl) paginationEl.style.display = 'none';
 
-    if (filterContainer) filterContainer.style.display = 'none';
-    filterBtns.forEach(btn => {
-        btn.style.display = 'none';
-        if (btn.parentElement && btn.parentElement.classList.contains('filters')) {
-            btn.parentElement.style.display = 'none';
+        // 1. Khôi phục và cấu hình Nút Bộ Lọc (Đám Hỏi / Đám Cưới)
+        let filterContainer = document.querySelector('.gallery-filters, .filters');
+        if (!filterContainer) {
+            filterContainer = document.createElement('div');
+            filterContainer.className = 'gallery-filters filters';
+            galleryRoot.parentNode.insertBefore(filterContainer, galleryRoot);
         }
+        
+        // Ghi đè bắt buộc lại toàn bộ html nếu container đang chứa các nút cũ
+        if (!filterContainer.querySelector('[data-filter="damcuoi"]')) {
+            filterContainer.innerHTML = `
+                <button class="filter-btn active" data-filter="damhoi">Đám Hỏi</button>
+                <button class="filter-btn" data-filter="damcuoi">Đám Cưới</button>
+            `;
+        }
+
+        const customFilterBtns = filterContainer.querySelectorAll('.filter-btn');
+        customFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                customFilterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filterValue = this.getAttribute('data-filter');
+                const editorialItems = galleryRoot.querySelectorAll('.editorial-item');
+                let visibleIndex = 0;
+                
+                editorialItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (category === filterValue) {
+                        item.classList.remove('is-filtered-out');
+                        item.style.animationDelay = `${(visibleIndex % 6) * 0.1}s`;
+                        visibleIndex++;
+                    } else {
+                        item.classList.add('is-filtered-out');
+                    }
+                });
+                // Cập nhật lại danh sách ảnh cho Lightbox (khi bấm phóng to)
+                lightboxImages = getVisibleGalleryImages();
+            });
     });
-    if (paginationEl) paginationEl.style.display = 'none';
 
     // 2. Chèn CSS để định dạng lại layout 5-3-2-1 và thêm hiệu ứng
     if (!document.getElementById('custom-gallery-layout')) {
@@ -485,6 +531,11 @@ function initEditorialGallery() {
                 padding: 20px 0 !important;
                 min-height: auto !important;
             }
+                /* Styles cho nút bộ lọc */
+                .gallery-filters { display: flex !important; justify-content: center !important; gap: 15px !important; margin-bottom: 25px !important; flex-wrap: wrap !important; }
+                .filter-btn { padding: 8px 25px !important; border: 1px solid #d4a373 !important; background: transparent !important; color: #d4a373 !important; border-radius: 25px !important; cursor: pointer !important; font-weight: 500 !important; transition: all 0.3s ease !important; font-family: inherit !important; display: inline-block !important; }
+                .filter-btn:hover { background: #fdf6f0 !important; }
+                .filter-btn.active { background: #d4a373 !important; color: white !important; box-shadow: 0 4px 10px rgba(212,163,115,0.3) !important; }
             .editorial-item {
                 position: relative !important;
                 left: auto !important;
@@ -585,12 +636,16 @@ function initEditorialGallery() {
         document.head.appendChild(style);
     }
 
-    // 3. Xóa các class cũ và thiết lập delay cho hiệu ứng xuất hiện kiểu thác nước
+        // 3. Xóa class ẩn cũ
     const items = Array.from(galleryRoot.querySelectorAll('.editorial-item'));
-    items.forEach((item, index) => {
-        item.classList.remove('is-paged-hidden', 'is-filtered-out');
-        item.style.animationDelay = `${(index % 6) * 0.1}s`;
+        items.forEach((item) => {
+            item.classList.remove('is-paged-hidden');
     });
+
+        // 4. Kích hoạt tự động bấm vào nút Đám Hỏi khi web vừa load xong
+        if (customFilterBtns.length > 0) {
+            customFilterBtns[0].click();
+        }
 }
 
 
@@ -846,6 +901,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.warn('AOS library not loaded');
         }
+
+        // --- BẮT BUỘC: Dọn dẹp toàn bộ các bộ lọc cũ (Lễ Cưới, Tiệc Cưới, Khoảnh Khắc) trên mọi giao diện ---
+        document.querySelectorAll('[data-filter]').forEach(el => {
+            const val = el.getAttribute('data-filter');
+            if (val !== 'damhoi' && val !== 'damcuoi' && el.parentElement) {
+                el.parentElement.classList.add('gallery-filters', 'filters');
+                el.parentElement.innerHTML = `
+                    <button class="filter-btn active" data-filter="damhoi">Đám Hỏi</button>
+                    <button class="filter-btn" data-filter="damcuoi">Đám Cưới</button>
+                `;
+            }
+        });
 
         // Initialize animations
         initEnvelopeAnimation();

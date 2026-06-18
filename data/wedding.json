@@ -75,32 +75,62 @@
     {
       "url": "/image/anhcuoi1.jpg",
       "caption": "Lễ Định Hôn - Ngọc Dung & Minh Tiến",
-      "category": "ceremony"
+      "category": "damhoi"
     },
     {
       "url": "/image/anhcuoi2.jpg",
       "caption": "Khoảnh khắc ngoài sân",
-      "category": "moments"
+      "category": "damhoi"
     },
     {
       "url": "/image/anhcuoi3.jpg",
       "caption": "Không gian lễ đính hôn",
-      "category": "ceremony"
+      "category": "damhoi"
     },
     {
       "url": "/image/anhcuoi4.jpg",
       "caption": "Cặp đôi tỏa sáng",
-      "category": "reception"
+      "category": "damhoi"
     },
     {
       "url": "/image/anhcuoi5.jpg",
       "caption": "Khoảnh khắc đáng nhớ",
-      "category": "reception"
+      "category": "damhoi"
     },
     {
       "url": "/image/anhcuoi8.jpg",
       "caption": "Gia đình sum vầy",
-      "category": "moments"
+      "category": "damhoi"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
+      "caption": "Ảnh Đám Cưới 1",
+      "category": "damcuoi"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80",
+      "caption": "Ảnh Đám Cưới 2",
+      "category": "damcuoi"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80",
+      "caption": "Ảnh Đám Cưới 3",
+      "category": "damcuoi"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&q=80",
+      "caption": "Ảnh Đám Cưới 4",
+      "category": "damcuoi"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80",
+      "caption": "Ảnh Đám Cưới 5",
+      "category": "damcuoi"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80",
+      "caption": "Ảnh Đám Cưới 6",
+      "category": "damcuoi"
     }
   ],
   "preWeddingVideo": "https://www.youtube.com/embed/dQw4w9WgXcQ",

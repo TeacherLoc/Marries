@@ -1,0 +1,32 @@
+=========================================================
+HƯỚNG DẪN THAY ĐỔI VÀ THÊM ẢNH ĐÁM CƯỚI / ĐÁM HỎI TUỲ Ý
+=========================================================
+
+BƯỚC 1: Đưa ảnh vào dự án
+---------------------------------------------------------
+- Copy các bức ảnh bạn muốn hiển thị dán vào trong thư mục này:
+  d:\Gittt\Marries\public\image\
+- (Ví dụ đặt tên ảnh là: damcuoi1.jpg, damcuoi2.jpg...)
+
+BƯỚC 2: Mở file dữ liệu để chỉnh sửa
+---------------------------------------------------------
+- Mở file: d:\Gittt\Marries\data\wedding.json
+- Cuộn xuống tìm đoạn có chữ `"gallery": [`
+
+BƯỚC 3: Cách khai báo một bức ảnh (Cứ copy dán thêm)
+---------------------------------------------------------
+{
+  "url": "/image/ten-anh-cua-ban.jpg",
+  "caption": "Lời tựa dưới ảnh (có thể để trống)",
+  "category": "damcuoi"
+}
+
+*** LƯU Ý RẤT QUAN TRỌNG VỀ PHÂN LOẠI (CATEGORY):
+- Muốn ảnh đó hiện ở tab "Đám Hỏi" -> Ghi là `"category": "damhoi"`
+- Muốn ảnh đó hiện ở tab "Đám Cưới" -> Ghi là `"category": "damcuoi"`
+
+BƯỚC 4: Hoàn tất
+---------------------------------------------------------
+- Hãy nhớ cứ hết một khối {...} thì phải có 1 dấu phẩy (,) ngăn cách.
+- Bạn có thể chèn bao nhiêu ảnh tuỳ thích. Layout trên Web sẽ TỰ ĐỘNG XẾP SO LE rất nghệ thuật!
+- Nhớ ấn Lưu file `wedding.json` và khởi động lại Server/tải lại trang (Ctrl + F5). Xong!
