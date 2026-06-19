@@ -769,8 +769,28 @@ body.theme-watercolor .wedding-container > * {
     margin-bottom: 4px;
 }
 
+.invite-family-details .family-side p.parents-names {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.invite-family-details .family-side p.parents-names .name-sep {
+    color: var(--accent-gold);
+    font-weight: bold;
+}
+
+.invite-family-details .family-side p strong {
+    display: inline-block;
+    white-space: nowrap;
+}
+
 .invite-family-details .family-divider {
     padding: 0 10px;
+    flex-shrink: 0;
 }
 
 .invite-family-details .family-divider .heart-icon {
@@ -883,6 +903,7 @@ body.theme-watercolor .wedding-container > * {
 
     .invite-photos-area {
         height: 300px;
+        overflow: visible;
     }
 
     .invite-date-number {
@@ -890,17 +911,79 @@ body.theme-watercolor .wedding-container > * {
     }
 
     .invite-family-details {
+        flex-direction: column;
         padding: 1.2rem 0;
         margin: 1.5rem 0;
+        gap: 1rem;
     }
+
+    .invite-family-details .family-side {
+        width: 100%;
+        padding: 0;
+    }
+
     .invite-family-details .family-side h4 {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
     }
+
     .invite-family-details .family-side p {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        line-height: 2;
     }
+
+    /* Tên ông bà trên 1 hàng cho trang trọng */
+    .invite-family-details .family-side p.parents-names {
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        justify-content: center;
+    }
+
+    .invite-family-details .family-divider {
+        padding: 0.5rem 0;
+    }
+
     .invite-family-details .family-divider .heart-icon {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+    }
+}
+
+/* Responsive cho điện thoại rất nhỏ (320px-380px) - chỉnh ảnh không bị che */
+@media (max-width: 380px) {
+    .invite-photos-area {
+        height: 280px;
+        overflow: visible;
+    }
+
+    .invite-card .polaroid-groom,
+    .invite-card .polaroid-bride {
+        width: 130px;
+    }
+
+    .invite-card .polaroid-groom {
+        left: 5px;
+        top: 5px;
+    }
+
+    .invite-card .polaroid-bride {
+        right: 5px;
+        bottom: -5px;
+    }
+
+    .invite-card .wax-seal {
+        width: 45px;
+        height: 45px;
+        transform: translate(-50%, -35%);
+    }
+
+    .invite-card .polaroid-caption .name {
+        font-size: 25px;
+    }
+
+    .invite-card .polaroid-caption .role {
+        font-size: 8px;
     }
 }
 
@@ -1779,75 +1862,60 @@ body.theme-watercolor .wedding-container > * {
         height: 180px;
     }
 } */
-/* Giao diện cho Tablet và Điện thoại màn hình lớn (Android lớn) */
-@media (max-width: 768px) { 
-    .gallery-editorial { 
-        grid-template-columns: 1fr 1fr; /* Chia 2 cột cho đẹp thay vì 1 cột quá to */
-        gap: 14px; 
-    } 
-    
-    /* Ảnh to nhất chiếm 2 cột */
-    .editorial-item--hero { 
-        grid-column: span 2; 
-        grid-row: auto; 
+/* Giao diện cho Điện thoại màn hình nhỏ - Layout 2 cột đều (dưới 500px) */
+@media (max-width: 500px) {
+    .gallery-editorial {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        padding: 12px 6px !important;
     }
-    
-    /* Các ảnh còn lại chiếm 1 cột, cao tự động */
-    .editorial-item--tall, 
-    .editorial-item--wide, 
-    .editorial-item--square { 
-        grid-column: span 1; 
-        grid-row: auto; 
-    }
-    
-    .editorial-item--tall .editorial-media { aspect-ratio: 3/4; }
-    .editorial-item--wide .editorial-media { aspect-ratio: 4/3; }
-    .editorial-item--square .editorial-media { aspect-ratio: 1/1; }
-}
 
-/* Giao diện cho Điện thoại màn hình nhỏ */
-@media (max-width: 480px) { 
-    .gallery-editorial { 
-        display: block !important; /* Hủy bỏ hoàn toàn chế độ Grid gây lỗi */
-        column-count: 2 !important; /* Chia màn hình làm 2 cột dọc xếp kiểu Pinterest */
-        column-gap: 12px !important; /* Khoảng cách giữa 2 cột */
-        padding: 0 12px !important;
-    } 
-    
-    /* Áp dụng cấu trúc dòng cho TẤT CẢ các khung chứa ảnh */
+    /* TẤT CẢ các ảnh đều hiển thị 2 cột với chiều cao bằng nhau */
+    .editorial-item,
     .editorial-item--hero,
     .editorial-item--tall,
     .editorial-item--wide,
-    .editorial-item--square { 
-        display: inline-block !important; /* Ép các khối xếp liên tục theo cột */
-        width: 100% !important; /* Chiếm trọn chiều ngang của cột đó */
-        margin-bottom: 12px !important; /* Khoảng cách đều giữa ảnh trên và ảnh dưới */
-        break-inside: avoid !important; /* Ngăn việc ảnh bị cắt đôi khi chuyển cột */
-        
-        /* Reset hoàn toàn Grid cũ */
-        grid-column: auto !important;
-        grid-row: auto !important;
-    }
-
-    /* Riêng ảnh Hero (ảnh to nhất), cho nó bắc ngang chiếm trọn cả 2 cột để làm điểm nhấn */
-    .editorial-item--hero {
-        column-span: all !important; 
-        margin-bottom: 16px !important;
-    }
-
-    /* Định dạng hình ảnh hiển thị tự nhiên theo tỷ lệ vốn có, không bị méo */
-    .editorial-media { 
+    .editorial-item--square {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+        height: 160px !important;
         width: 100% !important;
-        height: auto !important;
-        object-fit: cover !important; 
-        display: block !important;
     }
 
-    /* Giữ nguyên các tỷ lệ ảnh sinh động ban đầu của bạn nhưng không làm lỗi dòng */
-    .editorial-item--tall .editorial-media { aspect-ratio: 3/4 !important; }
-    .editorial-item--wide .editorial-media { aspect-ratio: 4/3 !important; }
-    .editorial-item--square .editorial-media { aspect-ratio: 1/1 !important; }
-    .editorial-item--hero .editorial-media { aspect-ratio: 16/10 !important; }
+    /* Định dạng hình ảnh */
+    .editorial-media,
+    .editorial-item--tall .editorial-media,
+    .editorial-item--wide .editorial-media,
+    .editorial-item--square .editorial-media,
+    .editorial-item--hero .editorial-media {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .editorial-media img,
+    .editorial-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+}
+
+/* Responsive cho điện thoại rất nhỏ (dưới 360px) */
+@media (max-width: 360px) {
+    .gallery-editorial {
+        gap: 6px !important;
+        padding: 10px 4px !important;
+    }
+
+    .editorial-item,
+    .editorial-item--hero,
+    .editorial-item--tall,
+    .editorial-item--wide,
+    .editorial-item--square {
+        height: 140px !important;
+    }
 }
 
 /* Print Styles */

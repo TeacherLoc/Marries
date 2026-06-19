@@ -302,16 +302,22 @@
                     <div class="invite-family-details">
                         <div class="family-side bride-side">
                             <h4>Nhà Trai</h4>
-                            <p>Ông: <strong><%= couple.parentsBride.father %></strong></p>
-                            <p>Bà: <strong><%= couple.parentsBride.mother %></strong></p>
+                            <p class="parents-names">
+                                <span>Ông: <strong><%= couple.parentsBride.father %></strong></span>
+                                <span class="name-sep">|</span>
+                                <span>Bà: <strong><%= couple.parentsBride.mother %></strong></span>
+                            </p>
                         </div>
                         <div class="family-divider">
                             <span class="heart-icon">❤</span>
                         </div>
                         <div class="family-side groom-side">
                             <h4>Nhà Gái</h4>
-                            <p>Ông: <strong><%= couple.parentsGroom.father %></strong></p>
-                            <p>Bà: <strong><%= couple.parentsGroom.mother %></strong></p>
+                            <p class="parents-names">
+                                <span>Ông: <strong><%= couple.parentsGroom.father %></strong></span>
+                                <span class="name-sep">|</span>
+                                <span>Bà: <strong><%= couple.parentsGroom.mother %></strong></span>
+                            </p>
                         </div>
                     </div>
 

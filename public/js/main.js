@@ -589,7 +589,7 @@ function initEditorialGallery() {
             .editorial-item h1, .editorial-item h2, .editorial-item h3, .editorial-item h4 {
                 display: none !important;
             }
-            
+
             /* --- Bố cục luân phiên 6 ảnh (3-2-1) --- */
             /* Dòng 1: 3 ảnh */
             .editorial-item:nth-child(6n+1),
@@ -609,27 +609,56 @@ function initEditorialGallery() {
                 width: 100% !important;
                 height: 500px !important;
             }
-            
+
             @keyframes fadeInScale {
                 0% { opacity: 0; transform: scale(0.8) translateY(30px); }
                 100% { opacity: 1; transform: scale(1) translateY(0); }
             }
-            /* Responsive cho điện thoại */
-            @media (max-width: 768px) {
+
+            /* Responsive cho điện thoại màn hình nhỏ - Layout 2 cột đều (dưới 500px) */
+            @media (max-width: 500px) {
+                .gallery-editorial {
+                    display: grid !important;
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 8px !important;
+                    padding: 12px 6px !important;
+                }
+
+                /* TẤT CẢ ảnh đều hiển thị 2 cột với chiều cao bằng nhau */
+                .editorial-item,
                 .editorial-item:nth-child(6n+1),
                 .editorial-item:nth-child(6n+2),
-                .editorial-item:nth-child(6n+3) {
-                    width: calc(33.333% - 6.66px) !important;
-                    height: 100px !important;
-                }
+                .editorial-item:nth-child(6n+3),
                 .editorial-item:nth-child(6n+4),
-                .editorial-item:nth-child(6n+5) {
-                    width: calc(50% - 5px) !important;
-                    height: 180px !important;
-                }
+                .editorial-item:nth-child(6n+5),
                 .editorial-item:nth-child(6n+6) {
                     width: 100% !important;
-                    height: 250px !important;
+                    height: 160px !important;
+                    grid-column: span 1 !important;
+                    grid-row: span 1 !important;
+                }
+
+                /* Giảm hiệu ứng hover trên mobile */
+                .editorial-item:hover {
+                    transform: translateY(-4px) scale(1.01) !important;
+                }
+            }
+
+            /* Responsive cho điện thoại rất nhỏ (dưới 360px) */
+            @media (max-width: 360px) {
+                .gallery-editorial {
+                    gap: 6px !important;
+                    padding: 10px 4px !important;
+                }
+
+                .editorial-item,
+                .editorial-item:nth-child(6n+1),
+                .editorial-item:nth-child(6n+2),
+                .editorial-item:nth-child(6n+3),
+                .editorial-item:nth-child(6n+4),
+                .editorial-item:nth-child(6n+5),
+                .editorial-item:nth-child(6n+6) {
+                    height: 140px !important;
                 }
             }
         `;
