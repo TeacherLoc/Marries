@@ -1805,34 +1805,42 @@ body.theme-watercolor .wedding-container > * {
     .editorial-item--square .editorial-media { aspect-ratio: 1/1; }
 }
 
-/* Giao diện cho Điện thoại màn hình nhỏ (như cũ của bạn nhưng an toàn hơn) */
+/* Giao diện cho Điện thoại màn hình nhỏ */
 @media (max-width: 480px) { 
     .gallery-editorial { 
-        display: flex !important; /* Chuyển hẳn sang Flexbox để vô hiệu hóa sự phức tạp của Grid cũ */
-        flex-direction: column !important; /* Xếp thành 1 cột dọc duy nhất */
-        gap: 16px !important; /* Khoảng cách đều đặn giữa các ảnh */
-        padding: 0 10px; /* Thêm một chút lề hai bên để ảnh không sát rịt vào mép điện thoại */
+        display: grid !important; 
+        grid-template-columns: repeat(2, 1fr) !important; /* Ép chia đúng 2 cột đều nhau */
+        gap: 8px !important; /* Thu nhỏ khoảng cách giữa các ảnh cho đỡ tốn diện tích */
+        padding: 0 10px; 
     } 
     
-    /* Reset lại toàn bộ kích thước của TẤT CẢ các loại khung ảnh */
-    .editorial-item--hero,
+    /* Ép tất cả các loại ảnh (trừ ảnh hero) chỉ được chiếm đúng 1 cột, ngăn chặn lỗi lủng lỗ */
     .editorial-item--tall,
     .editorial-item--wide,
     .editorial-item--square { 
-        width: 100% !important; /* Ép khung ảnh bung hết chiều ngang 100% */
-        height: auto !important;
+        grid-column: span 1 !important; 
+        grid-row: auto !important;
         margin: 0 !important;
     }
 
-    /* Giữ tỷ lệ ảnh tự nhiên, hủy bỏ các tỷ lệ ép buộc để tránh méo ảnh */
-    .editorial-item--tall .editorial-media,
-    .editorial-item--wide .editorial-media,
-    .editorial-item--square .editorial-media,
-    .editorial-item--hero .editorial-media { 
-        aspect-ratio: auto !important; 
-        width: 100% !important;
-        height: auto !important;
+    /* Riêng ảnh Hero (ảnh chính) cho phép chiếm trọn 2 cột ngang để làm điểm nhấn */
+    .editorial-item--hero {
+        grid-column: span 2 !important;
+        grid-row: auto !important;
     }
+
+    /* Cắt cúp ảnh vuông vức hoặc theo tỷ lệ hợp lý để 2 cột lên hình đều tăm tắp */
+    .editorial-media { 
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important; 
+    }
+
+    /* Tùy chọn: Set tỷ lệ cho các khung để nó không bị lộn xộn */
+    .editorial-item--tall .editorial-media { aspect-ratio: 3/4 !important; }
+    .editorial-item--wide .editorial-media { aspect-ratio: 4/3 !important; }
+    .editorial-item--square .editorial-media { aspect-ratio: 1/1 !important; }
+    .editorial-item--hero .editorial-media { aspect-ratio: 16/9 !important; }
 }
 
 /* Print Styles */
