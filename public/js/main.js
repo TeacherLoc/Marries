@@ -615,12 +615,44 @@ function initEditorialGallery() {
                 100% { opacity: 1; transform: scale(1) translateY(0); }
             }
 
-            /* Responsive cho điện thoại màn hình nhỏ - Layout 2 cột đều (dưới 500px) */
-            @media (max-width: 500px) {
+            /* Responsive cho tablet và điện thoại lớn (350px - 768px) - Layout 3-2-1 */
+            @media (min-width: 350px) and (max-width: 768px) {
+                .gallery-editorial {
+                    gap: 8px !important;
+                    padding: 12px 8px !important;
+                }
+
+                /* Dòng 1: 3 ảnh */
+                .editorial-item:nth-child(6n+1),
+                .editorial-item:nth-child(6n+2),
+                .editorial-item:nth-child(6n+3) {
+                    width: calc(33.333% - 6px) !important;
+                    height: 140px !important;
+                }
+                /* Dòng 2: 2 ảnh */
+                .editorial-item:nth-child(6n+4),
+                .editorial-item:nth-child(6n+5) {
+                    width: calc(50% - 4px) !important;
+                    height: 200px !important;
+                }
+                /* Dòng 3: 1 ảnh to */
+                .editorial-item:nth-child(6n+6) {
+                    width: 100% !important;
+                    height: 280px !important;
+                }
+
+                /* Giảm hiệu ứng hover trên mobile */
+                .editorial-item:hover {
+                    transform: translateY(-4px) scale(1.01) !important;
+                }
+            }
+
+            /* Responsive cho điện thoại nhỏ (dưới 350px) - Layout 2 cột đều */
+            @media (max-width: 349px) {
                 .gallery-editorial {
                     display: grid !important;
                     grid-template-columns: repeat(2, 1fr) !important;
-                    gap: 8px !important;
+                    gap: 6px !important;
                     padding: 12px 6px !important;
                 }
 
@@ -633,7 +665,7 @@ function initEditorialGallery() {
                 .editorial-item:nth-child(6n+5),
                 .editorial-item:nth-child(6n+6) {
                     width: 100% !important;
-                    height: 160px !important;
+                    height: 150px !important;
                     grid-column: span 1 !important;
                     grid-row: span 1 !important;
                 }
@@ -645,9 +677,9 @@ function initEditorialGallery() {
             }
 
             /* Responsive cho điện thoại rất nhỏ (dưới 360px) */
-            @media (max-width: 360px) {
+            @media (max-width: 359px) {
                 .gallery-editorial {
-                    gap: 6px !important;
+                    gap: 4px !important;
                     padding: 10px 4px !important;
                 }
 
