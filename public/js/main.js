@@ -1163,8 +1163,8 @@ function updateMapForVenue(venue) {
         lng = 106.6632386;
         address = '1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương';
         placeName = 'Nhà Hàng Tiệc Cưới Thắng Lợi';
-        mapQuery = 'Victory Wedding Convention Restaurant, Phú Lợi, Thủ Dầu Một, Bình Dương';
-        mapsUrl = 'https://maps.google.com/maps?q=Victory+Wedding+Convention+Restaurant,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
+        mapQuery = 'Nhà Hàng Tiệc Cưới Thắng Lợi, Phú Lợi, Thủ Dầu Một, Bình Dương';
+        mapsUrl = 'https://www.google.com/maps/place/Nh%C3%A0+H%C3%A0ng+Ti%E1%BB%87c+C%C6%B0%E1%BB%9Bi+Th%E1%BA%AFng+L%E1%BB%A3i/@10.97741,106.6632386,17z/data=!3m1!4b1!4m6!3m5!1s0x3174d12504db361b:0x4fc26dcc14e0ec8a!8m2!3d10.97741!4d106.6632386!16s%2Fg%2F1td4xbmr?hl=vi-VN&entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D';
     }
 
     if (weddingConfig) {
