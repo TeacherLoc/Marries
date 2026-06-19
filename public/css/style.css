@@ -1808,39 +1808,46 @@ body.theme-watercolor .wedding-container > * {
 /* Giao diện cho Điện thoại màn hình nhỏ */
 @media (max-width: 480px) { 
     .gallery-editorial { 
-        display: grid !important; 
-        grid-template-columns: repeat(2, 1fr) !important; /* Ép chia đúng 2 cột đều nhau */
-        gap: 8px !important; /* Thu nhỏ khoảng cách giữa các ảnh cho đỡ tốn diện tích */
-        padding: 0 10px; 
+        display: block !important; /* Hủy bỏ hoàn toàn chế độ Grid gây lỗi */
+        column-count: 2 !important; /* Chia màn hình làm 2 cột dọc xếp kiểu Pinterest */
+        column-gap: 12px !important; /* Khoảng cách giữa 2 cột */
+        padding: 0 12px !important;
     } 
     
-    /* Ép tất cả các loại ảnh (trừ ảnh hero) chỉ được chiếm đúng 1 cột, ngăn chặn lỗi lủng lỗ */
+    /* Áp dụng cấu trúc dòng cho TẤT CẢ các khung chứa ảnh */
+    .editorial-item--hero,
     .editorial-item--tall,
     .editorial-item--wide,
     .editorial-item--square { 
-        grid-column: span 1 !important; 
+        display: inline-block !important; /* Ép các khối xếp liên tục theo cột */
+        width: 100% !important; /* Chiếm trọn chiều ngang của cột đó */
+        margin-bottom: 12px !important; /* Khoảng cách đều giữa ảnh trên và ảnh dưới */
+        break-inside: avoid !important; /* Ngăn việc ảnh bị cắt đôi khi chuyển cột */
+        
+        /* Reset hoàn toàn Grid cũ */
+        grid-column: auto !important;
         grid-row: auto !important;
-        margin: 0 !important;
     }
 
-    /* Riêng ảnh Hero (ảnh chính) cho phép chiếm trọn 2 cột ngang để làm điểm nhấn */
+    /* Riêng ảnh Hero (ảnh to nhất), cho nó bắc ngang chiếm trọn cả 2 cột để làm điểm nhấn */
     .editorial-item--hero {
-        grid-column: span 2 !important;
-        grid-row: auto !important;
+        column-span: all !important; 
+        margin-bottom: 16px !important;
     }
 
-    /* Cắt cúp ảnh vuông vức hoặc theo tỷ lệ hợp lý để 2 cột lên hình đều tăm tắp */
+    /* Định dạng hình ảnh hiển thị tự nhiên theo tỷ lệ vốn có, không bị méo */
     .editorial-media { 
         width: 100% !important;
-        height: 100% !important;
+        height: auto !important;
         object-fit: cover !important; 
+        display: block !important;
     }
 
-    /* Tùy chọn: Set tỷ lệ cho các khung để nó không bị lộn xộn */
+    /* Giữ nguyên các tỷ lệ ảnh sinh động ban đầu của bạn nhưng không làm lỗi dòng */
     .editorial-item--tall .editorial-media { aspect-ratio: 3/4 !important; }
     .editorial-item--wide .editorial-media { aspect-ratio: 4/3 !important; }
     .editorial-item--square .editorial-media { aspect-ratio: 1/1 !important; }
-    .editorial-item--hero .editorial-media { aspect-ratio: 16/9 !important; }
+    .editorial-item--hero .editorial-media { aspect-ratio: 16/10 !important; }
 }
 
 /* Print Styles */
