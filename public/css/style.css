@@ -1702,7 +1702,7 @@ body.theme-watercolor .wedding-container > * {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
     .gallery-editorial {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -1777,6 +1777,42 @@ body.theme-watercolor .wedding-container > * {
     .website-qr {
         width: 180px;
         height: 180px;
+    }
+} */
+/* Giao diện cho Tablet và Điện thoại màn hình lớn (Android lớn) */
+@media (max-width: 768px) { 
+    .gallery-editorial { 
+        grid-template-columns: 1fr 1fr; /* Chia 2 cột cho đẹp thay vì 1 cột quá to */
+        gap: 14px; 
+    } 
+    
+    /* Ảnh to nhất chiếm 2 cột */
+    .editorial-item--hero { 
+        grid-column: span 2; 
+        grid-row: auto; 
+    }
+    
+    /* Các ảnh còn lại chiếm 1 cột, cao tự động */
+    .editorial-item--tall, 
+    .editorial-item--wide, 
+    .editorial-item--square { 
+        grid-column: span 1; 
+        grid-row: auto; 
+    }
+    
+    .editorial-item--tall .editorial-media { aspect-ratio: 3/4; }
+    .editorial-item--wide .editorial-media { aspect-ratio: 4/3; }
+    .editorial-item--square .editorial-media { aspect-ratio: 1/1; }
+}
+
+/* Giao diện cho Điện thoại màn hình nhỏ (như cũ của bạn nhưng an toàn hơn) */
+@media (max-width: 480px) { 
+    .gallery-editorial { 
+        grid-template-columns: 1fr; /* Về lại 1 cột nếu màn hình quá bé */
+    } 
+    
+    .editorial-item--hero {
+        grid-column: span 1;
     }
 }
 

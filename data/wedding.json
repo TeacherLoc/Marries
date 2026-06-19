@@ -40,37 +40,15 @@
       "name": "Tiệc nhà trai - Thắng Lợi",
       "date": "2026-07-19",
       "location": "Nhà Hàng Tiệc Cưới Thắng Lợi",
-      "address": "1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương",
+      "address": "1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Hồ Chí Minh",
       "time": "11:00",
       "coordinates": {
         "lat": 10.97741,
         "lng": 106.6632386
       },
-      "mapsUrl": "https://maps.google.com/maps?q=Victory+Wedding+Convention+Restaurant,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương"
+      "mapsUrl": "https://www.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Hồ+Chí+Minh"
     }
   },
-  "loveStory": [
-    {
-      "year": 2018,
-      "title": "Gặp Gỡ Lần Đầu",
-      "description": "Chúng tôi đã gặp nhau tại đại học. Ngay từ lần gặp đầu tiên, tôi đã cảm thấy có gì đó đặc biệt."
-    },
-    {
-      "year": 2020,
-      "title": "Bước Đầu Tìm Hiểu",
-      "description": "Sau một thời gian làm quen, chúng tôi bắt đầu hẹn hò và khám phá thế giới cùng nhau."
-    },
-    {
-      "year": 2022,
-      "title": "Du Lịch Singapore",
-      "description": "Chuyến đi Singapore đã giúp chúng tôi nhận ra tình yêu sâu sắc của nhau."
-    },
-    {
-      "year": 2023,
-      "title": "Cầu Hôn",
-      "description": "Minh Tuấn đã cầu hôn Ngọc Anh vào một buổi hoàng hôn tuyệt đẹp trên bãi biển Nha Trang."
-    }
-  ],
   "gallery": [
     {
       "url": "/image/anhcuoi1.jpg",
