@@ -1109,16 +1109,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 guestTypeDiv.style.marginBottom = '15px';
                 guestTypeDiv.style.textAlign = 'left';
                 guestTypeDiv.innerHTML = `
-                    <label style="display:block; margin-bottom:8px; font-weight:500;">Bạn là khách của:</label>
-                    <div style="display:flex; gap:20px; justify-content: flex-start; padding-left: 5px; flex-wrap: nowrap; overflow-x: auto;">
-                        <label style="cursor:pointer; display:flex; align-items:center; gap:5px; white-space: nowrap;">
-                            <input type="radio" name="guestType" value="Cô Dâu" required> Cô Dâu
-                        </label>
-                        <label style="cursor:pointer; display:flex; align-items:center; gap:5px; white-space: nowrap;">
-                            <input type="radio" name="guestType" value="Chú Rể" required> Chú Rể
-                        </label>
+                <label style="display:block; margin-bottom:12px; font-weight:600; font-size: 16px;">Bạn là khách của:</label>
+                <div style="display:flex; gap:25px; justify-content: flex-start; padding-left: 5px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; position: relative;">
+                        <input type="radio" id="guestBride" name="guestType" value="Cô Dâu" required 
+                            style="width: 22px; height: 22px; margin: 0 8px 0 0; cursor: pointer; accent-color: #d4a373;">
+                        <label for="guestBride" style="cursor:pointer; font-size: 16px; user-select: none; -webkit-user-select: none; margin: 0; line-height: 22px;">Cô Dâu</label>
                     </div>
-                `;
+                    <div style="display: flex; align-items: center; position: relative;">
+                        <input type="radio" id="guestGroom" name="guestType" value="Chú Rể" required 
+                            style="width: 22px; height: 22px; margin: 0 8px 0 0; cursor: pointer; accent-color: #d4a373;">
+                        <label for="guestGroom" style="cursor:pointer; font-size: 16px; user-select: none; -webkit-user-select: none; margin: 0; line-height: 22px;">Chú Rể</label>
+                    </div>
+                </div>
+            `;
                 gbForm.insertBefore(guestTypeDiv, submitBtn.closest('.form-group') || submitBtn);
             }
         }
