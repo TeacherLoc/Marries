@@ -1808,37 +1808,30 @@ body.theme-watercolor .wedding-container > * {
 /* Giao diện cho Điện thoại màn hình nhỏ (như cũ của bạn nhưng an toàn hơn) */
 @media (max-width: 480px) { 
     .gallery-editorial { 
-        grid-template-columns: 1fr; /* Về lại 1 cột nếu màn hình quá bé */
+        display: flex !important; /* Chuyển hẳn sang Flexbox để vô hiệu hóa sự phức tạp của Grid cũ */
+        flex-direction: column !important; /* Xếp thành 1 cột dọc duy nhất */
+        gap: 16px !important; /* Khoảng cách đều đặn giữa các ảnh */
+        padding: 0 10px; /* Thêm một chút lề hai bên để ảnh không sát rịt vào mép điện thoại */
     } 
     
-    .editorial-item--hero {
-        grid-column: span 1;
-    }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-    .gallery-editorial {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
+    /* Reset lại toàn bộ kích thước của TẤT CẢ các loại khung ảnh */
     .editorial-item--hero,
     .editorial-item--tall,
     .editorial-item--wide,
-    .editorial-item--square {
-        grid-column: span 1;
-        grid-row: auto;
+    .editorial-item--square { 
+        width: 100% !important; /* Ép khung ảnh bung hết chiều ngang 100% */
+        height: auto !important;
+        margin: 0 !important;
     }
 
-    .details-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .parents-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .countdown-timer {
-        grid-template-columns: repeat(2, 1fr);
+    /* Giữ tỷ lệ ảnh tự nhiên, hủy bỏ các tỷ lệ ép buộc để tránh méo ảnh */
+    .editorial-item--tall .editorial-media,
+    .editorial-item--wide .editorial-media,
+    .editorial-item--square .editorial-media,
+    .editorial-item--hero .editorial-media { 
+        aspect-ratio: auto !important; 
+        width: 100% !important;
+        height: auto !important;
     }
 }
 
