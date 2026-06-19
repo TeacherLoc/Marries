@@ -1111,19 +1111,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 guestTypeDiv.innerHTML = `
                 <label style="display:block; margin-bottom:12px; font-weight:600; font-size: 16px;">Bạn là khách của:</label>
                 <div style="display:flex; gap:25px; justify-content: flex-start; padding-left: 5px; flex-wrap: wrap;">
+                    
                     <div style="display: flex; align-items: center; position: relative;">
                         <input type="radio" id="guestBride" name="guestType" value="Cô Dâu" required 
                             style="width: 22px; height: 22px; margin: 0 8px 0 0; cursor: pointer; accent-color: #d4a373;">
-                        <label for="guestBride" style="cursor:pointer; font-size: 16px; user-select: none; -webkit-user-select: none; margin: 0; line-height: 22px;">Cô Dâu</label>
+                        <label for="guestBride" style="cursor:pointer; font-size: 16px; margin: 0; line-height: 22px; 
+                            -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; 
+                            -webkit-tap-highlight-color: transparent; touch-action: manipulation;">
+                            Cô Dâu
+                        </label>
                     </div>
+
                     <div style="display: flex; align-items: center; position: relative;">
                         <input type="radio" id="guestGroom" name="guestType" value="Chú Rể" required 
                             style="width: 22px; height: 22px; margin: 0 8px 0 0; cursor: pointer; accent-color: #d4a373;">
-                        <label for="guestGroom" style="cursor:pointer; font-size: 16px; user-select: none; -webkit-user-select: none; margin: 0; line-height: 22px;">Chú Rể</label>
+                        <label for="guestGroom" style="cursor:pointer; font-size: 16px; margin: 0; line-height: 22px; 
+                            -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; 
+                            -webkit-tap-highlight-color: transparent; touch-action: manipulation;">
+                            Chú Rể
+                        </label>
                     </div>
+
                 </div>
             `;
-                gbForm.insertBefore(guestTypeDiv, submitBtn.closest('.form-group') || submitBtn);
+                            gbForm.insertBefore(guestTypeDiv, submitBtn.closest('.form-group') || submitBtn);
             }
         }
 
