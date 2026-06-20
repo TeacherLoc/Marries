@@ -242,10 +242,10 @@ function updateCountdown() {
     setInterval(countdown, 1000);
 }
 
-// ===== BUTTERFLY FOLLOW =====
-function initButterflyFollow() {
-    const butterfly = document.getElementById('butterfly');
-    if (!butterfly) return;
+// ===== FLOATING HEART FOLLOW =====
+function initFloatingHeart() {
+    const heart = document.getElementById('floating-heart');
+    if (!heart) return;
 
     let targetX = window.innerWidth * 0.7;
     let targetY = window.innerHeight * 0.35;
@@ -255,11 +255,11 @@ function initButterflyFollow() {
     let wander = Math.random() * Math.PI * 2;
     let wobble = Math.random() * Math.PI * 2;
 
-    const orbitRadius = 26;
-    const orbitYScale = 0.65;
-    const followEase = 0.055;
-    const halfW = 21;
-    const halfH = 17;
+    const orbitRadius = 22;
+    const orbitYScale = 0.7;
+    const followEase = 0.06;
+    const halfW = 22;
+    const halfH = 20;
 
     function setTargetFromEvent(evt) {
         const point = evt.touches ? evt.touches[0] : evt;
@@ -277,24 +277,24 @@ function initButterflyFollow() {
         const dt = Math.min(40, now - lastTime);
         lastTime = now;
 
-        orbitAngle += dt * 0.0036;
-        wander += dt * 0.0015;
-        wobble += dt * 0.0022;
+        orbitAngle += dt * 0.003;
+        wander += dt * 0.0012;
+        wobble += dt * 0.0018;
 
         currentX += (targetX - currentX) * followEase;
         currentY += (targetY - currentY) * followEase;
 
-        const radiusJitter = 0.65 + Math.sin(wander * 0.9) * 0.35 + Math.cos(wobble * 1.4) * 0.15;
-        const orbitX = Math.cos(orbitAngle + Math.sin(wobble) * 0.4) * orbitRadius * radiusJitter;
-        const orbitY = Math.sin(orbitAngle + Math.cos(wander) * 0.35) * orbitRadius * orbitYScale * radiusJitter;
-        const driftX = Math.cos(wander * 1.3) * 10 + Math.sin(wobble * 1.7) * 6;
-        const driftY = Math.sin(wander * 1.1) * 8 + Math.cos(wobble * 1.5) * 5;
+        const radiusJitter = 0.7 + Math.sin(wander * 0.8) * 0.3 + Math.cos(wobble * 1.3) * 0.12;
+        const orbitX = Math.cos(orbitAngle + Math.sin(wobble) * 0.5) * orbitRadius * radiusJitter;
+        const orbitY = Math.sin(orbitAngle + Math.cos(wander) * 0.4) * orbitRadius * orbitYScale * radiusJitter;
+        const driftX = Math.cos(wander * 1.2) * 12 + Math.sin(wobble * 1.6) * 7;
+        const driftY = Math.sin(wander * 1.0) * 10 + Math.cos(wobble * 1.4) * 6;
 
         const x = currentX + orbitX + driftX - halfW;
         const y = currentY + orbitY + driftY - halfH;
-        const tilt = Math.sin(orbitAngle) * 16 + Math.cos(wobble) * 6;
+        const tilt = Math.sin(orbitAngle) * 12 + Math.cos(wobble) * 5;
 
-        butterfly.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${tilt}deg)`;
+        heart.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${tilt}deg)`;
         requestAnimationFrame(animate);
     }
 
@@ -1126,7 +1126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initEnvelopeAnimation();
         initVenueSelector();
         updateCountdown();
-        initButterflyFollow();
+        initFloatingHeart();
         // Music player disabled on landing page
         // initMusicPlayer();
 

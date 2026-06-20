@@ -36,10 +36,26 @@
 
     <!-- Floating petals -->
     <div id="petals"></div>
-    <div id="butterfly" class="butterfly" aria-hidden="true">
-        <div class="butterfly-wing left"></div>
-        <div class="butterfly-wing right"></div>
-        <div class="butterfly-body"></div>
+    <div id="floating-heart" class="floating-heart" aria-hidden="true">
+        <div class="heart-glow"></div>
+        <div class="heart-shape">
+            <svg viewBox="0 0 32 29.6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 28.6C16 28.6 2 18.2 2 10.1C2 5.4 5.9 1.6 10.7 1.6C13.3 1.6 15.6 3 16 3C16.4 3 18.7 1.6 21.3 1.6C26.1 1.6 30 5.4 30 10.1C30 18.2 16 28.6 16 28.6Z" fill="url(#heartGradient)"/>
+                <defs>
+                    <linearGradient id="heartGradient" x1="16" y1="1.6" x2="16" y2="28.6" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#ff8fab"/>
+                        <stop offset="50%" stop-color="#e84a7f"/>
+                        <stop offset="100%" stop-color="#c1355e"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+        <div class="heart-sparkles">
+            <div class="heart-sparkle"></div>
+            <div class="heart-sparkle"></div>
+            <div class="heart-sparkle"></div>
+            <div class="heart-sparkle"></div>
+        </div>
     </div>
 
     <!-- ── VENUE SELECTOR ── -->
