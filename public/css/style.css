@@ -1835,6 +1835,82 @@ body.theme-watercolor .wedding-container > * {
     font-size: 0.95rem;
 }
 
+/* ===== SHARE BUTTONS ===== */
+.share-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 70px;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn:active {
+    transform: translateY(0);
+}
+
+.share-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.share-icon-svg {
+    width: 36px;
+    height: 36px;
+}
+
+.share-btn span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.share-btn-zalo:hover {
+    box-shadow: 0 4px 16px rgba(25, 137, 250, 0.3);
+}
+
+.share-btn-messenger:hover {
+    box-shadow: 0 4px 16px rgba(88, 101, 242, 0.3);
+}
+
+.share-btn-copy:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.share-btn-copy.copied {
+    background: #e8f5e9;
+}
+
+.share-btn-copy.copied span {
+    color: #2e7d32;
+}
+
+.qr-hint {
+    color: var(--light-text);
+    font-size: 0.95rem;
+}
+
 /* ===== FOOTER ===== */
 .footer {
     padding: 40px 20px;
@@ -4074,3 +4150,49 @@ section {
 .venue-selector.selecting {
     background: linear-gradient(180deg, #f8f5f2 0%, #f5f1ed 100%);
 }
+
+/* ===== SHARE BUTTONS RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .share-buttons {
+        gap: 8px;
+    }
+
+    .share-btn {
+        padding: 8px 10px;
+        min-width: 60px;
+        border-radius: 10px;
+    }
+
+    .share-icon,
+    .share-icon-svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .share-btn span {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .share-buttons {
+        gap: 6px;
+    }
+
+    .share-btn {
+        padding: 6px 8px;
+        min-width: 52px;
+        border-radius: 8px;
+    }
+
+    .share-icon,
+    .share-icon-svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .share-btn span {
+        font-size: 0.6rem;
+    }
+}
+

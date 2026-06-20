@@ -1141,6 +1141,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }
 
+        // Initialize share buttons
+        initShareButtons();
+
         // Add animation style for success message
         if (!document.getElementById('animation-styles')) {
             const style = document.createElement('style');
@@ -1385,3 +1388,63 @@ function openCard() {
         petalEl.appendChild(p);
     }
 })();
+
+// ===== SHARE BUTTONS =====
+function initShareButtons() {
+    // Get current page URL
+    const pageUrl = window.location.href;
+
+    // Zalo share
+    const zaloBtn = document.getElementById('share-zalo');
+    if (zaloBtn) {
+        zaloBtn.addEventListener('click', () => {
+            const zaloShareUrl = `https://zalo.me/share?url=${encodeURIComponent(pageUrl)}`;
+            window.open(zaloShareUrl, '_blank', 'width=600,height=500');
+        });
+    }
+
+    // Messenger share
+    const messengerBtn = document.getElementById('share-messenger');
+    if (messengerBtn) {
+        messengerBtn.addEventListener('click', () => {
+            const messengerShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+            window.open(messengerShareUrl, '_blank', 'width=600,height=500');
+        });
+    }
+
+    // Copy link
+    const copyBtn = document.getElementById('share-copy');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(pageUrl);
+                const span = copyBtn.querySelector('span');
+                const originalText = span.textContent;
+                span.textContent = 'Đã sao chép!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    span.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = pageUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                const span = copyBtn.querySelector('span');
+                const originalText = span.textContent;
+                span.textContent = 'Đã sao chép!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    span.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }
+        });
+    }
+}
