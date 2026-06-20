@@ -1892,10 +1892,6 @@ body.theme-watercolor .wedding-container > * {
     box-shadow: 0 4px 16px rgba(25, 137, 250, 0.3);
 }
 
-.share-btn-messenger:hover {
-    box-shadow: 0 4px 16px rgba(88, 101, 242, 0.3);
-}
-
 .share-btn-copy:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }

@@ -1413,12 +1413,12 @@ function initShareButtons() {
     }
 
     // Messenger share
-    const messengerBtn = document.getElementById('share-messenger');
-    if (messengerBtn) {
-        messengerBtn.addEventListener('click', () => {
-            doNativeShare(pageUrl, pageTitle);
-        });
-    }
+    // const messengerBtn = document.getElementById('share-messenger');
+    // if (messengerBtn) {
+    //     messengerBtn.addEventListener('click', () => {
+    //         doNativeShare(pageUrl, pageTitle);
+    //     });
+    // }
 
     // Copy link
     const copyBtn = document.getElementById('share-copy');

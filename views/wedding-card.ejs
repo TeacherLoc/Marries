@@ -452,16 +452,7 @@
                 <button type="submit" class="btn-submit">Gửi Lời Chúc</button>
             </form>
 
-            <div class="guestbook-entries">
-                <h3>Lời Chúc Từ Khách Mời</h3>
-                <% guestbookEntries.forEach(entry => { %>
-                    <div class="guestbook-entry">
-                        <strong><%= entry.guestName %></strong>
-                        <p><%= entry.message %></p>
-                        <small><%= new Date(entry.timestamp).toLocaleDateString('vi-VN') %></small>
-                    </div>
-                <% }); %>
-            </div>
+            <div class="guestbook-entries" style="display: none;">
         </section>
 
         <!-- QR Code for Website -->
@@ -474,10 +465,10 @@
                         <img src="/symbol/zalo-icon.png" alt="Zalo" class="share-icon">
                         <span>Zalo</span>
                     </button>
-                    <button type="button" class="share-btn share-btn-messenger" id="share-messenger" title="Chia sẻ qua Messenger">
+                    <!-- <button type="button" class="share-btn share-btn-messenger" id="share-messenger" title="Chia sẻ qua Messenger">
                         <img src="/symbol/message-icon.png" alt="Messenger" class="share-icon">
                         <span>Messenger</span>
-                    </button>
+                    </button> -->
                     <button type="button" class="share-btn share-btn-copy" id="share-copy" title="Sao chép liên kết">
                         <svg class="share-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 9H11.5C10.12 9 9 10.12 9 11.5V20C9 21.1 9.9 22 11 22H20C21.1 22 22 21.1 22 20V11.5C22 10.12 20.88 9 19.5 9H20ZM10.5 11.5C10.5 10.95 10.95 10.5 11.5 10.5H19.5C20.05 10.5 20.5 10.95 20.5 11.5V20C20.5 20.55 20.05 21 19.5 21H11.5C10.95 21 10.5 20.55 10.5 20V11.5Z" fill="#5865F2"/>
@@ -486,7 +477,7 @@
                         <span>Sao chép</span>
                     </button>
                 </div>
-                <p class="qr-hint">Quét mã để truy cập thiệp cưới</p>
+                <p class="qr-hint">Chia sẻ với người thương</p>
             </div>
         </section>
 
