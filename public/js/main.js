@@ -1070,8 +1070,6 @@ document.getElementById('guestbook-form')?.addEventListener('submit', async (e) 
                 btn.disabled = false;
                 btn.textContent = originalText;
                 btn.style.background = '';
-                // Reload to show new entry with animation
-                location.reload();
             }, 1500);
         } else {
             btn.textContent = '✗ Lỗi - Thử lại';
