@@ -787,7 +787,7 @@ body.theme-watercolor .wedding-container > * {
 
     .invite-card .polaroid-groom,
     .invite-card .polaroid-bride {
-        width: 160px;
+        width: 150px;
     }
 
     .invite-card .polaroid-groom {
@@ -795,7 +795,7 @@ body.theme-watercolor .wedding-container > * {
     }
 
     .invite-card .polaroid-bride {
-        transform: translateX(-12%) rotate(4deg);
+        transform: translateX(-1%) rotate(4deg);
     }
 
     .invite-card .wax-seal {
@@ -829,11 +829,11 @@ body.theme-watercolor .wedding-container > * {
     }
 
     .invite-card .polaroid-groom {
-        transform: translateX(-85%) rotate(-4deg);
+        transform: translateX(-88%) rotate(-4deg);
     }
 
     .invite-card .polaroid-bride {
-        transform: translateX(-15%) rotate(4deg);
+        transform: translateX(-1%) rotate(4deg);
     }
 
     .invite-card .wax-seal {
@@ -4018,7 +4018,7 @@ section {
 .venue-btn:nth-child(1) {
     animation-delay: 0.1s;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.04);
+    background: rgb(12 58 34);
     position: absolute;
     top: 0;
     left: 0;
@@ -4029,6 +4029,7 @@ section {
 .venue-btn:nth-child(3) {
     animation-delay: 0.3s;
     justify-content: center;
+    background: rgb(113 74 74);
     position: absolute;
     top: 50%;
     left: 0;
