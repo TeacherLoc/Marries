@@ -1125,8 +1125,12 @@ document.addEventListener('DOMContentLoaded', () => {
         initVenueSelector();
         updateCountdown();
         initFloatingHeart();
-        // Music player disabled on landing page
-        // initMusicPlayer();
+
+        // Auto-open envelope after 5 seconds
+        startCountdown();
+        autoOpenTimer = setTimeout(() => {
+            openCard();
+        }, 5000);
 
         // Initialize gallery layouts
         if (document.querySelector('.gallery-editorial')) {
@@ -1354,22 +1358,88 @@ function initVenueSelector() {
 }
 
 // ===== LANDING PAGE FUNCTIONS =====
-function openCard() {
-    const landing = document.getElementById('landing');
-    const card = document.getElementById('card');
-    landing.classList.add('hide');
-    card.style.display = 'block';
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            card.classList.add('visible');
-        });
-    });
-    setTimeout(() => {
-        landing.style.display = 'none';
-    }, 900);
+let autoOpenTimer = null;
+let countdownInterval = null;
+
+function startCountdown() {
+    const secondsEl = document.getElementById('timer-seconds');
+    if (!secondsEl) return;
+
+    let remaining = 5;
+    secondsEl.textContent = remaining;
+
+    countdownInterval = setInterval(() => {
+        remaining--;
+        if (remaining > 0) {
+            secondsEl.textContent = remaining;
+        } else {
+            clearInterval(countdownInterval);
+        }
+    }, 1000);
 }
 
-// Spawn petals
+function openCard() {
+    const landing = document.getElementById('landing');
+    const scene = document.getElementById('envWrap');
+    if (!landing || landing.classList.contains('is-opened')) return;
+
+    // Clear auto-open timer
+    if (autoOpenTimer) {
+        clearTimeout(autoOpenTimer);
+        autoOpenTimer = null;
+    }
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    // Start envelope opening animation
+    landing.classList.add('is-opening');
+    if (scene) scene.classList.add('is-opening');
+
+    // After envelope opens, hide landing & show card
+    setTimeout(() => {
+        landing.classList.add('is-opened');
+        const card = document.getElementById('card');
+        if (card) {
+            card.style.display = 'block';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    card.classList.add('visible');
+                });
+            });
+        }
+    }, 1400);
+
+    // Remove landing from DOM
+    setTimeout(() => {
+        landing.style.display = 'none';
+    }, 2400);
+}
+
+function initEnvelopeAnimation() {
+    const envelope = document.getElementById('envelope-overlay');
+    if (!envelope) return;
+
+    envelope.addEventListener('click', () => {
+        envelope.classList.remove('active');
+        envelope.classList.add('closed');
+        setTimeout(() => {
+            envelope.style.display = 'none';
+        }, ENVELOPE_HIDE_DELAY);
+    });
+
+    // Auto-close after 30 seconds
+    setTimeout(() => {
+        if (envelope.classList.contains('active')) {
+            envelope.classList.remove('active');
+            envelope.classList.add('closed');
+            setTimeout(() => {
+                envelope.style.display = 'none';
+            }, ENVELOPE_HIDE_DELAY);
+        }
+    }, 30000);
+}
 (function spawnPetals() {
     const petalEl = document.getElementById('petals');
     if (!petalEl) return;

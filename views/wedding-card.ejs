@@ -81,25 +81,50 @@
 
     <!-- ── LANDING ── -->
     <div id="landing">
-      <div class="landing-names-section">
-        <span class="landing-name"><%= couple.brideName %></span>
-        <span class="landing-heart">❤</span>
-        <span class="landing-name"><%= couple.groomName %></span>
-      </div>
-
-      <div class="landing-envelope-wrapper" id="envWrap" onclick="openCard()">
-        <div class="landing-envelope">
-          <div class="landing-flap"></div>
-          <div class="landing-seal"></div>
+      <!-- Full-screen envelope card -->
+      <div class="envelope-scene" id="envWrap" onclick="openCard()">
+        <!-- Back envelope -->
+        <div class="envelope-back"></div>
+        <!-- Letter inside (revealed on open) -->
+        <div class="envelope-letter">
+          <div class="envelope-letter-content">
+            <div class="env-names">
+              <span class="env-name"><%= couple.brideName %></span>
+              <span class="env-heart">❤</span>
+              <span class="env-name"><%= couple.groomName %></span>
+            </div>
+            <% if (preWeddingPhoto) { %>
+              <img src="<%= preWeddingPhoto %>" alt="Pre-wedding" class="env-photo">
+            <% } %>
+          </div>
         </div>
+        <!-- Left flap -->
+        <div class="envelope-flap envelope-flap-left"></div>
+        <!-- Right flap -->
+        <div class="envelope-flap envelope-flap-right"></div>
+        <!-- Bottom flap (opens first) -->
+        <div class="envelope-bottom"></div>
+        <!-- Wax seal -->
+        <div class="envelope-seal">
+          <span>❤</span>
+        </div>
+        <!-- Front envelope body -->
+        <div class="envelope-front"></div>
       </div>
 
-      <div class="landing-cta">CLICK VÀO THIỆP ĐỂ MỞ</div>
-
-      <div class="landing-photo-section" style="margin-left: -2rem; margin-right: -2rem; width: calc(100% + 4rem); height: calc(100% + 4rem);">
-        <% if (preWeddingPhoto) { %>
-          <img src="<%= preWeddingPhoto %>" alt="Pre-wedding" class="landing-photo">
-        <% } %>
+      <!-- Countdown & CTA overlay -->
+      <div class="landing-overlay" id="landing-overlay">
+        <div class="landing-overlay-names">
+          <span class="overlay-name"><%= couple.brideName %></span>
+          <span class="overlay-heart">❤</span>
+          <span class="overlay-name"><%= couple.groomName %></span>
+        </div>
+        <div class="landing-timer" id="landing-timer">
+          <div class="timer-circle" id="timer-circle">
+            <span id="timer-seconds">5</span>
+          </div>
+        </div>
+        <div class="landing-cta">NHẤN ĐỂ MỞ THIỆP CƯỚI</div>
       </div>
     </div>
 

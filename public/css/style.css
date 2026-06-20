@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --primary-divider: #8fa69b;
     --secondary-color: #f7f1e8;
     --text-color: #2d2a26;
@@ -3318,15 +3318,14 @@ section {
 #landing {
     position: fixed;
     inset: 0;
-    display: none;
-    flex-direction: column;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--cream);
-    z-index: 10001;
+    background: #f5f0e8;
+    z-index: 9000;
     transition: opacity 0.8s ease, transform 0.8s ease;
-    padding: 20px;
-    opacity: 0;
+    overflow: hidden;
+    opacity: 1;
 }
 
 #landing.visible {
@@ -3338,6 +3337,326 @@ section {
 #landing.hide {
     opacity: 0;
     transform: translateY(-30px);
+    pointer-events: none;
+}
+
+/* ── REALISTIC FULL-SCREEN ENVELOPE ── */
+
+/* Scene container */
+.envelope-scene {
+    position: relative;
+    width: min(95vw, 420px);
+    height: min(85vh, 580px);
+    perspective: 1400px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    z-index: 2;
+}
+
+/* Back layer */
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #b5a88a 0%, #c9b99a 30%, #d4c5a9 60%, #b59878 100%);
+    border-radius: 4px;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.18),
+        0 8px 20px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.4),
+        inset 0 -3px 8px rgba(0,0,0,0.08);
+    transform: translateZ(-10px);
+}
+
+/* Front face of envelope */
+.envelope-front {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #c4b28e 0%, #b5a88a 40%, #a8946e 100%);
+    border-radius: 4px;
+    box-shadow:
+        0 0 0 1px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    overflow: hidden;
+}
+
+/* Subtle fabric texture on front */
+.envelope-front::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,0.03) 2px,
+            rgba(255,255,255,0.03) 4px
+        );
+    pointer-events: none;
+}
+
+/* Bottom flap (closed = pointed, opens upward to reveal letter) */
+.envelope-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, #b5a88a 0%, #a08060 100%);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    transform-origin: bottom center;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
+}
+
+.envelope-bottom::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,0.04) 2px,
+            rgba(255,255,255,0.04) 4px
+        );
+}
+
+/* Left flap */
+.envelope-flap-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(135deg, #c4b28e 0%, #b0a07a 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    transform-origin: left top;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    z-index: 4;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Right flap */
+.envelope-flap-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(225deg, #c4b28e 0%, #b0a07a 100%);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    transform-origin: right top;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    z-index: 4;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Wax seal */
+.envelope-seal {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    background: radial-gradient(ellipse at 35% 35%, #c0392b 0%, #8b1a1a 60%, #6b1010 100%);
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.3),
+        inset 0 -2px 6px rgba(0,0,0,0.3),
+        inset 0 2px 4px rgba(255,255,255,0.15);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    font-size: 22px;
+    color: rgba(255,255,255,0.9);
+}
+
+.envelope-seal::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Letter inside envelope */
+.envelope-letter {
+    position: absolute;
+    top: 8%;
+    left: 6%;
+    right: 6%;
+    height: 70%;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1;
+    transform: translateY(0);
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.envelope-letter-content {
+    width: 100%;
+    height: 100%;
+    background: #faf7f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.env-names {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(20px, 4.5vw, 28px);
+    color: #a74545;
+}
+
+.env-heart {
+    font-size: 16px;
+    color: #c0392b;
+}
+
+.env-photo {
+    width: 70%;
+    max-height: 60%;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+/* ── OPEN ENVELOPE ANIMATION ── */
+.envelope-scene.is-opening .envelope-bottom {
+    transform: rotateX(-170deg);
+}
+
+.envelope-scene.is-opening .envelope-flap-left {
+    transform: rotateY(-150deg);
+}
+
+.envelope-scene.is-opening .envelope-flap-right {
+    transform: rotateY(150deg);
+}
+
+.envelope-scene.is-opening .envelope-letter {
+    transform: translateY(-60px) scale(1.05);
+}
+
+.envelope-scene.is-opening .envelope-seal {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0;
+}
+
+/* ── LANDING OVERLAY (countdown + CTA) ── */
+.landing-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(24px, 5vh, 48px) clamp(16px, 4vw, 32px) clamp(32px, 6vh, 56px);
+    pointer-events: none;
+}
+
+.landing-overlay-names {
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 1.5vw, 10px);
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(28px, 6vw, 42px);
+    color: #a74545;
+    text-shadow: 0 1px 8px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.6);
+    animation: fadeUp 0.9s ease both;
+}
+
+.overlay-heart {
+    font-size: clamp(18px, 4vw, 28px);
+    color: #c0392b;
+}
+
+/* Timer circle */
+.landing-timer {
+    pointer-events: auto;
+    animation: fadeUp 0.9s 0.2s ease both;
+}
+
+.timer-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(160, 128, 96, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    animation: pulse-ring 1s ease-in-out infinite;
+}
+
+.timer-circle span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #8b1a1a;
+}
+
+@keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.25), 0 4px 16px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 0 0 8px rgba(192, 57, 43, 0), 0 4px 16px rgba(0,0,0,0.1); }
+}
+
+.landing-cta {
+    text-align: center;
+    font-size: clamp(10px, 2.5vw, 13px);
+    color: #8b7355;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-shadow: 0 1px 6px rgba(255,255,255,0.9);
+    animation: fadeUp 0.9s 0.4s ease both, textGlow 2s ease-in-out infinite;
+    pointer-events: auto;
+}
+
+@keyframes textGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.65; }
+}
+
+/* ── HIDE OVERLAY WHEN OPENING ── */
+#landing.is-opening .landing-overlay {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+/* ── RESPONSIVE LANDING ── */
+@media (max-width: 400px) {
+    .envelope-scene {
+        width: 94vw;
+        height: 80vh;
+    }
+    .envelope-seal {
+        width: 46px;
+        height: 46px;
+        font-size: 18px;
+    }
+}
+
+/* ── LANDING OPENED ── */
+#landing.is-opened {
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1s ease, transform 1s ease;
     pointer-events: none;
 }
 
