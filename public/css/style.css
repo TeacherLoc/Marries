@@ -1307,6 +1307,7 @@ body.theme-watercolor .wedding-container > * {
     font-weight: 600;
     font-style: italic;
     line-height: 0.95;
+    margin-bottom: 10px;
 }
 
 .calendar-month {
@@ -1318,6 +1319,7 @@ body.theme-watercolor .wedding-container > * {
     text-transform: none;
     font-style: italic;
     line-height: 1;
+    margin-bottom: -10px;
 }
 
 .calendar-grid {

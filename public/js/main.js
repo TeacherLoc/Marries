@@ -1391,15 +1391,24 @@ function openCard() {
 
 // ===== SHARE BUTTONS =====
 function initShareButtons() {
-    // Get current page URL
     const pageUrl = window.location.href;
+    const pageTitle = document.title;
+
+    function doNativeShare(url, title) {
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: 'Mời bạn xem thiệp cưới của chúng mình! 💍',
+                url: url
+            }).catch(() => {});
+        }
+    }
 
     // Zalo share
     const zaloBtn = document.getElementById('share-zalo');
     if (zaloBtn) {
         zaloBtn.addEventListener('click', () => {
-            const zaloShareUrl = `https://zalo.me/share?url=${encodeURIComponent(pageUrl)}`;
-            window.open(zaloShareUrl, '_blank', 'width=600,height=500');
+            doNativeShare(pageUrl, pageTitle);
         });
     }
 
@@ -1407,8 +1416,7 @@ function initShareButtons() {
     const messengerBtn = document.getElementById('share-messenger');
     if (messengerBtn) {
         messengerBtn.addEventListener('click', () => {
-            const messengerShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
-            window.open(messengerShareUrl, '_blank', 'width=600,height=500');
+            doNativeShare(pageUrl, pageTitle);
         });
     }
 
@@ -1427,7 +1435,6 @@ function initShareButtons() {
                     copyBtn.classList.remove('copied');
                 }, 2000);
             } catch (err) {
-                // Fallback for older browsers
                 const textarea = document.createElement('textarea');
                 textarea.value = pageUrl;
                 textarea.style.position = 'fixed';
