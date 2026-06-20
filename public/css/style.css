@@ -3112,10 +3112,21 @@ section {
 
 .venue-btn.groom-venue {
     animation-delay: 0.1s;
+    background: rgba(0, 0, 0, 0.04);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50%;
 }
 
 .venue-btn.bride-venue {
     animation-delay: 0.3s;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .venue-btn::before,
@@ -3194,7 +3205,6 @@ section {
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 30px 20px;
     background: transparent;
     flex: 0 0 auto;
 }
@@ -3933,7 +3943,6 @@ section {
     z-index: 9999;
     opacity: 1;
     transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
-    padding: 20px;
     visibility: visible;
 }
 
@@ -3946,12 +3955,12 @@ section {
 .venue-selector-content {
     text-align: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 100%;
     animation: fadeInDown 0.8s ease-out;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 80vh;
+    align-items: stretch;
+    height: 100vh;
     justify-content: center;
 }
 
@@ -3960,17 +3969,20 @@ section {
     flex-direction: column;
     gap: 0;
     width: 100%;
-    align-items: center;
+    align-items: stretch;
     position: relative;
     flex: 1;
+    height: 100vh;
 }
 
 /* Logo Container - positioned in the middle */
 .venue-logo {
-    margin: -50px auto;
-    animation: fadeInDown 0.8s ease-out 0.2s backwards;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 20;
+    animation: fadeInDown 0.8s ease-out 0.2s backwards;
 }
 
 .venue-logo img {
@@ -4006,11 +4018,22 @@ section {
 .venue-btn:nth-child(1) {
     animation-delay: 0.1s;
     justify-content: center;
+    background: rgba(0, 0, 0, 0.04);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50%;
 }
 
 .venue-btn:nth-child(3) {
     animation-delay: 0.3s;
     justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .venue-btn::before,
@@ -4056,7 +4079,7 @@ section {
 
 @media (max-width: 480px) {
     .venue-selector {
-        padding: 20px;
+        padding: 0;
     }
 
     .venue-selector-content {
@@ -4064,8 +4087,12 @@ section {
         height: 100vh;
     }
 
+    .venue-buttons {
+        height: 100vh;
+    }
+
     .venue-logo {
-        margin: -40px auto;
+        margin: 0px auto;
     }
 
     .venue-logo img {
@@ -4100,44 +4127,44 @@ section {
 /* Venue Selection Split Animation */
 @keyframes expandToTop {
     from {
-        transform: scaleY(1);
-        opacity: 1;
+        top: 0;
+        bottom: 50%;
     }
     to {
-        transform: scaleY(2) translateY(-50%);
-        opacity: 1;
+        top: 0;
+        bottom: 0;
     }
 }
 
 @keyframes expandToBottom {
     from {
-        transform: scaleY(1);
-        opacity: 1;
+        top: 50%;
+        bottom: 0;
     }
     to {
-        transform: scaleY(2) translateY(50%);
-        opacity: 1;
+        top: 0;
+        bottom: 0;
     }
 }
 
 @keyframes fadeOutCenter {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.8);
-    }
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
 .venue-selector.selecting .venue-btn.selected {
-    animation: expandToTop 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
 }
 
 .venue-selector.selecting .venue-btn.selected.bride-venue {
     animation: expandToBottom 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.venue-selector.selecting .venue-btn.selected.groom-venue {
+    animation: expandToTop 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .venue-selector.selecting .venue-btn:not(.selected),
