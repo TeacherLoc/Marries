@@ -3212,7 +3212,7 @@ section {
 .venue-logo img {
     width: 110px;
     height: 110px;
-    background: #f0ebe6;
+    background: #9e8681;    
     border-radius: 50%;
     padding: 14px;
     box-shadow:
@@ -4386,7 +4386,7 @@ section {
 .venue-btn:nth-child(1) {
     animation-delay: 0.1s;
     justify-content: center;
-    background: rgb(12 58 34);
+    background: rgb(232 210 164);
     position: absolute;
     top: 0;
     left: 0;
@@ -4397,7 +4397,6 @@ section {
 .venue-btn:nth-child(3) {
     animation-delay: 0.3s;
     justify-content: center;
-    background: rgb(113 74 74);
     position: absolute;
     top: 50%;
     left: 0;

@@ -69,7 +69,7 @@ function selectVenue(venue) {
 
     // Update map if visible
     updateMapForVenue(venue);
-
+    // /rgb(232 210 164)
     // Cập nhật ngày tháng dựa theo tiệc được chọn
     if (typeof updateDateForVenue === 'function') updateDateForVenue(venue);
 }
