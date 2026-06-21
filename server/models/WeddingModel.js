@@ -28,7 +28,17 @@ const initializeData = () => {
         receptionTime: '18:00',
         receptionLocation: 'Nhà hàng',
         receptionAddress: 'Địa chỉ nhà hàng',
-        coordinates: { lat: 0, lng: 0 }
+        coordinates: { lat: 0, lng: 0 },
+        groomReception: {
+          date: '2026-07-19',
+          paradeTime: '11:00',
+          location: 'Khách sạn Thắng Lợi'
+        },
+        brideReception: {
+          date: '2026-07-19',
+          paradeTime: '11:00',
+          location: 'Trung tâm Hội nghị tiệc cưới Võ Gia Place'
+        }
       },
       loveStory: [
         {

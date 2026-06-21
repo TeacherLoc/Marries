@@ -241,18 +241,31 @@
 
         <!-- Wedding Details -->
         <section class="wedding-details-section" data-aos="fade-up">
-            <h2>Thời gian tổ chức</h2>
-            <div class="details-grid">
-                <div class="detail-card ceremony">
-                    <h3>Lễ Vu Quy / Tân Hôn</h3>
-                    <h3 style="font-size: 1.0rem; margin: 0.5rem 0;">Ngày 19/07/2026</h3>
-                    <p class="time"><%= wedding.ceremonyTime %></p>
-                    <p class="location"><%= wedding.ceremonyLocation %></p>
+            <div class="parade-header">
+                <h2>Thông tin tiệc cưới</h2>
+            </div>
+            <div class="parade-card" id="parade-card">
+                <div class="parade-subtitle">TIỆC CƯỚI SẼ DIỄN RA VÀO LÚC:</div>
+                <div class="parade-main-time">11:00</div>
+                <div class="parade-date-display">
+                    <span class="date-weekday">CHỦ NHẬT</span>
+                    <span class="date-divider">|</span>
+                    <span class="date-day">12</span>
+                    <span class="date-divider">|</span>
+                    <span class="date-month">THÁNG 07</span>
                 </div>
-                <div class="detail-card reception">
-                    <h3>Tiệc Cưới</h3>
-                    <p class="time"><%= wedding.receptionTime %></p>
-                    <p class="location"><%= wedding.receptionLocation %></p>
+                <div class="parade-year">2026</div>
+                <div class="parade-lunar">Tức ngày 16 tháng 6 năm Bính Thân</div>
+            </div>
+            <div class="parade-footer">
+                <div class="parade-footer-item">
+                    <span class="footer-label">ĐÓN KHÁCH</span>
+                    <span class="footer-time">11:00</span>
+                </div>
+                <div class="footer-divider">|</div>
+                <div class="parade-footer-item">
+                    <span class="footer-label">KHAI TIỆC</span>
+                    <span class="footer-time">12:00</span>
                 </div>
             </div>
         </section>

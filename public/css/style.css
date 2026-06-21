@@ -1058,69 +1058,148 @@ body.theme-watercolor .wedding-container > * {
 
 /* ===== WEDDING DETAILS ===== */
 .wedding-details-section {
-    padding: 40px 20px;
-    background-color: var(--secondary-color);
+    padding: 0;
+    background: linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%);
     animation: fadeInUp 0.8s ease-out;
-}
-
-.details-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-.detail-card {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: fadeInUp 0.6s ease-out both;
-    position: relative;
+    border-radius: 20px;
     overflow: hidden;
 }
 
-.detail-card:nth-child(1) { animation-delay: 0.1s; }
-.detail-card:nth-child(2) { animation-delay: 0.2s; }
-
-.detail-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(122, 46, 46, 0.1), transparent);
-    transition: left 0.5s ease;
+.parade-header {
+    background: linear-gradient(135deg, rgba(192, 174, 142, 1) 49%, rgba(196, 169, 137, 1) 22%);
+    padding: 0.5rem 1rem;
+    text-align: center;
 }
 
-.detail-card:hover::before {
-    left: 100%;
+.parade-header h2 {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 0.85rem;
+    color: white;
+    letter-spacing: 0.25em;
+    margin: 0;
+    font-weight: 600;
 }
 
-.detail-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(122, 46, 46, 0.2);
+.parade-card {
+    background: white;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
 }
 
-.detail-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    color: var(--accent-wine);
-    font-family: var(--font-script);
+.parade-subtitle {
+    font-size: 0.75rem;
+    color: #8a7f76;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
 }
 
-.detail-card .time {
+.parade-main-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #c9a96e;
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.parade-date-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.date-weekday {
+    font-size: 0.85rem;
+    color: #4a4038;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.date-divider {
+    color: #d4cfc8;
+}
+
+.date-day {
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    animation: pulse 2s ease-in-out infinite;
+    font-weight: 700;
+    color: #4a4038;
+    line-height: 1;
 }
 
-.detail-card .location {
-    color: var(--light-text);
-    font-size: 1rem;
+.date-month {
+    font-size: 0.85rem;
+    color: #4a4038;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.parade-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #4a4038;
+    margin-bottom: 0.5rem;
+}
+
+.parade-lunar {
+    font-size: 0.75rem;
+    color: #9a9088;
+    letter-spacing: 0.05em;
+}
+
+.parade-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 1.5rem 2rem 2rem;
+    background: white;
+    border-top: 1px solid #f0ebe3;
+}
+
+.parade-footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.footer-label {
+    font-size: 0.65rem;
+    color: #9a9088;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.footer-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #4a4038;
+}
+
+.footer-divider {
+    color: #d4cfc8;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 480px) {
+    .parade-main-time {
+        font-size: 3.2rem;
+    }
+
+    .parade-date-display {
+        gap: 0.5rem;
+    }
+
+    .parade-footer {
+        gap: 1.5rem;
+    }
 }
 
 /* ===== MAP SECTION ===== */
