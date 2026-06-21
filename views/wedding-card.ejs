@@ -115,25 +115,24 @@
         <!-- Top flap (triangular, opens upward) -->
         <div class="envelope-top"></div>
 
-        <!-- Wax seal -->
-        <div class="envelope-seal">
-          <span>❤</span>
+        <!-- Circular logo button -->
+        <div class="env-logo" onclick="openCard()">
+          <img src="/image/logotron.png" alt="Mở thiệp cưới">
         </div>
       </div>
-
-      <!-- Countdown & CTA overlay -->
-      <div class="landing-overlay" id="landing-overlay">
-        <div class="landing-overlay-names">
+      <!-- Timer overlay (positioned on front face of envelope) -->
+      <div class="envelope-front-overlay" id="landing-overlay">
+        <div class="envelope-overlay-names">
           <span class="overlay-name"><%= couple.brideName %></span>
           <span class="overlay-heart">❤</span>
           <span class="overlay-name"><%= couple.groomName %></span>
         </div>
-        <div class="landing-timer" id="landing-timer">
-          <div class="timer-circle" id="timer-circle">
+        <div class="envelope-timer" id="landing-timer">
+          <div class="env-timer-circle" id="timer-circle">
             <span id="timer-seconds">5</span>
           </div>
         </div>
-        <div class="landing-cta">NHẤN ĐỂ MỞ THIỆP CƯỚI</div>
+        <div class="envelope-cta-hint">NHẤN ĐỂ MỞ THIỆP CƯỚI</div>
       </div>
     </div>
 

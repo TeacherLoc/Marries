@@ -3488,35 +3488,45 @@ section {
     backface-visibility: hidden;
 }
 
-/* Wax seal */
-.envelope-seal {
+/* ── Circular logo button (replaces wax seal) ── */
+.env-logo {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 56px;
-    height: 56px;
-    background: radial-gradient(ellipse at 35% 35%, #c0392b 0%, #8b1a1a 60%, #6b1010 100%);
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
-    z-index: 10;
+    z-index: 15;
+    cursor: pointer;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow:
-        0 4px 12px rgba(0,0,0,0.3),
-        inset 0 -2px 6px rgba(0,0,0,0.3),
-        inset 0 2px 4px rgba(255,255,255,0.15);
-    transition: transform 0.6s ease, opacity 0.6s ease;
-    font-size: 22px;
-    color: rgba(255,255,255,0.9);
+        0 6px 20px rgba(0,0,0,0.2),
+        0 2px 8px rgba(0,0,0,0.12);
+    transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
+    animation: pulse-ring-logo 1.5s ease-in-out infinite;
 }
 
-.envelope-seal::before {
-    content: '';
-    position: absolute;
-    inset: 3px;
+.env-logo img {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.1);
+    object-fit: cover;
+    display: block;
+}
+
+@keyframes pulse-ring-logo {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.25), 0 6px 20px rgba(0,0,0,0.2);
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(192, 57, 43, 0), 0 6px 20px rgba(0,0,0,0.2);
+        transform: translate(-50%, -50%) scale(1.03);
+    }
 }
 
 /* ── Letter inside (sits on top of back, beneath the flaps) ── */
@@ -3590,49 +3600,48 @@ section {
     transform: translateY(-6%);
 }
 
-.envelope-scene.is-opening .envelope-seal {
+.envelope-scene.is-opening .env-logo {
     transform: translate(-50%, -50%) scale(1.3);
     opacity: 0;
 }
 
-/* ── LANDING OVERLAY (countdown + CTA) ── */
-.landing-overlay {
-    position: fixed;
+/* ── ENVELOPE FRONT OVERLAY (names + timer + CTA, sits on front face) ── */
+.envelope-front-overlay {
+    position: absolute;
     inset: 0;
-    z-index: 20;
+    z-index: 11;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: clamp(24px, 5vh, 48px) clamp(16px, 4vw, 32px) clamp(32px, 6vh, 56px);
+    padding: clamp(20px, 5vh, 44px) clamp(16px, 4vw, 32px) clamp(28px, 6vh, 52px);
     pointer-events: none;
 }
 
-.landing-overlay-names {
+.envelope-overlay-names {
     display: flex;
     align-items: center;
     gap: clamp(4px, 1.5vw, 10px);
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(28px, 6vw, 42px);
+    font-size: clamp(26px, 6vw, 40px);
     color: #a74545;
     text-shadow: 0 1px 8px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.6);
     animation: fadeUp 0.9s ease both;
 }
 
 .overlay-heart {
-    font-size: clamp(18px, 4vw, 28px);
+    font-size: clamp(18px, 4vw, 26px);
     color: #c0392b;
 }
 
-/* Timer circle */
-.landing-timer {
+.envelope-timer {
     pointer-events: auto;
     animation: fadeUp 0.9s 0.2s ease both;
 }
 
-.timer-circle {
-    width: 64px;
-    height: 64px;
+.env-timer-circle {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(8px);
@@ -3644,21 +3653,16 @@ section {
     animation: pulse-ring 1s ease-in-out infinite;
 }
 
-.timer-circle span {
+.env-timer-circle span {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     color: #8b1a1a;
 }
 
-@keyframes pulse-ring {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.25), 0 4px 16px rgba(0,0,0,0.1); }
-    50% { box-shadow: 0 0 0 8px rgba(192, 57, 43, 0), 0 4px 16px rgba(0,0,0,0.1); }
-}
-
-.landing-cta {
+.envelope-cta-hint {
     text-align: center;
-    font-size: clamp(10px, 2.5vw, 13px);
+    font-size: clamp(9px, 2.5vw, 12px);
     color: #8b7355;
     letter-spacing: 1px;
     font-weight: 500;
@@ -3667,15 +3671,21 @@ section {
     pointer-events: auto;
 }
 
+/* Hide overlay when opening */
+.envelope-scene.is-opening ~ .envelope-front-overlay,
+.envelope-scene.is-opening + .envelope-front-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 @keyframes textGlow {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.65; }
 }
 
 /* ── HIDE OVERLAY WHEN OPENING ── */
-#landing.is-opening .landing-overlay {
+#landing.is-opening .envelope-front-overlay {
     opacity: 0;
-    transition: opacity 0.5s ease;
     pointer-events: none;
 }
 
@@ -3685,10 +3695,9 @@ section {
         width: 94vw;
         height: 80vh;
     }
-    .envelope-seal {
-        width: 46px;
-        height: 46px;
-        font-size: 18px;
+    .env-logo {
+        width: 58px;
+        height: 58px;
     }
 }
 

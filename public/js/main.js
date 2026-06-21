@@ -1418,6 +1418,10 @@ function openCard() {
     landing.classList.add('is-opening');
     if (scene) scene.classList.add('is-opening');
 
+    // Fade out the front overlay (timer + names + CTA)
+    const overlay = document.getElementById('landing-overlay');
+    if (overlay) overlay.style.opacity = '0';
+
     // After envelope opens, hide landing & show card
     setTimeout(() => {
         landing.classList.add('is-opened');
