@@ -241,10 +241,11 @@
 
         <!-- Wedding Details -->
         <section class="wedding-details-section" data-aos="fade-up">
-            <div class="parade-header">
-                <h2>Thông tin tiệc cưới</h2>
+            <div class="parade-tabs">
+                <button class="parade-tab active" data-target="parade-card-bride">Nhà Gái — 12/07</button>
+                <button class="parade-tab" data-target="parade-card-groom">Nhà Trai — 19/07</button>
             </div>
-            <div class="parade-card" id="parade-card">
+            <div class="parade-card" id="parade-card-bride">
                 <div class="parade-subtitle">TIỆC CƯỚI SẼ DIỄN RA VÀO LÚC:</div>
                 <div class="parade-main-time">11:00</div>
                 <div class="parade-date-display">
@@ -257,7 +258,31 @@
                 <div class="parade-year">2026</div>
                 <div class="parade-lunar">Tức ngày 16 tháng 6 năm Bính Thân</div>
             </div>
-            <div class="parade-footer">
+            <div class="parade-card hidden" id="parade-card-groom">
+                <div class="parade-subtitle">TIỆC CƯỚI SẼ DIỄN RA VÀO LÚC:</div>
+                <div class="parade-main-time">11:00</div>
+                <div class="parade-date-display">
+                    <span class="date-weekday">CHỦ NHẬT</span>
+                    <span class="date-divider">|</span>
+                    <span class="date-day">19</span>
+                    <span class="date-divider">|</span>
+                    <span class="date-month">THÁNG 07</span>
+                </div>
+                <div class="parade-year">2026</div>
+                <div class="parade-lunar">Tức ngày 23 tháng 6 năm Bính Thân</div>
+            </div>
+            <div class="parade-footer" id="parade-footer-bride">
+                <div class="parade-footer-item">
+                    <span class="footer-label">ĐÓN KHÁCH</span>
+                    <span class="footer-time">11:00</span>
+                </div>
+                <div class="footer-divider">|</div>
+                <div class="parade-footer-item">
+                    <span class="footer-label">KHAI TIỆC</span>
+                    <span class="footer-time">12:00</span>
+                </div>
+            </div>
+            <div class="parade-footer hidden" id="parade-footer-groom">
                 <div class="parade-footer-item">
                     <span class="footer-label">ĐÓN KHÁCH</span>
                     <span class="footer-time">11:00</span>
@@ -362,7 +387,7 @@
                     <!-- =================================== -->
                     <div class="invite-family-details">
                         <div class="family-side bride-side">
-                            <h4>Nhà Trai</h4>
+                            <h4>Nhà Gái</h4>
                             <p class="parents-names">
                                 <span>Ông: <strong><%= couple.parentsBride.father %></strong></span>
                               
@@ -373,7 +398,7 @@
                             <span class="heart-icon">❤</span>
                         </div>
                         <div class="family-side groom-side">
-                            <h4>Nhà Gái</h4>
+                            <h4>Nhà Trai</h4>
                             <p class="parents-names">
                                 <span>Ông: <strong><%= couple.parentsGroom.father %></strong></span>
                                 

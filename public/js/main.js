@@ -1546,5 +1546,32 @@ function initShareButtons() {
                 }, 2000);
             }
         });
+
+        // Parade tab switching (Nhà Gái / Nhà Trai)
+        document.querySelectorAll('.parade-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-target');
+
+                document.querySelectorAll('.parade-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const brideCard = document.getElementById('parade-card-bride');
+                const groomCard = document.getElementById('parade-card-groom');
+                const brideFooter = document.getElementById('parade-footer-bride');
+                const groomFooter = document.getElementById('parade-footer-groom');
+
+                if (target === 'parade-card-groom') {
+                    brideCard.classList.add('hidden');
+                    groomCard.classList.remove('hidden');
+                    brideFooter.classList.add('hidden');
+                    groomFooter.classList.remove('hidden');
+                } else {
+                    groomCard.classList.add('hidden');
+                    brideCard.classList.remove('hidden');
+                    groomFooter.classList.add('hidden');
+                    brideFooter.classList.remove('hidden');
+                }
+            });
+        });
     }
 }

@@ -526,7 +526,7 @@ body.theme-watercolor .wedding-container > * {
     content: '❦';
     display: block;
     font-size: 1.4rem;
-    color: var(--accent-gold);
+    color: #957e3e;
     margin-bottom: 10px;
     animation: float 3s ease-in-out infinite;
 }
@@ -1078,6 +1078,38 @@ body.theme-watercolor .wedding-container > * {
     letter-spacing: 0.25em;
     margin: 0;
     font-weight: 600;
+}
+
+.parade-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem 0;
+}
+
+.parade-tab {
+    background: transparent;
+    border: 1.5px solid #c0ae8e;
+    color: #8a7f76;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 1.25rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.parade-tab.active {
+    background: linear-gradient(135deg, rgba(192, 174, 142, 1) 49%, rgba(196, 169, 137, 1) 22%);
+    color: white;
+    border-color: transparent;
+}
+
+.parade-card.hidden,
+.parade-footer.hidden {
+    display: none;
 }
 
 .parade-card {
