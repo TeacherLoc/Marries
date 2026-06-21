@@ -3347,7 +3347,7 @@ section {
     position: relative;
     width: min(95vw, 420px);
     height: min(85vh, 580px);
-    perspective: 1400px;
+    perspective: 1200px;
     cursor: pointer;
     transform-style: preserve-3d;
     z-index: 2;
@@ -3367,8 +3367,8 @@ section {
     transform: translateZ(-10px);
 }
 
-/* Front face of envelope */
-.envelope-front {
+/* ── Front body (rectangular, covers letter entirely) ── */
+.envelope-front-body {
     position: absolute;
     inset: 0;
     background: linear-gradient(160deg, #c4b28e 0%, #b5a88a 40%, #a8946e 100%);
@@ -3376,11 +3376,11 @@ section {
     box-shadow:
         0 0 0 1px rgba(0,0,0,0.06),
         inset 0 1px 0 rgba(255,255,255,0.3);
-    overflow: hidden;
+    z-index: 5;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Subtle fabric texture on front */
-.envelope-front::before {
+.envelope-front-body::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -3395,19 +3395,51 @@ section {
     pointer-events: none;
 }
 
-/* Bottom flap (closed = pointed, opens upward to reveal letter) */
+/* ── Top flap (triangular, covers gap above left/right flaps) ── */
+.envelope-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(0deg, #b5a88a 0%, #c4b28e 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.05s;
+    z-index: 6;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    backface-visibility: hidden;
+}
+
+.envelope-top::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,0.03) 2px,
+            rgba(255,255,255,0.03) 4px
+        );
+    pointer-events: none;
+}
+
+/* ── Bottom flap (triangular, points up to center) ── */
 .envelope-bottom {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 45%;
+    height: 50%;
     background: linear-gradient(180deg, #b5a88a 0%, #a08060 100%);
     clip-path: polygon(0 100%, 50% 0, 100% 100%);
     transform-origin: bottom center;
-    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 3;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
     box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
+    backface-visibility: hidden;
 }
 
 .envelope-bottom::after {
@@ -3424,40 +3456,42 @@ section {
         );
 }
 
-/* Left flap */
+/* ── Left flap (right-angled triangle, covers left half of top) ── */
 .envelope-flap-left {
     position: absolute;
     top: 0;
     left: 0;
     width: 50%;
     height: 50%;
-    background: linear-gradient(135deg, #c4b28e 0%, #b0a07a 100%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    background: linear-gradient(135deg, #d4c5a0 0%, #c4b28e 100%);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
     transform-origin: left top;
-    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
-    z-index: 4;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 6;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    backface-visibility: hidden;
 }
 
-/* Right flap */
+/* ── Right flap (right-angled triangle, covers right half of top) ── */
 .envelope-flap-right {
     position: absolute;
     top: 0;
     right: 0;
     width: 50%;
     height: 50%;
-    background: linear-gradient(225deg, #c4b28e 0%, #b0a07a 100%);
-    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    background: linear-gradient(225deg, #d4c5a0 0%, #c4b28e 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
     transform-origin: right top;
-    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
-    z-index: 4;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 6;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    backface-visibility: hidden;
 }
 
 /* Wax seal */
 .envelope-seal {
     position: absolute;
-    top: 42%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 56px;
@@ -3485,18 +3519,15 @@ section {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Letter inside envelope */
+/* ── Letter inside (sits on top of back, beneath the flaps) ── */
 .envelope-letter {
     position: absolute;
-    top: 8%;
-    left: 6%;
-    right: 6%;
-    height: 70%;
-    border-radius: 4px;
-    overflow: hidden;
+    inset: 5% 4%;
     z-index: 1;
+    border-radius: 3px;
+    overflow: hidden;
     transform: translateY(0);
-    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
@@ -3533,21 +3564,30 @@ section {
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
-/* ── OPEN ENVELOPE ANIMATION ── */
+/* ── OPEN ANIMATION ── */
+/* All flaps open outward evenly, front body lifts up, letter slides up */
+.envelope-scene.is-opening .envelope-flap-left {
+    transform: rotateY(-160deg);
+}
+
+.envelope-scene.is-opening .envelope-flap-right {
+    transform: rotateY(160deg);
+}
+
+.envelope-scene.is-opening .envelope-top {
+    transform: rotateX(170deg);
+}
+
 .envelope-scene.is-opening .envelope-bottom {
     transform: rotateX(-170deg);
 }
 
-.envelope-scene.is-opening .envelope-flap-left {
-    transform: rotateY(-150deg);
-}
-
-.envelope-scene.is-opening .envelope-flap-right {
-    transform: rotateY(150deg);
+.envelope-scene.is-opening .envelope-front-body {
+    transform: translateY(-110%);
 }
 
 .envelope-scene.is-opening .envelope-letter {
-    transform: translateY(-60px) scale(1.05);
+    transform: translateY(-6%);
 }
 
 .envelope-scene.is-opening .envelope-seal {

@@ -2,6 +2,17 @@
 let selectedVenue = 'bride'; // Default venue
 const ENVELOPE_HIDE_DELAY = 2500;
 let weddingConfig = null;
+let envelopeTimerStarted = false;
+
+function startEnvelopeTimer() {
+    if (envelopeTimerStarted) return;
+    envelopeTimerStarted = true;
+    if (typeof startCountdown === 'function') startCountdown();
+    if (autoOpenTimer) clearTimeout(autoOpenTimer);
+    autoOpenTimer = setTimeout(() => {
+        openCard();
+    }, 5000);
+}
 
 // ===== LOAD DYNAMIC CONFIG =====
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1126,11 +1137,21 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCountdown();
         initFloatingHeart();
 
-        // Auto-open envelope after 5 seconds
-        startCountdown();
-        autoOpenTimer = setTimeout(() => {
-            openCard();
-        }, 5000);
+        // Auto-open envelope — starts only when landing becomes visible
+        const landingEl = document.getElementById('landing');
+        if (landingEl) {
+            const observer = new MutationObserver(() => {
+                if (landingEl.classList.contains('visible') && !envelopeTimerStarted) {
+                    startEnvelopeTimer();
+                }
+            });
+            observer.observe(landingEl, { attributes: true, attributeFilter: ['class'] });
+
+            // If landing is already visible (no venue selector), start immediately
+            if (landingEl.classList.contains('visible') && !envelopeTimerStarted) {
+                startEnvelopeTimer();
+            }
+        }
 
         // Initialize gallery layouts
         if (document.querySelector('.gallery-editorial')) {

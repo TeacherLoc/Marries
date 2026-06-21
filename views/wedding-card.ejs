@@ -85,7 +85,8 @@
       <div class="envelope-scene" id="envWrap" onclick="openCard()">
         <!-- Back envelope -->
         <div class="envelope-back"></div>
-        <!-- Letter inside (revealed on open) -->
+
+        <!-- Letter inside (slides up when opened) -->
         <div class="envelope-letter">
           <div class="envelope-letter-content">
             <div class="env-names">
@@ -98,18 +99,26 @@
             <% } %>
           </div>
         </div>
-        <!-- Left flap -->
-        <div class="envelope-flap envelope-flap-left"></div>
-        <!-- Right flap -->
-        <div class="envelope-flap envelope-flap-right"></div>
-        <!-- Bottom flap (opens first) -->
+
+        <!-- Bottom flap (triangular, points up, opens downward) -->
         <div class="envelope-bottom"></div>
+
+        <!-- Left flap (triangular, opens to the left) -->
+        <div class="envelope-flap envelope-flap-left"></div>
+
+        <!-- Right flap (triangular, opens to the right) -->
+        <div class="envelope-flap envelope-flap-right"></div>
+
+        <!-- Front body (covers letter, lifts up when opened) -->
+        <div class="envelope-front-body"></div>
+
+        <!-- Top flap (triangular, opens upward) -->
+        <div class="envelope-top"></div>
+
         <!-- Wax seal -->
         <div class="envelope-seal">
           <span>❤</span>
         </div>
-        <!-- Front envelope body -->
-        <div class="envelope-front"></div>
       </div>
 
       <!-- Countdown & CTA overlay -->
