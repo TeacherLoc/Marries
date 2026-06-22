@@ -1287,6 +1287,36 @@ function updateMapForVenue(venue) {
             link.target = '_blank'; // Đảm bảo luôn mở sang tab mới hoặc app Maps
         });
     }
+
+    // Đồng bộ map tab với venue được chọn
+    const mapTabs = document.querySelectorAll('.map-tab');
+    const brideContainer = document.querySelector('.map-bride-container');
+    const groomContainer = document.querySelector('.map-groom-container');
+    const brideAddr = document.querySelector('.map-bride-address');
+    const groomAddr = document.querySelector('.map-groom-address');
+    const brideLink = document.querySelector('.map-bride-link');
+    const groomLink = document.querySelector('.map-groom-link');
+    if (mapTabs.length > 0) {
+        mapTabs.forEach(t => t.classList.remove('active'));
+        const activeTab = document.querySelector(`.map-tab[data-map="${venue}"]`);
+        if (activeTab) activeTab.classList.add('active');
+
+        if (venue === 'groom') {
+            if (brideContainer) brideContainer.classList.add('hidden');
+            if (groomContainer) groomContainer.classList.remove('hidden');
+            if (brideAddr) brideAddr.classList.add('hidden');
+            if (groomAddr) groomAddr.classList.remove('hidden');
+            if (brideLink) brideLink.classList.add('hidden');
+            if (groomLink) groomLink.classList.remove('hidden');
+        } else {
+            if (groomContainer) groomContainer.classList.add('hidden');
+            if (brideContainer) brideContainer.classList.remove('hidden');
+            if (groomAddr) groomAddr.classList.add('hidden');
+            if (brideAddr) brideAddr.classList.remove('hidden');
+            if (groomLink) groomLink.classList.add('hidden');
+            if (brideLink) brideLink.classList.remove('hidden');
+        }
+    }
 }
 
 // ===== DATE UPDATE FOR VENUE =====
@@ -1570,6 +1600,39 @@ function initShareButtons() {
                     brideCard.classList.remove('hidden');
                     groomFooter.classList.add('hidden');
                     brideFooter.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Map tab switching (Nhà Gái / Nhà Trai)
+        document.querySelectorAll('.map-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const mapType = tab.getAttribute('data-map');
+
+                document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const brideContainer = document.querySelector('.map-bride-container');
+                const groomContainer = document.querySelector('.map-groom-container');
+                const brideAddr = document.querySelector('.map-bride-address');
+                const groomAddr = document.querySelector('.map-groom-address');
+                const brideLink = document.querySelector('.map-bride-link');
+                const groomLink = document.querySelector('.map-groom-link');
+
+                if (mapType === 'groom') {
+                    brideContainer.classList.add('hidden');
+                    groomContainer.classList.remove('hidden');
+                    brideAddr.classList.add('hidden');
+                    groomAddr.classList.remove('hidden');
+                    if (brideLink) brideLink.classList.add('hidden');
+                    if (groomLink) groomLink.classList.remove('hidden');
+                } else {
+                    groomContainer.classList.add('hidden');
+                    brideContainer.classList.remove('hidden');
+                    groomAddr.classList.add('hidden');
+                    brideAddr.classList.remove('hidden');
+                    if (groomLink) groomLink.classList.add('hidden');
+                    if (brideLink) brideLink.classList.remove('hidden');
                 }
             });
         });
