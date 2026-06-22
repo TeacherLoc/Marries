@@ -1241,14 +1241,14 @@ function updateMapForVenue(venue) {
     if (venue === 'bride') {
         lat = 10.9382941;
         lng = 106.6881491;
-        address = '37 Đ. Cách Mạng Tháng Tám, P. Lái Thiêu, Thuận An, Bình Dương';
+        address = '379 Đ. Cách Mạng Tháng Tám, Thuận An, Hồ Chí Minh';
         placeName = 'Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace';
         mapQuery = 'Trung Tâm Hội Nghị Tiệc Cưới Võ Gia Palace, Thuận An, Bình Dương';
         mapsUrl = 'https://maps.google.com/maps?q=Trung+Tâm+Hội+Nghị+Tiệc+Cưới+Võ+Gia+Palace,+Thuận+An,+Bình+Dương';
     } else {
         lat = 10.97741;
         lng = 106.6632386;
-        address = '1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương';
+        address = '210 Thích Quảng Đức, Thủ Dầu Một, Hồ Chí Minh';
         placeName = 'Nhà Hàng Tiệc Cưới Thắng Lợi';
         mapQuery = 'Nhà Hàng Tiệc Cưới Thắng Lợi, Phú Lợi, Thủ Dầu Một, Hồ Chí Minh';
         mapsUrl = 'https://www.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Hồ+Chí+Minh';
