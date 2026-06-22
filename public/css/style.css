@@ -3369,7 +3369,6 @@ section {
 
 /* Logo Container */
 .venue-logo {
-    animation: fadeInDown 0.8s ease-out 0.2s backwards;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4519,7 +4518,6 @@ section {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
-    animation: fadeInDown 0.8s ease-out 0.2s backwards;
 }
 
 .venue-logo img {
