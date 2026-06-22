@@ -1624,15 +1624,27 @@ function initShareButtons() {
                     groomContainer.classList.remove('hidden');
                     brideAddr.classList.add('hidden');
                     groomAddr.classList.remove('hidden');
-                    if (brideLink) brideLink.classList.add('hidden');
-                    if (groomLink) groomLink.classList.remove('hidden');
+                    if (brideLink) {
+                        brideLink.classList.add('hidden');
+                        brideLink.href = 'https://maps.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
+                    }
+                    if (groomLink) {
+                        groomLink.classList.remove('hidden');
+                        groomLink.href = 'https://www.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
+                    }
                 } else {
                     groomContainer.classList.add('hidden');
                     brideContainer.classList.remove('hidden');
                     groomAddr.classList.add('hidden');
                     brideAddr.classList.remove('hidden');
-                    if (groomLink) groomLink.classList.add('hidden');
-                    if (brideLink) brideLink.classList.remove('hidden');
+                    if (groomLink) {
+                        groomLink.classList.add('hidden');
+                        groomLink.href = 'https://www.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
+                    }
+                    if (brideLink) {
+                        brideLink.classList.remove('hidden');
+                        brideLink.href = 'https://maps.google.com/maps?q=Trung+Tâm+Hội+Nghị+Tiệc+Cưới+Võ+Gia+Palace,+Thuận+An,+Bình+Dương';
+                    }
                 }
             });
         });
