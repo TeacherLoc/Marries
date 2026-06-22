@@ -1277,7 +1277,14 @@ function updateMapForVenue(venue) {
         mapFrame.src = `https://maps.google.com/maps?q=${query}&z=16&output=embed`;
     }
     if (mapAddress) {
-        mapAddress.textContent = address;
+        // Chỉ cập nhật dòng địa chỉ đang hiển thị tương ứng với venue
+        const brideAddrEl = document.querySelector('.map-bride-address');
+        const groomAddrEl = document.querySelector('.map-groom-address');
+        if (venue === 'bride') {
+            if (brideAddrEl) brideAddrEl.textContent = address;
+        } else {
+            if (groomAddrEl) groomAddrEl.textContent = address;
+        }
     }
     
     // Cập nhật đường link cho các nút "Chỉ đường / Open Map"
@@ -1622,8 +1629,14 @@ function initShareButtons() {
                 if (mapType === 'groom') {
                     brideContainer.classList.add('hidden');
                     groomContainer.classList.remove('hidden');
-                    brideAddr.classList.add('hidden');
-                    groomAddr.classList.remove('hidden');
+                    if (brideAddr) {
+                        brideAddr.classList.add('hidden');
+                        brideAddr.textContent = '37 Đ. Cách Mạng Tháng Tám, P. Lái Thiêu, Thuận An, Bình Dương';
+                    }
+                    if (groomAddr) {
+                        groomAddr.classList.remove('hidden');
+                        groomAddr.textContent = '1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương';
+                    }
                     if (brideLink) {
                         brideLink.classList.add('hidden');
                         brideLink.href = 'https://maps.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
@@ -1635,8 +1648,14 @@ function initShareButtons() {
                 } else {
                     groomContainer.classList.add('hidden');
                     brideContainer.classList.remove('hidden');
-                    groomAddr.classList.add('hidden');
-                    brideAddr.classList.remove('hidden');
+                    if (groomAddr) {
+                        groomAddr.classList.add('hidden');
+                        groomAddr.textContent = '1 Đ. Huỳnh Văn Lũy, Phú Lợi, Thủ Dầu Một, Bình Dương';
+                    }
+                    if (brideAddr) {
+                        brideAddr.classList.remove('hidden');
+                        brideAddr.textContent = '37 Đ. Cách Mạng Tháng Tám, P. Lái Thiêu, Thuận An, Bình Dương';
+                    }
                     if (groomLink) {
                         groomLink.classList.add('hidden');
                         groomLink.href = 'https://www.google.com/maps?q=Nhà+Hàng+Tiệc+Cưới+Thắng+Lợi,+Phú+Lợi,+Thủ+Dầu+Một,+Bình+Dương';
