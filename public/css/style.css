@@ -1452,7 +1452,7 @@ body.theme-watercolor .wedding-container > * {
     background-size: cover;
     background-position: center top;
     filter: blur(1px) saturate(1.05);
-    transform: scale(1.2);
+    transform: scale(1.01);
     opacity: 0.75;
 }
 
@@ -3380,7 +3380,7 @@ section {
 .venue-logo img {
     width: 110px;
     height: 110px;
-    background: #9e8681;    
+    background: #cec7bf;    
     border-radius: 50%;
     padding: 14px;
     box-shadow:
@@ -4523,7 +4523,7 @@ section {
 .venue-logo img {
     width: 120px;
     height: 120px;
-    background: #ede8e3;
+    background: #cec7bf;
     border-radius: 24px;
     padding: 15px;
     box-shadow: 0 8px 24px rgba(157, 128, 128, 0.15);
