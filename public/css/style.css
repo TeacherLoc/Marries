@@ -1450,9 +1450,9 @@ body.theme-watercolor .wedding-container > * {
     position: absolute;
     inset: 0;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     filter: blur(1px) saturate(1.05);
-    transform: scale(1.05);
+    transform: scale(1.2);
     opacity: 0.75;
 }
 
