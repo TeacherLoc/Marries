@@ -1128,7 +1128,7 @@ body.theme-watercolor .wedding-container > * {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(1.3rem, 4vw, 1.9rem);
     color: #3c4a42;
-    margin-top: -8px;
+    margin-top: -1px;
     letter-spacing: 0.02em;
     text-transform: none;
     font-style: italic;
@@ -2848,7 +2848,7 @@ section {
 .venue-logo img {
     width: 110px;
     height: 110px;
-    background: #f0ebe6;
+    background: #cec7bf;
     border-radius: 50%;
     padding: 14px;
     box-shadow:
@@ -3293,7 +3293,7 @@ section {
     opacity: 0.95;
 }
 
-.hero-invite-name::after {
+/* .hero-invite-name::after {
     content: ".........................";
     position: absolute;
     left: 50%;
@@ -3305,7 +3305,7 @@ section {
     letter-spacing: 0.2em;
     opacity: 0.7;
     white-space: nowrap;
-}
+} */
 
 .hero-tagline {
     font-family: 'Montserrat', sans-serif;
@@ -3599,7 +3599,7 @@ section {
 .venue-logo img {
     width: 120px;
     height: 120px;
-    background: #ede8e3;
+    background: #cec7bf;
     border-radius: 24px;
     padding: 15px;
     box-shadow: 0 8px 24px rgba(157, 128, 128, 0.15);
