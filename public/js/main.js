@@ -101,17 +101,22 @@ function initEnvelopeAnimation() {
 }
 
 // ===== MUSIC PLAYER =====
+let musicPlayerState = {
+    isPlaying: false,
+    isInitialized: false
+};
+
 function initMusicPlayer() {
     const musicToggle = document.getElementById('music-toggle');
     const backgroundMusic = document.getElementById('background-music');
 
     if (!musicToggle || !backgroundMusic) return;
 
-    let isPlaying = false;
+    musicPlayerState.isInitialized = true;
 
     // Update button state
     function updateToggleState() {
-        if (isPlaying) {
+        if (musicPlayerState.isPlaying) {
             musicToggle.title = 'Tạm dừng nhạc';
             musicToggle.classList.add('playing');
         } else {
@@ -122,30 +127,29 @@ function initMusicPlayer() {
 
     // Play music
     function playMusic() {
-        if (isPlaying) return;
+        if (musicPlayerState.isPlaying) return;
         backgroundMusic.play()
             .then(() => {
-                isPlaying = true;
+                musicPlayerState.isPlaying = true;
                 updateToggleState();
             })
             .catch(err => {
                 console.log('Không thể phát nhạc tự động:', err);
-                // User needs to click to play
             });
     }
 
     // Pause music
     function pauseMusic() {
-        if (!isPlaying) return;
+        if (!musicPlayerState.isPlaying) return;
         backgroundMusic.pause();
-        isPlaying = false;
+        musicPlayerState.isPlaying = false;
         updateToggleState();
     }
 
     // Toggle music on button click
     musicToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (isPlaying) {
+        if (musicPlayerState.isPlaying) {
             pauseMusic();
         } else {
             playMusic();
@@ -159,23 +163,33 @@ function initMusicPlayer() {
         document.removeEventListener('touchstart', autoPlayOnce);
     }
 
-    // Try to auto-play after entering the card (need user interaction first)
     document.addEventListener('click', autoPlayOnce, { once: true });
     document.addEventListener('touchstart', autoPlayOnce, { once: true, passive: true });
 
     // Update state when audio ends/pauses
     backgroundMusic.addEventListener('ended', () => {
-        isPlaying = false;
+        musicPlayerState.isPlaying = false;
         updateToggleState();
     });
 
-    backgroundMusic.addEventListener('pause', () => {
-        if (isPlaying) {
-            // Only update if we didn't intentionally pause
-        }
-    });
-
     updateToggleState();
+}
+
+// Trigger music auto-play (called after envelope opens)
+function triggerMusicAutoPlay() {
+    const backgroundMusic = document.getElementById('background-music');
+    const musicToggle = document.getElementById('music-toggle');
+    if (!backgroundMusic || !musicToggle) return;
+
+    backgroundMusic.play()
+        .then(() => {
+            musicPlayerState.isPlaying = true;
+            musicToggle.title = 'Tạm dừng nhạc';
+            musicToggle.classList.add('playing');
+        })
+        .catch(err => {
+            console.log('Trình duyệt chặn autoplay, người dùng cần click để phát nhạc');
+        });
 }
 
 // ===== COUNTDOWN TIMER =====
@@ -1433,6 +1447,9 @@ function openCard() {
                 });
             });
         }
+
+        // Auto-play music after envelope opens
+        triggerMusicAutoPlay();
     }, 1400);
 
     // Remove landing from DOM
