@@ -107,114 +107,75 @@ function initMusicPlayer() {
 
     if (!musicToggle || !backgroundMusic) return;
 
-    // YouTube URL - extract video ID for embed player
-    const youtubeUrl = 'https://www.youtube.com/watch?v=xFONPDwW-lU&list=RDxFONPDwW-lU&start_radio=1';
-    const videoId = 'xFONPDwW-lU'; // Extract from URL
-
-    // Create hidden YouTube embed for audio playback
-    const youtubeEmbed = document.createElement('div');
-    youtubeEmbed.id = 'youtube-player';
-    youtubeEmbed.style.display = 'none';
-    document.body.appendChild(youtubeEmbed);
-
     let isPlaying = false;
-    let ytPlayer = null;
-    let pendingAutoplay = false;
 
+    // Update button state
     function updateToggleState() {
         if (isPlaying) {
-            musicToggle.textContent = '🎶';
-            musicToggle.title = 'Tạm dừng';
+            musicToggle.title = 'Tạm dừng nhạc';
             musicToggle.classList.add('playing');
         } else {
-            musicToggle.textContent = '🎵';
             musicToggle.title = 'Phát nhạc';
             musicToggle.classList.remove('playing');
         }
     }
 
-    function startPlayback() {
-        if (!ytPlayer) {
-            pendingAutoplay = true;
-            return;
-        }
-
-        if (!isPlaying) {
-            ytPlayer.playVideo();
-            isPlaying = true;
-            updateToggleState();
-        }
+    // Play music
+    function playMusic() {
+        if (isPlaying) return;
+        backgroundMusic.play()
+            .then(() => {
+                isPlaying = true;
+                updateToggleState();
+            })
+            .catch(err => {
+                console.log('Không thể phát nhạc tự động:', err);
+                // User needs to click to play
+            });
     }
 
-    // Load YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-
-    // YouTube Player Ready Callback
-    window.onYouTubeIframeAPIReady = function() {
-        ytPlayer = new YT.Player('youtube-player', {
-            height: '0',
-            width: '0',
-            videoId: videoId,
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    };
-
-    function onPlayerReady(event) {
-        if (pendingAutoplay) {
-            pendingAutoplay = false;
-            startPlayback();
-        }
+    // Pause music
+    function pauseMusic() {
+        if (!isPlaying) return;
+        backgroundMusic.pause();
+        isPlaying = false;
+        updateToggleState();
     }
 
-    function onPlayerStateChange(event) {
-        // Handle state changes
-    }
-
-    musicToggle.addEventListener('click', () => {
-        if (!ytPlayer) {
-            pendingAutoplay = true;
-            return;
-        }
-
+    // Toggle music on button click
+    musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         if (isPlaying) {
-            ytPlayer.pauseVideo();
-            isPlaying = false;
-            updateToggleState();
+            pauseMusic();
         } else {
-            ytPlayer.playVideo();
-            isPlaying = true;
-            updateToggleState();
+            playMusic();
         }
     });
 
-    document.addEventListener('click', startPlayback, { once: true });
-    document.addEventListener('touchstart', startPlayback, { once: true, passive: true });
+    // Listen for first user interaction to auto-play
+    function autoPlayOnce() {
+        playMusic();
+        document.removeEventListener('click', autoPlayOnce);
+        document.removeEventListener('touchstart', autoPlayOnce);
+    }
+
+    // Try to auto-play after entering the card (need user interaction first)
+    document.addEventListener('click', autoPlayOnce, { once: true });
+    document.addEventListener('touchstart', autoPlayOnce, { once: true, passive: true });
+
+    // Update state when audio ends/pauses
+    backgroundMusic.addEventListener('ended', () => {
+        isPlaying = false;
+        updateToggleState();
+    });
+
+    backgroundMusic.addEventListener('pause', () => {
+        if (isPlaying) {
+            // Only update if we didn't intentionally pause
+        }
+    });
+
     updateToggleState();
-
-    // Alternative: Direct audio playback if user provides MP3 URL
-    // Uncomment below to use direct audio URL instead
-    /*
-    backgroundMusic.src = 'YOUR_MP3_URL_HERE';
-
-    musicToggle.addEventListener('click', () => {
-        if (isPlaying) {
-            backgroundMusic.pause();
-            musicToggle.textContent = '🎵';
-            musicToggle.classList.remove('playing');
-            isPlaying = false;
-        } else {
-            backgroundMusic.play().catch(err => console.log('Cannot autoplay audio:', err));
-            musicToggle.textContent = '🎶';
-            musicToggle.classList.add('playing');
-            isPlaying = true;
-        }
-    });
-    */
 }
 
 // ===== COUNTDOWN TIMER =====
@@ -1136,6 +1097,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initVenueSelector();
         updateCountdown();
         initFloatingHeart();
+        initMusicPlayer();
 
         // Auto-open envelope — starts only when landing becomes visible
         const landingEl = document.getElementById('landing');
