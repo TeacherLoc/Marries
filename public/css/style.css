@@ -1157,7 +1157,7 @@ body.theme-watercolor .wedding-container > * {
 }
 
 .date-day {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: auto, serif;
     font-size: 1.8rem;
     font-weight: 700;
     color: #4a4038;
