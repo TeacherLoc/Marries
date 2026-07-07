@@ -109,24 +109,30 @@ let musicPlayerState = {
     isInitialized: false
 };
 
+// Global toggle state updater - safe to call before initMusicPlayer
+function updateToggleState() {
+    const musicToggle = document.getElementById('music-toggle');
+    if (!musicToggle) return;
+    if (musicPlayerState.isPlaying) {
+        musicToggle.title = 'Tạm dừng nhạc';
+        musicToggle.classList.add('playing');
+    } else {
+        musicToggle.title = 'Phát nhạc';
+        musicToggle.classList.remove('playing');
+    }
+}
+
 function initMusicPlayer() {
     const musicToggle = document.getElementById('music-toggle');
     const backgroundMusic = document.getElementById('background-music');
 
     if (!musicToggle || !backgroundMusic) return;
 
+    // Reset state on page load - pause any playing audio
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+    musicPlayerState.isPlaying = false;
     musicPlayerState.isInitialized = true;
-
-    // Update button state
-    function updateToggleState() {
-        if (musicPlayerState.isPlaying) {
-            musicToggle.title = 'Tạm dừng nhạc';
-            musicToggle.classList.add('playing');
-        } else {
-            musicToggle.title = 'Phát nhạc';
-            musicToggle.classList.remove('playing');
-        }
-    }
 
     // Play music
     function playMusic() {
@@ -184,14 +190,18 @@ function triggerMusicAutoPlay() {
     const musicToggle = document.getElementById('music-toggle');
     if (!backgroundMusic || !musicToggle) return;
 
+    // Don't replay if browser blocked previous play or audio already ended
+    if (musicPlayerState.isPlaying) return;
+
     backgroundMusic.play()
         .then(() => {
             musicPlayerState.isPlaying = true;
-            musicToggle.title = 'Tạm dừng nhạc';
-            musicToggle.classList.add('playing');
+            updateToggleState();
         })
         .catch(err => {
             console.log('Trình duyệt chặn autoplay, người dùng cần click để phát nhạc');
+            musicPlayerState.isPlaying = false;
+            updateToggleState();
         });
 }
 
@@ -1109,12 +1119,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Initialize animations
+        // Initialize animations - music player must be FIRST so venue selector can call its functions
+        initMusicPlayer();
         initEnvelopeAnimation();
         initVenueSelector();
         updateCountdown();
         initFloatingHeart();
-        initMusicPlayer();
 
         // Auto-open envelope — starts only when landing becomes visible
         const landingEl = document.getElementById('landing');
@@ -1312,32 +1322,26 @@ function updateMusicForVenue(venue) {
     const groomSource = document.getElementById('audio-source-groom');
     if (!audio || !brideSource || !groomSource) return;
 
-    const currentSrc = audio.querySelector('source[disabled=""]')?.getAttribute('src') || audio.currentSrc || '';
-    let nextSource, nextDisabled, nextToEnable;
+    // Always pause first to prevent old track from continuing
+    audio.pause();
+    audio.currentTime = 0;
+    musicPlayerState.isPlaying = false;
+    if (typeof updateToggleState === 'function') updateToggleState();
+
+    let nextSource, nextDisabled;
 
     if (venue === 'groom') {
         nextSource = groomSource;
         nextDisabled = brideSource;
-        nextToEnable = groomSource;
     } else {
         nextSource = brideSource;
         nextDisabled = groomSource;
-        nextToEnable = brideSource;
-    }
-
-    const targetSrc = nextSource.getAttribute('src');
-    if (currentSrc && currentSrc !== targetSrc) {
-        audio.pause();
-        musicPlayerState.isPlaying = false;
-        updateToggleState();
     }
 
     nextDisabled.setAttribute('disabled', '');
-    nextToEnable.removeAttribute('disabled');
+    nextSource.removeAttribute('disabled');
 
-    if (!currentSrc || currentSrc !== targetSrc) {
-        audio.load();
-    }
+    audio.load();
 }
 
 // ===== DATE UPDATE FOR VENUE =====
