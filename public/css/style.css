@@ -2423,13 +2423,12 @@ body.theme-watercolor .wedding-container > * {
 }
 
 @keyframes musicBtnSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from { transform: rotate(0deg) scale(1); }
+    to { transform: rotate(360deg) scale(1); }
 }
 
 .music-btn.playing:hover {
-    animation: none;
-    transform: scale(1.12);
+    animation: musicBtnSpin 4s linear infinite, musicBtnPulse 3s ease-in-out infinite;
 }
 
 #music-icon-note {

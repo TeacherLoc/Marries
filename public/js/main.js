@@ -165,18 +165,34 @@ function initMusicPlayer() {
         }
     });
 
-    // Listen for first user interaction to auto-play
-    function autoPlayOnce() {
+    // Listen for first user interaction to auto-play - use capture to ensure we control it
+    // We use capture so we can decide whether to handle the click before it reaches the music button
+    function autoPlayOnce(e) {
+        // Don't autoplay when user clicked on music button or any button/link
+        const target = e.target;
+        if (target.closest('.music-player') || target.closest('button, a, input, select, textarea')) {
+            return;
+        }
         playMusic();
-        document.removeEventListener('click', autoPlayOnce);
-        document.removeEventListener('touchstart', autoPlayOnce);
+        document.removeEventListener('click', autoPlayOnce, true);
+        document.removeEventListener('touchstart', autoPlayOnce, true);
     }
 
-    document.addEventListener('click', autoPlayOnce, { once: true });
-    document.addEventListener('touchstart', autoPlayOnce, { once: true, passive: true });
+    document.addEventListener('click', autoPlayOnce, { once: true, capture: true });
+    document.addEventListener('touchstart', autoPlayOnce, { once: true, passive: true, capture: true });
 
     // Update state when audio ends/pauses
     backgroundMusic.addEventListener('ended', () => {
+        musicPlayerState.isPlaying = false;
+        updateToggleState();
+    });
+
+    // Update state when audio starts/pauses via browser controls
+    backgroundMusic.addEventListener('play', () => {
+        musicPlayerState.isPlaying = true;
+        updateToggleState();
+    });
+    backgroundMusic.addEventListener('pause', () => {
         musicPlayerState.isPlaying = false;
         updateToggleState();
     });
@@ -187,11 +203,13 @@ function initMusicPlayer() {
 // Trigger music auto-play (called after envelope opens)
 function triggerMusicAutoPlay() {
     const backgroundMusic = document.getElementById('background-music');
-    const musicToggle = document.getElementById('music-toggle');
-    if (!backgroundMusic || !musicToggle) return;
+    if (!backgroundMusic) return;
 
-    // Don't replay if browser blocked previous play or audio already ended
-    if (musicPlayerState.isPlaying) return;
+    // Don't replay if already playing
+    if (musicPlayerState.isPlaying) {
+        updateToggleState();
+        return;
+    }
 
     backgroundMusic.play()
         .then(() => {
