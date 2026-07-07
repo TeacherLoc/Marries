@@ -67,6 +67,9 @@ function selectVenue(venue) {
     // Store selection
     sessionStorage.setItem('selectedVenue', venue);
 
+    // Update music source by venue
+    updateMusicForVenue(venue);
+
     // Update map if visible
     updateMapForVenue(venue);
     // /rgb(232 210 164)
@@ -1299,6 +1302,41 @@ function updateMapForVenue(venue) {
             if (groomLink) groomLink.classList.add('hidden');
             if (brideLink) brideLink.classList.remove('hidden');
         }
+    }
+}
+
+// ===== MUSIC UPDATE FOR VENUE =====
+function updateMusicForVenue(venue) {
+    const audio = document.getElementById('background-music');
+    const brideSource = document.getElementById('audio-source-bride');
+    const groomSource = document.getElementById('audio-source-groom');
+    if (!audio || !brideSource || !groomSource) return;
+
+    const currentSrc = audio.querySelector('source[disabled=""]')?.getAttribute('src') || audio.currentSrc || '';
+    let nextSource, nextDisabled, nextToEnable;
+
+    if (venue === 'groom') {
+        nextSource = groomSource;
+        nextDisabled = brideSource;
+        nextToEnable = groomSource;
+    } else {
+        nextSource = brideSource;
+        nextDisabled = groomSource;
+        nextToEnable = brideSource;
+    }
+
+    const targetSrc = nextSource.getAttribute('src');
+    if (currentSrc && currentSrc !== targetSrc) {
+        audio.pause();
+        musicPlayerState.isPlaying = false;
+        updateToggleState();
+    }
+
+    nextDisabled.setAttribute('disabled', '');
+    nextToEnable.removeAttribute('disabled');
+
+    if (!currentSrc || currentSrc !== targetSrc) {
+        audio.load();
     }
 }
 

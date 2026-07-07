@@ -140,7 +140,8 @@
               </svg>
           </button>
           <audio id="background-music" loop>
-              <source src="/audio/wedding.mp3" type="audio/mpeg">
+              <source id="audio-source-bride" src="/audio/wedding.mp3" type="audio/mpeg">
+              <source id="audio-source-groom" src="/audio/wedding_nhatrai.mp3" type="audio/mpeg" disabled>
           </audio>
       </div>
 
@@ -269,7 +270,7 @@
                 <button class="parade-tab" data-target="parade-card-groom">Nhà Trai — 19/07</button>
             </div>
             <div class="parade-card" id="parade-card-bride">
-                <div class="parade-subtitle">TIỆC CƯỚI SẼ DIỄN RA VÀO LÚC:</div>
+                <div class="parade-subtitle">TIỆC CƯỚI SẼ DIỄN RA VÀO LÚC</div>
                 <div class="parade-main-time">11:00</div>
                 <div class="parade-date-display">
                     <span class="date-weekday">CHỦ NHẬT</span>
@@ -410,7 +411,7 @@
                     <!-- =================================== -->
                     <div class="invite-family-details">
                         <div class="family-side bride-side">
-                            <h4>Nhà Gái</h4>
+                            <h4>Nhà Trai</h4>
                             <p class="parents-names">
                                 <span>Ông: <strong><%= couple.parentsBride.father %></strong></span>
                               
@@ -421,7 +422,7 @@
                             <span class="heart-icon">❤</span>
                         </div>
                         <div class="family-side groom-side">
-                            <h4>Nhà Trai</h4>
+                            <h4>Nhà Gái</h4>
                             <p class="parents-names">
                                 <span>Ông: <strong><%= couple.parentsGroom.father %></strong></span>
                                 
