@@ -1336,30 +1336,64 @@ function updateMapForVenue(venue) {
 // ===== MUSIC UPDATE FOR VENUE =====
 function updateMusicForVenue(venue) {
     const audio = document.getElementById('background-music');
-    const brideSource = document.getElementById('audio-source-bride');
-    const groomSource = document.getElementById('audio-source-groom');
-    if (!audio || !brideSource || !groomSource) return;
+    if (!audio) return;
 
-    // Always pause first to prevent old track from continuing
-    audio.pause();
-    audio.currentTime = 0;
-    musicPlayerState.isPlaying = false;
-    if (typeof updateToggleState === 'function') updateToggleState();
+    // Determine the target source URL for this venue
+    const targetFile = venue === 'groom' ? 'wedding_nhatrai.mp3' : 'wedding.mp3';
+    const targetSrc = `/audio/${targetFile}`;
 
-    let nextSource, nextDisabled;
+    // Get the current effective source of the audio element
+    const currentSrc = audio.currentSrc || audio.src || '';
 
-    if (venue === 'groom') {
-        nextSource = groomSource;
-        nextDisabled = brideSource;
-    } else {
-        nextSource = brideSource;
-        nextDisabled = groomSource;
+    // Only reload if source actually changes
+    if (!currentSrc.endsWith(targetFile)) {
+        // Always pause first to prevent old track from continuing
+        const wasPlaying = musicPlayerState.isPlaying;
+        audio.pause();
+        audio.currentTime = 0;
+        musicPlayerState.isPlaying = false;
+        if (typeof updateToggleState === 'function') updateToggleState();
+
+        // Force browser to release old resource
+        audio.removeAttribute('src');
+
+        // Set the new source with cache-busting to ensure fresh load
+        audio.src = targetSrc + `?v=${Date.now()}`;
+
+        // Reset <source> elements disabled states for correctness
+        const brideSource = document.getElementById('audio-source-bride');
+        const groomSource = document.getElementById('audio-source-groom');
+        if (brideSource && groomSource) {
+            if (venue === 'groom') {
+                brideSource.setAttribute('disabled', '');
+                groomSource.removeAttribute('disabled');
+            } else {
+                groomSource.setAttribute('disabled', '');
+                brideSource.removeAttribute('disabled');
+            }
+        }
+
+        audio.load();
+
+        // If music was playing before switch, try to resume with the new source
+        if (wasPlaying) {
+            // Wait for audio to be ready before playing
+            const onCanPlay = () => {
+                audio.removeEventListener('canplay', onCanPlay);
+                audio.play()
+                    .then(() => {
+                        musicPlayerState.isPlaying = true;
+                        if (typeof updateToggleState === 'function') updateToggleState();
+                    })
+                    .catch(err => {
+                        console.log('Không thể phát nhạc sau khi đổi bên:', err);
+                        musicPlayerState.isPlaying = false;
+                        if (typeof updateToggleState === 'function') updateToggleState();
+                    });
+            };
+            audio.addEventListener('canplay', onCanPlay);
+        }
     }
-
-    nextDisabled.setAttribute('disabled', '');
-    nextSource.removeAttribute('disabled');
-
-    audio.load();
 }
 
 // ===== DATE UPDATE FOR VENUE =====
